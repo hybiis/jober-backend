@@ -1,5 +1,4 @@
 package com.javajober.entity;
-
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -28,13 +28,13 @@ public class MemberGroup {
     @Column(name = "account_type", nullable = false)
     private AccountType accountType;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "add_space_id", nullable = false)
     private AddSpace addSpace;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_group_id", nullable = false)
-    private List<Member> members;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -50,10 +50,10 @@ public class MemberGroup {
     protected MemberGroup() {}
 
     @Builder
-    public MemberGroup(final MemberHashtagType memberHashtagType, final AccountType accountType, final AddSpace addSpace, final List<Member> members) {
+    public MemberGroup(final MemberHashtagType memberHashtagType, final AccountType accountType, final AddSpace addSpace, final Member member) {
         this.memberHashtagType = memberHashtagType;
         this.accountType = accountType;
         this.addSpace = addSpace;
-        this.members = members;
+        this.member = member;
     }
 }
