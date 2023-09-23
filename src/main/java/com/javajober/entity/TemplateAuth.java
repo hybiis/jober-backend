@@ -19,9 +19,9 @@ public class TemplateAuth {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auth_member_id",  nullable = false)
-    private Member authMember;
+    private MemberGroup authMember;
 
     @Column(name = "has_access")
     private Boolean hasAccess;
@@ -42,7 +42,7 @@ public class TemplateAuth {
     }
 
     @Builder
-    public TemplateAuth(final Member authMember, final Boolean hasAccess) {
+    public TemplateAuth(final MemberGroup authMember, final Boolean hasAccess) {
         this.authMember = authMember;
         this.hasAccess = hasAccess;
     }
