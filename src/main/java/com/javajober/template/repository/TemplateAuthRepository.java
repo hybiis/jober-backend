@@ -1,4 +1,4 @@
-package com.javajober.repository;
+package com.javajober.template.repository;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.javajober.service;
+package com.javajober.template.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.javajober.core.error.exception.Exception404;
-import com.javajober.dto.MemberAuthResponse;
+import com.javajober.template.dto.MemberAuthResponse;
 import com.javajober.entity.AddSpace;
 import com.javajober.entity.Member;
 import com.javajober.entity.MemberGroup;
 import com.javajober.entity.SpaceType;
 import com.javajober.entity.TemplateAuth;
-import com.javajober.repository.AddSpaceRepository;
-import com.javajober.repository.MemberGroupRepository;
-import com.javajober.repository.TemplateAuthRepository;
+import com.javajober.template.repository.AddSpaceRepository;
+import com.javajober.template.repository.MemberGroupRepository;
+import com.javajober.template.repository.TemplateAuthRepository;
 
 import lombok.RequiredArgsConstructor;
 

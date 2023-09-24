@@ -1,4 +1,4 @@
-package com.javajober.dto;
+package com.javajober.template.dto;
 
 
 import java.util.List;
