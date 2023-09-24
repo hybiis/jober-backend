@@ -8,15 +8,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.javajober.core.error.exception.Exception404;
+import com.javajober.entity.SpaceWallCategory;
+import com.javajober.entity.SpaceWallCategoryType;
+import com.javajober.entity.Template;
 import com.javajober.template.dto.MemberAuthResponse;
 import com.javajober.entity.AddSpace;
 import com.javajober.entity.Member;
 import com.javajober.entity.MemberGroup;
 import com.javajober.entity.SpaceType;
 import com.javajober.entity.TemplateAuth;
+import com.javajober.template.dto.TemplateResponse;
 import com.javajober.template.repository.AddSpaceRepository;
 import com.javajober.template.repository.MemberGroupRepository;
+import com.javajober.template.repository.SpaceWallCategoryRepository;
 import com.javajober.template.repository.TemplateAuthRepository;
+import com.javajober.template.repository.TemplateRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +33,8 @@ public class TemplateBlockService {
 	private final MemberGroupRepository memberGroupRepository;
 	private final AddSpaceRepository addSpaceRepository;
 	private final TemplateAuthRepository templateAuthRepository;
+	private final SpaceWallCategoryRepository spaceWallCategoryRepository;
+	private final TemplateRepository templateRepository;
 
 
 	@Transactional
@@ -52,5 +60,23 @@ public class TemplateBlockService {
 		}
 
 		return new MemberAuthResponse(memberInfos);
+	}
+
+	@Transactional
+	public TemplateResponse getTemplateRecommend(SpaceWallCategoryType spaceWallCategoryType){
+
+		SpaceWallCategory spaceWallCategory = spaceWallCategoryRepository.getBySpaceWallCategory(spaceWallCategoryType);
+
+		List<Template> templates = templateRepository.getBySpaceWallCategoryId(spaceWallCategory.getId());
+
+		List<TemplateResponse.TemplateInfo> templateInfos = new ArrayList<>();
+
+		for(Template template : templates) {
+			TemplateResponse.TemplateInfo templateInfo = TemplateResponse.TemplateInfo.from(template);
+			templateInfos.add(templateInfo);
+		}
+
+		return new TemplateResponse(templateInfos);
+
 	}
 }
