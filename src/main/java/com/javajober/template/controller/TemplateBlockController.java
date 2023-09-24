@@ -32,4 +32,10 @@ public class TemplateBlockController {
 		TemplateResponse templateResponse = templateBlockService.getTemplateRecommend(category);
 		return ResponseEntity.ok(ApiUtils.success(templateResponse));
 	}
+
+	@GetMapping("/lists")
+	public ResponseEntity<?> getTemplateCategoryList(@RequestParam SpaceWallCategoryType category){
+		TemplateResponse templateResponse = templateBlockService.getTemplateRecommend(category);
+		return ResponseEntity.ok(ApiUtils.success(templateResponse));
+	}
 }
