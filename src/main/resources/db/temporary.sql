@@ -61,3 +61,19 @@ values
     (false,5,NOW(), NOW(), NULL),
     (false,6,NOW(), NOW(), NULL),
     (false,7,NOW(), NOW(), NULL);
+
+insert into template (template_title, template_description,space_wall_category_id, created_at, updated_at,deleted_at)
+values
+    ('면접확인서','면접자가 회사에 요청하는 면접확인서 양식입니다.',1,NOW(), NOW(), NULL),
+    ('인턴 경력증명서','인턴분에게 발급하는 경력증명서입니다. (제출용도 포함)',1,NOW(), NOW(), NULL),
+    ('디자이너 등록하기','디자이너로 등록하기 위해 이력서와 포트폴리오 그리고 관심분야를 제출해주세요.',1,NOW(), NOW(), NULL),
+    ('채용 지원서 (자버)','채용 지원서를 작성해주세요.',1,NOW(), NOW(), NULL);
+
+
+insert into space_wall_category  (space_wall_category)
+values
+    ('CAREER'),
+    ('PERSONAL'),
+    ('EVENT'),
+    ('ENTERPRISE'),
+    ('BASIC');
