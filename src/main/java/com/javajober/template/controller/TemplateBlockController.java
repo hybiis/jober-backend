@@ -18,6 +18,7 @@ import com.javajober.template.dto.TemplateBlockDeleteRequest;
 import com.javajober.template.dto.TemplateBlockRequest;
 import com.javajober.template.dto.TemplateBlockRequests;
 import com.javajober.template.dto.TemplateBlockResponses;
+import com.javajober.template.dto.TemplateBlockUpdateRequest;
 import com.javajober.template.service.TemplateBlockService;
 
 @RequestMapping("/api/wall/templateBlocks")
@@ -47,7 +48,15 @@ public class TemplateBlockController {
 	}
 
 	@PutMapping
-	public ResponseEntity<ApiUtils.ApiResponse> deleteTemplateBlock (@RequestBody final TemplateBlockDeleteRequest templateBlockDeleteRequest) {
+	public ResponseEntity<ApiUtils.ApiResponse> updateTemplateBlock(@RequestBody final TemplateBlockRequests<TemplateBlockUpdateRequest> templateBlockRequests){
+
+		templateBlockService.update(templateBlockRequests);
+
+		return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.TEMPLATE_BLOCK_UPDATE_SUCCESS, null));
+	}
+
+	@PutMapping("/history")
+	public ResponseEntity<ApiUtils.ApiResponse> deleteTemplateBlock(@RequestBody final TemplateBlockDeleteRequest templateBlockDeleteRequest) {
 
 		templateBlockService.delete(templateBlockDeleteRequest);
 

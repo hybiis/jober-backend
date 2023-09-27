@@ -50,6 +50,12 @@ public class TemplateBlock {
         this.templateDescription = templateDescription;
     }
 
+    public void update(final String templateUUID, final String templateTitle, final String templateDescription) {
+        this.templateUUID = templateUUID;
+        this.templateTitle = templateTitle;
+        this.templateDescription = templateDescription;
+    }
+
     public void setDeletedAt(){
         this.deletedAt = LocalDateTime.now();
     }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.javajober.member.domain.MemberGroup;
 import com.javajober.template.domain.TemplateAuth;
@@ -14,6 +15,7 @@ import com.javajober.template.dto.TemplateBlockRequest;
 import com.javajober.template.dto.TemplateBlockRequests;
 import com.javajober.template.dto.TemplateBlockResponse;
 import com.javajober.template.dto.TemplateBlockResponses;
+import com.javajober.template.dto.TemplateBlockUpdateRequest;
 import com.javajober.template.repository.MemberGroupRepository;
 import com.javajober.template.repository.TemplateAuthRepository;
 import com.javajober.template.repository.TemplateBlockRepository;
@@ -81,6 +83,26 @@ public class TemplateBlockService {
 		return new TemplateBlockResponses(templateBlockResponses);
 	}
 
+	@Transactional
+	public void update(@RequestBody final TemplateBlockRequests<TemplateBlockUpdateRequest> templateBlockRequests){
+
+		for(TemplateBlockUpdateRequest templateBlockRequest : templateBlockRequests.getSubData()){
+
+			TemplateBlock templateBlock = templateBlockRepository.getById(templateBlockRequest.getId());
+			templateBlock.update(templateBlockRequest.getTemplateUUID(), templateBlockRequest.getTemplateTitle(), templateBlockRequest.getTemplateDescription());
+
+			List<TemplateAuth> authIds = templateAuthRepository.findByTemplateBlockId(templateBlock.getId());
+
+			for (TemplateAuth auth : authIds) {
+				MemberGroup memberGroup = memberGroupRepository.getById(auth.getId());
+				Boolean hasAccess = templateBlockRequest.getHasAccessTemplateAuth().contains(auth.getId());
+				auth.update(memberGroup,hasAccess,templateBlock);
+				templateAuthRepository.save(auth);
+			}
+
+			templateBlockRepository.save(templateBlock);
+		}
+	}
 
 
 	@Transactional

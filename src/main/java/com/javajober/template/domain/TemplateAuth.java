@@ -54,6 +54,12 @@ public class TemplateAuth {
         this.templateBlock = templateBlock;
     }
 
+    public void update(final MemberGroup authMember, final Boolean hasAccess, final TemplateBlock templateBlock) {
+        this.authMember = authMember;
+        this.hasAccess = hasAccess;
+        this.templateBlock = templateBlock;
+    }
+
     public void setDeletedAt() {
         this.deletedAt = LocalDateTime.now();
     }
