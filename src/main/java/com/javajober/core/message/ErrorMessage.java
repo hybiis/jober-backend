@@ -18,6 +18,7 @@ public enum ErrorMessage {
 	TEMPLATE_CATEGORY_NOT_FOUND("해당 카테고리를 찾을 수 없습니다."),
 	TEMPLATE_SEARCH_NOT_FOUND("해당 검색어를 찾을 수 없습니다."),
 	SPACE_MEMBER_GROUP_NOT_FOUND("해당 스페이스 연락처를 찾을 수 없습니다."),
+	TEMPLATE_BLOCK_NOT_FOUND("템플릿 블럭을 찾을 수 없습니다."),
 	NOT_FOUND("요청하신 데이터를 찾을 수 없습니다.");
 
 	private final String message;
