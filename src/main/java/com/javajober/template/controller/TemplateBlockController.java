@@ -16,7 +16,6 @@ import com.javajober.core.message.SuccessMessage;
 import com.javajober.core.util.ApiUtils;
 import com.javajober.template.dto.TemplateBlockRequest;
 import com.javajober.template.dto.TemplateBlockRequests;
-import com.javajober.template.dto.TemplateBlockResponse;
 import com.javajober.template.dto.TemplateBlockResponses;
 import com.javajober.template.service.TemplateBlockService;
 
@@ -41,7 +40,7 @@ public class TemplateBlockController {
 	@GetMapping
 	public ResponseEntity<ApiUtils.ApiResponse<TemplateBlockResponses>> readTemplateBlock(@RequestParam final List<Long> templateBlockIds) {
 
-		TemplateBlockResponses response = templateBlockService.getTemplateBlock(templateBlockIds);
+		TemplateBlockResponses response = templateBlockService.find(templateBlockIds);
 
 		return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.TEMPLATE_BLOCK_READ_SUCCESS, response));
 	}
@@ -49,7 +48,7 @@ public class TemplateBlockController {
 	@PutMapping
 	public ResponseEntity<ApiUtils.ApiResponse> deleteTemplateBlock (@RequestParam final Long templateBlockId) {
 
-		templateBlockService.deleteTemplateBlock(templateBlockId);
+		templateBlockService.delete(templateBlockId);
 
 		return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.TEMPLATE_BLOCK_DELETE_SUCCESS, null));
 	}

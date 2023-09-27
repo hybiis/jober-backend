@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.javajober.core.error.exception.Exception404;
 import com.javajober.core.message.ErrorMessage;
-import com.javajober.freeBlock.dto.response.FreeBlockResponse;
 import com.javajober.member.domain.MemberGroup;
 import com.javajober.template.domain.TemplateAuth;
 import com.javajober.template.domain.TemplateBlock;
@@ -55,7 +54,7 @@ public class TemplateBlockService {
 	}
 
 	@Transactional
-	public TemplateBlockResponses getTemplateBlock(final List<Long> templateBlockIds){
+	public TemplateBlockResponses find(final List<Long> templateBlockIds){
 
 		List<TemplateBlockResponse> templateBlockResponses = new ArrayList<>();
 
@@ -86,7 +85,7 @@ public class TemplateBlockService {
 
 
 	@Transactional
-	public void deleteTemplateBlock(Long templateBlockId){
+	public void delete(Long templateBlockId){
 
 		TemplateBlock templateBlock = templateBlockRepository.getById(templateBlockId);
 
