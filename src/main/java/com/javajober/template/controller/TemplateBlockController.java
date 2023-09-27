@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javajober.core.message.SuccessMessage;
 import com.javajober.core.util.ApiUtils;
+import com.javajober.template.dto.TemplateBlockDeleteRequest;
 import com.javajober.template.dto.TemplateBlockRequest;
 import com.javajober.template.dto.TemplateBlockRequests;
 import com.javajober.template.dto.TemplateBlockResponses;
@@ -46,9 +47,9 @@ public class TemplateBlockController {
 	}
 
 	@PutMapping
-	public ResponseEntity<ApiUtils.ApiResponse> deleteTemplateBlock (@RequestParam final Long templateBlockId) {
+	public ResponseEntity<ApiUtils.ApiResponse> deleteTemplateBlock (@RequestBody final TemplateBlockDeleteRequest templateBlockDeleteRequest) {
 
-		templateBlockService.delete(templateBlockId);
+		templateBlockService.delete(templateBlockDeleteRequest);
 
 		return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.TEMPLATE_BLOCK_DELETE_SUCCESS, null));
 	}

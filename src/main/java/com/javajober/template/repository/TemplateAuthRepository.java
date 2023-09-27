@@ -21,7 +21,6 @@ public interface TemplateAuthRepository extends Repository<TemplateAuth, Long> {
 
 	TemplateAuth save(TemplateAuth templateAuth);
 
-	TemplateAuth delete(TemplateAuth auth);
 
 	List<TemplateAuth> findByTemplateBlockId(Long templateBlockId);
 

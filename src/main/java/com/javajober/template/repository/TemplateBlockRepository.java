@@ -1,5 +1,6 @@
 package com.javajober.template.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.Repository;
@@ -12,7 +13,9 @@ public interface TemplateBlockRepository extends Repository<TemplateBlock, Long>
 
 	TemplateBlock save(TemplateBlock templateBlock);
 
-	TemplateBlock delete(TemplateBlock templateBlock);
+	List<TemplateBlock> saveAll(Iterable<TemplateBlock> templateBlock);
+
+	List<TemplateBlock> findAllById(Iterable<Long> id);
 
 	Optional<TemplateBlock> findById(Long id);
 

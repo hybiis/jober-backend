@@ -6,11 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.javajober.core.error.exception.Exception404;
-import com.javajober.core.message.ErrorMessage;
 import com.javajober.member.domain.MemberGroup;
 import com.javajober.template.domain.TemplateAuth;
 import com.javajober.template.domain.TemplateBlock;
+import com.javajober.template.dto.TemplateBlockDeleteRequest;
 import com.javajober.template.dto.TemplateBlockRequest;
 import com.javajober.template.dto.TemplateBlockRequests;
 import com.javajober.template.dto.TemplateBlockResponse;
@@ -85,24 +84,23 @@ public class TemplateBlockService {
 
 
 	@Transactional
-	public void delete(Long templateBlockId){
+	public void delete(final TemplateBlockDeleteRequest templateBlockDeleteRequest){
 
-		TemplateBlock templateBlock = templateBlockRepository.getById(templateBlockId);
+		List<TemplateBlock> templateBlocks = templateBlockRepository.findAllById(templateBlockDeleteRequest.getTemplateBlockIds());
 
-		templateBlock.setDeletedAt();
+		for(TemplateBlock templateBlock : templateBlocks){
 
-		List<TemplateAuth> authIds = templateAuthRepository.findByTemplateBlock(templateBlock);
+			templateBlock.setDeletedAt();
 
-		if(authIds == null || authIds.isEmpty()){
-			throw new Exception404(ErrorMessage.TEMPLATE_AUTH_NOT_FOUND);
+			List<TemplateAuth> authIds = templateAuthRepository.findByTemplateBlock(templateBlock);
+
+			for (TemplateAuth auth : authIds) {
+				auth.setDeletedAt();
+				templateAuthRepository.save(auth);
+			}
 		}
 
-		for (TemplateAuth auth : authIds) {
-			templateAuthRepository.delete(auth);
-			auth.setDeletedAt();
-		}
-
-		templateBlockRepository.delete(templateBlock);
+		templateBlockRepository.saveAll(templateBlocks);
 	}
 
 }
