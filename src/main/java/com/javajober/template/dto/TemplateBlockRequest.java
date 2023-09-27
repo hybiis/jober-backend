@@ -5,8 +5,7 @@ package com.javajober.template.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.javajober.entity.TemplateAuth;
-import com.javajober.entity.TemplateBlock;
+import com.javajober.template.domain.TemplateBlock;
 
 import lombok.Getter;
 

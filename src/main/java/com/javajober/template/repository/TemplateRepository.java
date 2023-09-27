@@ -7,7 +7,7 @@ import org.springframework.data.repository.Repository;
 
 import com.javajober.core.error.exception.Exception404;
 import com.javajober.core.message.ErrorMessage;
-import com.javajober.entity.Template;
+import com.javajober.template.domain.Template;
 
 public interface TemplateRepository extends Repository<Template, Long> {
 

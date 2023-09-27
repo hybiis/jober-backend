@@ -1,4 +1,4 @@
-package com.javajober.entity;
+package com.javajober.template.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,26 +9,27 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import com.javajober.entity.SpaceWallCategory;
 
 @Getter
-@Table(name = "template_block")
+@Table(name = "template")
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class TemplateBlock {
+public class Template {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Column(name = "template_uuid",  nullable = false)
-    private String templateUUID;
-
-    @Column(name = "template_title",  nullable = false)
+    @Column(name = "template_title", nullable = false)
     private String templateTitle;
 
-    @Column(name = "template_description",  nullable = false)
+    @Column(name = "template_description", nullable = false)
     private String templateDescription;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "space_wall_category_id")
+    private SpaceWallCategory spaceWallCategory;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -41,16 +42,12 @@ public class TemplateBlock {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    protected TemplateBlock() {}
+    protected Template() {}
 
     @Builder
-    public TemplateBlock(final String templateUUID, final String templateTitle, final String templateDescription) {
-        this.templateUUID = templateUUID;
+    public Template(final String templateTitle, final String templateDescription, final SpaceWallCategory spaceWallCategory) {
         this.templateTitle = templateTitle;
         this.templateDescription = templateDescription;
-    }
-
-    public void setDeletedAt(){
-        this.deletedAt = LocalDateTime.now();
+        this.spaceWallCategory = spaceWallCategory;
     }
 }

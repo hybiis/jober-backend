@@ -3,8 +3,7 @@ package com.javajober.template.dto;
 
 import java.util.List;
 
-import com.javajober.entity.Template;
-import com.javajober.entity.TemplateBlock;
+import com.javajober.template.domain.TemplateBlock;
 
 import lombok.Builder;
 import lombok.Getter;

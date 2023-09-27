@@ -1,4 +1,7 @@
-package com.javajober.entity;
+package com.javajober.template.domain;
+import com.javajober.entity.AccountType;
+import com.javajober.entity.AddSpace;
+import com.javajober.entity.MemberHashtagType;
 import com.javajober.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
