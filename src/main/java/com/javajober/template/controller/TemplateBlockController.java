@@ -1,11 +1,14 @@
 package com.javajober.template.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,8 +17,10 @@ import com.javajober.core.util.ApiUtils;
 import com.javajober.template.dto.TemplateBlockRequest;
 import com.javajober.template.dto.TemplateBlockRequests;
 import com.javajober.template.dto.TemplateBlockResponse;
+import com.javajober.template.dto.TemplateBlockResponses;
 import com.javajober.template.service.TemplateBlockService;
 
+@RequestMapping("/api/wall/templateBlocks")
 @RestController
 public class TemplateBlockController {
 
@@ -25,7 +30,7 @@ public class TemplateBlockController {
 		this.templateBlockService = templateBlockService;
 	}
 
-	@PostMapping("/templateBlock")
+	@PostMapping
 	public ResponseEntity<ApiUtils.ApiResponse> createTemplateBlock(@RequestBody TemplateBlockRequests<TemplateBlockRequest> templateBlockRequests) {
 
 		templateBlockService.save(templateBlockRequests);
@@ -33,16 +38,16 @@ public class TemplateBlockController {
 		return ResponseEntity.ok(ApiUtils.success(HttpStatus.CREATED, SuccessMessage.TEMPLATE_BLOCK_SAVE_SUCCESS, null));
 	}
 
-	@GetMapping("/templateBlock")
-	public ResponseEntity<ApiUtils.ApiResponse<TemplateBlockResponse>> readTemplateBlock(@RequestParam Long templateBlockId) {
+	@GetMapping
+	public ResponseEntity<ApiUtils.ApiResponse<TemplateBlockResponses>> readTemplateBlock(@RequestParam final List<Long> templateBlockIds) {
 
-		TemplateBlockResponse response = templateBlockService.getTemplateBlock(templateBlockId);
+		TemplateBlockResponses response = templateBlockService.getTemplateBlock(templateBlockIds);
 
 		return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.TEMPLATE_BLOCK_READ_SUCCESS, response));
 	}
 
-	@PutMapping("/templateBlock")
-	public ResponseEntity<ApiUtils.ApiResponse> deleteTemplateBlock (@RequestParam Long templateBlockId) {
+	@PutMapping
+	public ResponseEntity<ApiUtils.ApiResponse> deleteTemplateBlock (@RequestParam final Long templateBlockId) {
 
 		templateBlockService.deleteTemplateBlock(templateBlockId);
 

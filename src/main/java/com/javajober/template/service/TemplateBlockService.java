@@ -8,12 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.javajober.core.error.exception.Exception404;
 import com.javajober.core.message.ErrorMessage;
+import com.javajober.freeBlock.dto.response.FreeBlockResponse;
 import com.javajober.member.domain.MemberGroup;
 import com.javajober.template.domain.TemplateAuth;
 import com.javajober.template.domain.TemplateBlock;
 import com.javajober.template.dto.TemplateBlockRequest;
 import com.javajober.template.dto.TemplateBlockRequests;
 import com.javajober.template.dto.TemplateBlockResponse;
+import com.javajober.template.dto.TemplateBlockResponses;
 import com.javajober.template.repository.MemberGroupRepository;
 import com.javajober.template.repository.TemplateAuthRepository;
 import com.javajober.template.repository.TemplateBlockRepository;
@@ -53,27 +55,32 @@ public class TemplateBlockService {
 	}
 
 	@Transactional
-	public TemplateBlockResponse getTemplateBlock(Long templateBlockId){
+	public TemplateBlockResponses getTemplateBlock(final List<Long> templateBlockIds){
 
-		TemplateBlock templateBlock = templateBlockRepository.getById(templateBlockId);
+		List<TemplateBlockResponse> templateBlockResponses = new ArrayList<>();
 
-		List<TemplateAuth> templateAuths = templateAuthRepository.findByTemplateBlockId(templateBlockId);
+		for(Long templateBlockId : templateBlockIds){
 
-		if(templateAuths == null || templateAuths.isEmpty()){
-			throw new Exception404(ErrorMessage.TEMPLATE_AUTH_NOT_FOUND);
-		}
+			TemplateBlock templateblock = templateBlockRepository.getById(templateBlockId);
 
-		List<Long> hasAccessTemplateAuth = new ArrayList<>();
-		List<Long> hasDenyTemplateAuth = new ArrayList<>();
+			List<TemplateAuth> templateAuths = templateAuthRepository.findByTemplateBlockId(templateblock.getId());
 
-		for (TemplateAuth auth : templateAuths) {
-			if (auth.getHasAccess()) {
-				hasAccessTemplateAuth.add(auth.getAuthMember().getId());
-			} else {
-				hasDenyTemplateAuth.add(auth.getAuthMember().getId());
+			List<Long> hasAccessTemplateAuth = new ArrayList<>();
+			List<Long> hasDenyTemplateAuth = new ArrayList<>();
+
+			for (TemplateAuth auth : templateAuths) {
+				if (auth.getHasAccess()) {
+					hasAccessTemplateAuth.add(auth.getAuthMember().getId());
+				} else {
+					hasDenyTemplateAuth.add(auth.getAuthMember().getId());
+				}
 			}
+			TemplateBlockResponse response = TemplateBlockResponse.from(templateblock,hasAccessTemplateAuth,hasDenyTemplateAuth);
+
+			templateBlockResponses.add(response);
 		}
-		return TemplateBlockResponse.from(templateBlock, hasAccessTemplateAuth, hasDenyTemplateAuth);
+
+		return new TemplateBlockResponses(templateBlockResponses);
 	}
 
 

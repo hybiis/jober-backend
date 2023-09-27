@@ -33,7 +33,5 @@ public class TemplateBlockRequest {
 		allAuthIds.addAll(hasDenyTemplateAuth);
 		return allAuthIds;
 	}
-
-
 }
 
