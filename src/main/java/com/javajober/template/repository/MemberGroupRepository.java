@@ -7,7 +7,7 @@ import org.springframework.data.repository.Repository;
 
 import com.javajober.core.error.exception.Exception404;
 import com.javajober.core.message.ErrorMessage;
-import com.javajober.template.domain.MemberGroup;
+import com.javajober.member.domain.MemberGroup;
 
 
 public interface MemberGroupRepository extends Repository<MemberGroup, Long> {

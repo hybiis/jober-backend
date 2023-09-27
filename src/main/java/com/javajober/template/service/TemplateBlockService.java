@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.javajober.core.error.exception.Exception404;
 import com.javajober.core.message.ErrorMessage;
-import com.javajober.template.domain.MemberGroup;
+import com.javajober.member.domain.MemberGroup;
 import com.javajober.template.domain.TemplateAuth;
 import com.javajober.template.domain.TemplateBlock;
 import com.javajober.template.dto.TemplateBlockRequest;

@@ -1,4 +1,4 @@
-package com.javajober.template.domain;
+package com.javajober.member.domain;
 import com.javajober.entity.AccountType;
 import com.javajober.entity.AddSpace;
 import com.javajober.entity.MemberHashtagType;

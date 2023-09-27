@@ -4,7 +4,7 @@ package com.javajober.template.dto;
 import java.util.List;
 
 import com.javajober.member.domain.Member;
-import com.javajober.template.domain.MemberGroup;
+import com.javajober.member.domain.MemberGroup;
 import com.javajober.template.domain.TemplateAuth;
 
 import lombok.Builder;
