@@ -1,4 +1,4 @@
-package com.javajober.entity;
+package com.javajober.setting.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,27 +9,25 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Getter
-@Table(name = "block_setting")
+@Table(name = "background_setting")
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class BlockSetting {
+public class BackgroundSetting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "shape")
-    private String shape;
-
-    @Column(name = "style")
-    private String style;
-
-    @Column(name = "style_color")
-    private String styleColor;
+    @Column(name = "solid_color")
+    private String solidColor;
 
     @Column(name = "gradation")
     private Boolean gradation;
+
+    @Column(name = "style_image_url")
+    private String styleImageURL;
 
     @CreatedDate
     @Column(name="created_at")
@@ -42,16 +40,12 @@ public class BlockSetting {
     @Column(name="deleted_at")
     private LocalDateTime deletedAt;
 
-    protected BlockSetting() {
-
-    }
+    protected BackgroundSetting() {};
 
     @Builder
-    public BlockSetting(final String shape, final String style, final String styleColor, final Boolean gradation) {
-        this.shape = shape;
-        this.style = style;
-        this.styleColor = styleColor;
+    public BackgroundSetting(final String solidColor, final Boolean gradation, final String styleImageURL) {
+        this.solidColor = solidColor;
         this.gradation = gradation;
-
+        this.styleImageURL = styleImageURL;
     }
 }
