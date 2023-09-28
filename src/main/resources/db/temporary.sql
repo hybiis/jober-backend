@@ -127,11 +127,3 @@ VALUES ('[
         {"position":3, "block_type":"snsBlock", "block_id":15, "block_UUID": "q7q21r51-sl2m-7070-pqpr-9q50r59r549l"}
     ]', 'https://javajober.shop/combined5', 5, 3, 'BASIC', 'PENDING', NOW(), NULL, NULL);
 
-INSERT INTO template_auth (has_access, auth_member_id, created_at, updated_at, deleted_at)
-VALUES (false, 1, NOW(), NOW(), NULL),
-       (false, 2, NOW(), NOW(), NULL),
-       (false, 3, NOW(), NOW(), NULL),
-       (false, 4, NOW(), NOW(), NULL),
-       (false, 5, NOW(), NOW(), NULL),
-       (false, 6, NOW(), NOW(), NULL),
-       (false, 7, NOW(), NOW(), NULL);
