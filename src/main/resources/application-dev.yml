@@ -12,7 +12,7 @@ spring:
     url: jdbc:h2:tcp://localhost/~/javajober;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=true
     driver-class-name: org.h2.Driver
     username: team3
-    password: sa
+    password:
 
   h2:
     console:
