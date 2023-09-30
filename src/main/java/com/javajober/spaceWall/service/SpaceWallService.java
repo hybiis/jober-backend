@@ -18,6 +18,18 @@ import com.javajober.listBlock.domain.ListBlock;
 import com.javajober.listBlock.dto.ListBlockSaveRequest;
 import com.javajober.listBlock.listBlockRepository.ListBlockRepository;
 import com.javajober.member.domain.MemberGroup;
+import com.javajober.setting.domain.BackgroundSetting;
+import com.javajober.setting.domain.BlockSetting;
+import com.javajober.setting.domain.StyleSetting;
+import com.javajober.setting.domain.ThemeSetting;
+import com.javajober.setting.dto.BackgroundSettingSaveRequest;
+import com.javajober.setting.dto.BlockSettingSaveRequest;
+import com.javajober.setting.dto.StyleSettingSaveRequest;
+import com.javajober.setting.dto.ThemeSettingSaveRequest;
+import com.javajober.setting.repository.BackgroundSettingRepository;
+import com.javajober.setting.repository.BlockSettingRepository;
+import com.javajober.setting.repository.StyleSettingRepository;
+import com.javajober.setting.repository.ThemeSettingRepository;
 import com.javajober.snsBlock.domain.SNSBlock;
 import com.javajober.snsBlock.dto.SNSBlockRequest;
 import com.javajober.snsBlock.repository.SNSBlockRepository;
@@ -62,12 +74,18 @@ public class SpaceWallService {
 	private final FileBlockRepository fileBlockRepository;
 	private final FileDirectoryConfig fileDirectoryConfig;
 	private final ListBlockRepository listBlockRepository;
+	private final StyleSettingRepository styleSettingRepository;
+	private final BackgroundSettingRepository backgroundSettingRepository;
+	private final BlockSettingRepository blockSettingRepository;
+	private final ThemeSettingRepository themeSettingRepository;
 
 	public SpaceWallService(SpaceWallRepository spaceWallRepository, SNSBlockRepository snsBlockRepository,
 							FreeBlockRepository freeBlockRepository, TemplateBlockRepository templateBlockRepository,
 							MemberGroupRepository memberGroupRepository, TemplateAuthRepository templateAuthRepository,
 							WallInfoBlockRepository wallInfoBlockRepository, FileBlockRepository fileBlockRepository,
-							FileDirectoryConfig fileDirectoryConfig, ListBlockRepository listBlockRepository) {
+							FileDirectoryConfig fileDirectoryConfig, ListBlockRepository listBlockRepository,
+		StyleSettingRepository styleSettingRepository, BackgroundSettingRepository backgroundSettingRepository,
+		BlockSettingRepository blockSettingRepository, ThemeSettingRepository themeSettingRepository) {
 
 		this.spaceWallRepository = spaceWallRepository;
 		this.snsBlockRepository = snsBlockRepository;
@@ -79,6 +97,10 @@ public class SpaceWallService {
 		this.fileBlockRepository = fileBlockRepository;
 		this.fileDirectoryConfig = fileDirectoryConfig;
 		this.listBlockRepository = listBlockRepository;
+		this.styleSettingRepository = styleSettingRepository;
+		this.backgroundSettingRepository = backgroundSettingRepository;
+		this.blockSettingRepository = blockSettingRepository;
+		this.themeSettingRepository = themeSettingRepository;
 	}
 
 	public SpaceWallResponse checkSpaceWallTemporary(Long memberId, Long addSpaceId) {
@@ -106,6 +128,9 @@ public class SpaceWallService {
 
 		WallInfoBlockRequest wallInfoBlockRequest = spaceWallRequest.getData().getWallInfoBlock();
 		saveWallInfoBlock(wallInfoBlockRequest);
+
+		StyleSettingSaveRequest styleSettingSaveRequest = spaceWallRequest.getData().getStyleSetting();
+		saveStyleSetting(styleSettingSaveRequest);
 
 		ObjectMapper mapper = new ObjectMapper();
 		AtomicInteger i = new AtomicInteger();
@@ -159,6 +184,30 @@ public class SpaceWallService {
 			FreeBlock freeBlock = FreeBlockSaveRequest.toEntity(block);
 			freeBlockRepository.save(freeBlock);
 		});
+	}
+
+	private void saveStyleSetting(StyleSettingSaveRequest saveRequest){
+		StyleSetting styleSetting =saveRequest.toEntity();
+		backgroundSettingRepository.save(styleSetting.getBackgroundSetting());
+		blockSettingRepository.save(styleSetting.getBlockSetting());
+		themeSettingRepository.save(styleSetting.getThemeSetting());
+		styleSettingRepository.save(styleSetting);
+	}
+
+	private BackgroundSetting saveBackgroundSetting(BackgroundSettingSaveRequest saveRequest){
+		//String styleImg = uploadFile(file);
+		BackgroundSetting backgroundSetting = saveRequest.toEntity();
+		return backgroundSettingRepository.save(backgroundSetting);
+	}
+
+	private BlockSetting saveBlockSetting(BlockSettingSaveRequest saveRequest ){
+		BlockSetting blockSetting = saveRequest.toEntity();
+		return blockSettingRepository.save(blockSetting);
+	}
+
+	private ThemeSetting saveThemeSetting(ThemeSettingSaveRequest saveRequest){
+		ThemeSetting themeSetting = saveRequest.toEntity();
+		return themeSettingRepository.save(themeSetting);
 	}
 
 	private void saveSnsBlocks(List<SNSBlockRequest> subData) {
