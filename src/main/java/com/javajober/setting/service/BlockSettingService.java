@@ -17,10 +17,10 @@ public class BlockSettingService {
 	}
 
 	@Transactional
-	public BlockSetting save(final BlockSettingSaveRequest saveRequest){
+	public void save(final BlockSettingSaveRequest saveRequest){
 
-		BlockSetting blockSetting  = BlockSettingSaveRequest.toEntity(saveRequest);
+		BlockSetting blockSetting  = saveRequest.toEntity();
 
-		return blockSettingRepository.save(blockSetting);
+		blockSettingRepository.save(blockSetting);
 	}
 }

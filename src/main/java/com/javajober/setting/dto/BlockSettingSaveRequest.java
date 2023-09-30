@@ -16,14 +16,13 @@ public class BlockSettingSaveRequest {
 
 	}
 
-	public static BlockSetting toEntity(BlockSettingSaveRequest blockSettingSaveRequest){
+	public BlockSetting toEntity() {
 		return BlockSetting.builder()
-			.shape(blockSettingSaveRequest.getShape())
-			.style(blockSettingSaveRequest.getStyle())
-			.styleColor(blockSettingSaveRequest.getStyleColor())
-			.gradation(blockSettingSaveRequest.isGradation())
+			.shape(this.getShape())
+			.style(this.getStyle())
+			.styleColor(this.getStyleColor())
+			.gradation(this.isGradation())
 			.build();
-
 	}
 
 }
