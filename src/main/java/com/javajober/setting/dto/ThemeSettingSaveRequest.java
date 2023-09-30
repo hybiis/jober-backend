@@ -12,9 +12,9 @@ public class ThemeSettingSaveRequest {
 
 	}
 
-	public static ThemeSetting toEntity(ThemeSettingSaveRequest themeSettingSaveRequest){
+	public ThemeSetting toEntity() {
 		return ThemeSetting.builder()
-			.theme(themeSettingSaveRequest.getTheme())
+			.theme(this.getTheme())
 			.build();
 	}
 }

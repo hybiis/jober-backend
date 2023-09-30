@@ -19,7 +19,7 @@ public class ThemeSettingService {
 	@Transactional
 	public ThemeSetting save(final ThemeSettingSaveRequest saveRequest){
 
-		ThemeSetting themeSetting = ThemeSettingSaveRequest.toEntity(saveRequest);
+		ThemeSetting themeSetting = saveRequest.toEntity();
 
 		return themeSettingRepository.save(themeSetting);
 	}
