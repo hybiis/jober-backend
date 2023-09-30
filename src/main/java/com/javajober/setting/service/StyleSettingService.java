@@ -3,10 +3,8 @@ package com.javajober.setting.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.javajober.setting.domain.BackgroundSetting;
-import com.javajober.setting.domain.BlockSetting;
+
 import com.javajober.setting.domain.StyleSetting;
-import com.javajober.setting.domain.ThemeSetting;
 import com.javajober.setting.dto.StyleSettingSaveRequest;
 import com.javajober.setting.repository.BackgroundSettingRepository;
 import com.javajober.setting.repository.BlockSettingRepository;
@@ -32,15 +30,12 @@ public class StyleSettingService {
 	}
 
 	@Transactional
-	public StyleSetting save(StyleSettingSaveRequest saveRequest){
+	public StyleSetting save(StyleSettingSaveRequest styleSettingSaveRequest) {
+		StyleSetting styleSetting = styleSettingSaveRequest.toEntity();
 
-		BackgroundSetting backgroundSetting = backgroundSettingRepository.getById(saveRequest.getBackgroundSettingId());
-
-		BlockSetting blockSetting = blockSettingRepository.getById(saveRequest.getBackgroundSettingId());
-
-		ThemeSetting themeSetting = themeSettingRepository.getById(saveRequest.getThemeSettingId());
-
-		StyleSetting styleSetting = StyleSettingSaveRequest.toEntity(backgroundSetting, blockSetting, themeSetting);
+		backgroundSettingRepository.save(styleSetting.getBackgroundSetting());
+		blockSettingRepository.save(styleSetting.getBlockSetting());
+		themeSettingRepository.save(styleSetting.getThemeSetting());
 
 		return styleSettingRepository.save(styleSetting);
 	}

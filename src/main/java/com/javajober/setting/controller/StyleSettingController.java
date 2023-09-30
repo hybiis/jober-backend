@@ -23,8 +23,8 @@ public class StyleSettingController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ApiUtils.ApiResponse> save(@RequestBody final StyleSettingSaveRequest saveRequest){
-		styleSettingService.save(saveRequest);
+	public ResponseEntity<ApiUtils.ApiResponse> save(@RequestBody StyleSettingSaveRequest styleSettingSaveRequest) {
+		styleSettingService.save(styleSettingSaveRequest);
 		return ResponseEntity.ok(ApiUtils.success(HttpStatus.CREATED, SuccessMessage.CREATE_SUCCESS, null));
 	}
 }
