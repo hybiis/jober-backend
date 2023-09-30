@@ -8,17 +8,14 @@ import lombok.Getter;
 public class BackgroundSettingSaveRequest {
 	private String solidColor;
 	private boolean gradation;
-	private String styleImageURL;
 
 	public BackgroundSettingSaveRequest(){
 
 	}
-
-	public static BackgroundSetting toEntity(BackgroundSettingSaveRequest backgroundSettingSaveRequest){
+	public BackgroundSetting toEntity() {
 		return BackgroundSetting.builder()
-			.solidColor(backgroundSettingSaveRequest.getSolidColor())
-			.gradation(backgroundSettingSaveRequest.isGradation())
-			.styleImageURL(backgroundSettingSaveRequest.getStyleImageURL())
+			.solidColor(this.getSolidColor())
+			.gradation(this.isGradation())
 			.build();
 	}
 }

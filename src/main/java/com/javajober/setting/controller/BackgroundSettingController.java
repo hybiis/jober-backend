@@ -3,9 +3,10 @@ package com.javajober.setting.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javajober.core.message.SuccessMessage;
 import com.javajober.core.util.ApiUtils;
@@ -23,8 +24,12 @@ public class BackgroundSettingController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ApiUtils.ApiResponse> save(@RequestBody final BackgroundSettingSaveRequest saveRequest){
-		backgroundSettingService.save(saveRequest);
+	public ResponseEntity<ApiUtils.ApiResponse> save(
+		@RequestPart(value = "backgroundRequest") final BackgroundSettingSaveRequest styleSetting,
+		@RequestPart(value = "styleImgURL", required = false) MultipartFile styleImgURL){
+
+		backgroundSettingService.save(styleSetting);
+
 		return ResponseEntity.ok(ApiUtils.success(HttpStatus.CREATED, SuccessMessage.CREATE_SUCCESS, null));
 	}
 }
