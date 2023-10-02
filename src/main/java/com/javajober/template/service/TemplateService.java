@@ -10,6 +10,7 @@ import com.javajober.space.repository.AddSpaceRepository;
 import com.javajober.core.error.exception.Exception404;
 import com.javajober.core.message.ErrorMessage;
 import com.javajober.member.domain.Member;
+import com.javajober.spaceWallCategory.domain.SpaceWallCategory;
 import com.javajober.spaceWallCategory.domain.SpaceWallCategoryType;
 import com.javajober.template.domain.Template;
 import com.javajober.templateBlock.domain.TemplateBlock;
@@ -79,7 +80,9 @@ public class TemplateService {
 	@Transactional
 	public TemplateResponse getTemplateRecommend(SpaceWallCategoryType spaceWallCategoryType) {
 
-		List<Template> templates = templateRepository.getBySpaceWallCategory(spaceWallCategoryType);
+		SpaceWallCategory spaceWallCategory = spaceWallCategoryRepository.getBySpaceWallCategory(spaceWallCategoryType);
+
+		List<Template> templates = templateRepository.getBySpaceWallCategoryId(spaceWallCategory.getId());
 
 		List<TemplateResponse.TemplateInfo> templateInfos = new ArrayList<>();
 

@@ -12,10 +12,10 @@ import com.javajober.template.domain.Template;
 
 public interface TemplateRepository extends Repository<Template, Long> {
 
-	List<Template> findBySpaceWallCategory(SpaceWallCategoryType categoryType);
+	List<Template> findBySpaceWallCategoryId(Long templateCategoryId);
 
-	default List<Template> getBySpaceWallCategory(final SpaceWallCategoryType categoryType){
-		List<Template> templates = findBySpaceWallCategory(categoryType);
+	default List<Template> getBySpaceWallCategoryId(final Long templateCategoryId){
+		List<Template> templates = findBySpaceWallCategoryId(templateCategoryId);
 
 		if(templates == null || templates.isEmpty()){
 			throw new Exception404(ErrorMessage.TEMPLATE_RECOMMEND_NOT_FOUND);
