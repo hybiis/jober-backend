@@ -34,6 +34,7 @@ import com.javajober.blockSetting.domain.BlockSetting;
 import com.javajober.spaceWall.dto.request.SpaceWallUpdateRequest;
 import com.javajober.spaceWall.dto.response.SpaceWallSaveResponse;
 import com.javajober.styleSetting.domain.StyleSetting;
+import com.javajober.styleSetting.dto.request.StyleSettingUpdateRequest;
 import com.javajober.templateBlock.dto.request.TemplateBlockUpdateRequest;
 import com.javajober.themeSetting.domain.ThemeSetting;
 import com.javajober.backgroundSetting.dto.request.BackgroundSettingSaveRequest;
@@ -194,7 +195,7 @@ public class SpaceWallService {
 	}
 
 	@Transactional
-	public void update(final SpaceWallUpdateRequest spaceWallUpdateRequest, FlagType flagType){
+	public SpaceWallSaveResponse update(final SpaceWallUpdateRequest spaceWallUpdateRequest, FlagType flagType){
 		SpaceWall spaceWall = spaceWallRepository.findById(spaceWallUpdateRequest.getData().getSpaceWallId())
 			.orElseThrow(() -> new Exception404(ErrorMessage.ADD_SPACE_NOT_FOUND));
 
@@ -202,6 +203,12 @@ public class SpaceWallService {
 		AtomicLong blocksPositionCounter = new AtomicLong(blocksPosition);
 		ObjectMapper jsonMapper = new ObjectMapper();
 		ArrayNode blockInfoArray = jsonMapper.createArrayNode();
+
+		WallInfoBlockUpdateRequest wallInfoBlockRequest = spaceWallUpdateRequest.getData().getWallInfoBlock();
+		Long wallInfoBlock = updateWallInfoBlock(wallInfoBlockRequest);
+		String wallInfoBlockType  = BlockType.WALL_INFO_BLOCK.getEngTitle();
+		Long blockStartPosition = 1L;
+		addBlockToJsonArray(blockInfoArray, jsonMapper, blockStartPosition, wallInfoBlockType, wallInfoBlock);
 
 		spaceWallUpdateRequest.getData().getBlocks().forEach(block -> {
 			BlockType blockType = BlockType.findBlockTypeByString(block.getBlockType());
@@ -244,11 +251,21 @@ public class SpaceWallService {
 			}
 		});
 
+		StyleSettingUpdateRequest updateRequest = spaceWallUpdateRequest.getData().getStyleSetting();
+		Long styleSetting = updateStyleSetting(updateRequest);
+		String styleSettingString = "styleSetting";
+		Long stylePosition = blocksPositionCounter.getAndIncrement();
+		addBlockToJsonArray(blockInfoArray, jsonMapper, stylePosition, styleSettingString, styleSetting);
+
 		String blockInfoArrayAsString = blockInfoArray.toString();
 		String shareURL = spaceWallUpdateRequest.getData().getShareURL();
 		SpaceWall updateSpaceWall = SpaceWallUpdateRequest.toEntity(spaceWall, shareURL, flagType, blockInfoArrayAsString);
 		spaceWall.update(updateSpaceWall);
 		spaceWallRepository.save(spaceWall);
+
+		Long spaceWallId = spaceWallRepository.save(spaceWall).getId();
+
+		return new SpaceWallSaveResponse(spaceWallId);
 	}
 
 
@@ -307,44 +324,31 @@ public class SpaceWallService {
 
 	private Long saveStyleSetting(StyleSettingSaveRequest saveRequest){
 		StyleSetting styleSetting =saveRequest.toEntity();
-
 		backgroundSettingRepository.save(styleSetting.getBackgroundSetting());
 		blockSettingRepository.save(styleSetting.getBlockSetting());
 		themeSettingRepository.save(styleSetting.getThemeSetting());
-
 		return styleSettingRepository.save(styleSetting).getId();
-	}
-
-	private BackgroundSetting saveBackgroundSetting(BackgroundSettingSaveRequest saveRequest){
-		//String styleImg = uploadFile(file);
-		BackgroundSetting backgroundSetting = saveRequest.toEntity();
-		return backgroundSettingRepository.save(backgroundSetting);
-	}
-
-	private BlockSetting saveBlockSetting(BlockSettingSaveRequest saveRequest ){
-		BlockSetting blockSetting = saveRequest.toEntity();
-		return blockSettingRepository.save(blockSetting);
-	}
-
-	private ThemeSetting saveThemeSetting(ThemeSettingSaveRequest saveRequest){
-		ThemeSetting themeSetting = saveRequest.toEntity();
-		return themeSettingRepository.save(themeSetting);
 	}
 
 	private Long updateWallInfoBlock(WallInfoBlockUpdateRequest wallInfoBlockRequest) {
 		WallInfoBlock wallInfoBlockPS = wallInfoBlockRepository.findWallInfoBlock(wallInfoBlockRequest.getWallInfoId());
 		WallInfoBlock wallInfoBlock = WallInfoBlockUpdateRequest.toEntity(wallInfoBlockRequest);
 		wallInfoBlockPS.update(wallInfoBlock);
-		return wallInfoBlockRepository.save(wallInfoBlock).getId();
+		return wallInfoBlockRepository.save(wallInfoBlockPS).getId();
 	}
 
 	private List<Long> updateFreeBlocks(List<FreeBlockUpdateRequest> subData) {
 		List<Long> updatedFreeBlockIds = new ArrayList<>();
 		for (FreeBlockUpdateRequest updateRequest : subData) {
-			FreeBlock freeBlockPS = freeBlockRepository.findFreeBlock(updateRequest.getFreeId());
-			FreeBlock freeBlock = FreeBlockUpdateRequest.toEntity(updateRequest);
-			freeBlockPS.update(freeBlock);
-			updatedFreeBlockIds.add(freeBlockRepository.save(freeBlockPS).getId());
+			if(updateRequest.getFreeId() == null ){
+				FreeBlock freeBlock = new FreeBlock(updateRequest.getFreeTitle(),updateRequest.getFreeContent());
+				updatedFreeBlockIds.add(freeBlockRepository.save(freeBlock).getId());
+			}else {
+				FreeBlock freeBlockPS = freeBlockRepository.findFreeBlock(updateRequest.getFreeId());
+				FreeBlock freeBlock = FreeBlockUpdateRequest.toEntity(updateRequest);
+				freeBlockPS.update(freeBlock);
+				updatedFreeBlockIds.add(freeBlockRepository.save(freeBlockPS).getId());
+			}
 		}
 		return updatedFreeBlockIds;
 	}
@@ -352,14 +356,16 @@ public class SpaceWallService {
 	private List<Long> updateSnsBlocks(List<SNSBlockUpdateRequest> subData){
 		List<Long> updateSnsBlockIds = new ArrayList<>();
 		subData.forEach(snsBlockRequest -> {
-
-			SNSBlock snsBlock = snsBlockRepository.findSNSBlock(snsBlockRequest.getSnsId());
-
-			SNSType snsType = SNSType.findSNSTypeByString(snsBlockRequest.getSnsType());
-
-			snsBlock.update(snsBlockRequest.getSnsUUID(), snsType, snsBlockRequest.getSnsURL());
-
-			updateSnsBlockIds.add(snsBlockRepository.save(snsBlock).getId());
+			if(snsBlockRequest.getSnsId() ==null){
+				SNSType snsType = SNSType.findSNSTypeByString(snsBlockRequest.getSnsType());
+				SNSBlock snsBlock = new SNSBlock(snsBlockRequest.getSnsUUID(),snsType,snsBlockRequest.getSnsURL());
+				updateSnsBlockIds.add(snsBlockRepository.save(snsBlock).getId());
+			}else {
+				SNSBlock snsBlock = snsBlockRepository.findSNSBlock(snsBlockRequest.getSnsId());
+				SNSType snsType = SNSType.findSNSTypeByString(snsBlockRequest.getSnsType());
+				snsBlock.update(snsBlockRequest.getSnsUUID(), snsType, snsBlockRequest.getSnsURL());
+				updateSnsBlockIds.add(snsBlockRepository.save(snsBlock).getId());
+			}
 		});
 
 		return updateSnsBlockIds;
@@ -367,40 +373,61 @@ public class SpaceWallService {
 
 	private List<Long> updateTemplateBlocks(List<TemplateBlockUpdateRequest> subData) {
 		List<Long> updateTemplateBlockIds = new ArrayList<>();
-		for(TemplateBlockUpdateRequest templateBlockRequest : subData){
-
-			TemplateBlock templateBlock = templateBlockRepository.findTemplateBlock(templateBlockRequest.getId());
-			templateBlock.update(templateBlockRequest.getTemplateUUID(), templateBlockRequest.getTemplateTitle(), templateBlockRequest.getTemplateDescription());
-
-			updateTemplateBlockIds.add(templateBlockRepository.save(templateBlock).getId());
+		for(TemplateBlockUpdateRequest updateRequest : subData) {
+			if (updateRequest.getTemplateId() == null) {
+				TemplateBlock templateBlock = new TemplateBlock(updateRequest.getTemplateUUID(),updateRequest.getTemplateTitle(),updateRequest.getTemplateDescription());
+				updateTemplateBlockIds.add(templateBlockRepository.save(templateBlock).getId());
+			} else {
+				TemplateBlock templateBlock = templateBlockRepository.findTemplateBlock(updateRequest.getTemplateId());
+				templateBlock.update(updateRequest.getTemplateUUID(), updateRequest.getTemplateTitle(), updateRequest.getTemplateDescription());
+				updateTemplateBlockIds.add(templateBlockRepository.save(templateBlock).getId());
+			}
 		}
 		return updateTemplateBlockIds;
 	}
 
 	private List<Long> updateFileBlocks(List<FileBlockUpdateRequest> subData) {
 		List<Long> updateFileBlockIds = new ArrayList<>();
-		for (FileBlockUpdateRequest fileBlockUpdateRequest : subData) {
-			FileBlock fileBlockPS = fileBlockRepository.findFileBlock(fileBlockUpdateRequest.getFileId());
-			//String fileNamePS = fileBlockPS.getFileName();
-			//deleteFile(fileNamePS);
-			//String fileName = uploadFile(file);
-			FileBlock fileBlock = FileBlockUpdateRequest.toEntity(fileBlockUpdateRequest, fileBlockPS.getFileName());
+		for (FileBlockUpdateRequest updateRequest : subData) {
+			FileBlock fileBlockPS = fileBlockRepository.findFileBlock(updateRequest.getFileId());
+			FileBlock fileBlock = FileBlockUpdateRequest.toEntity(updateRequest, fileBlockPS.getFileName());
 			fileBlockPS.update(fileBlock);
-
-			fileBlockRepository.save(fileBlockPS);
+			updateFileBlockIds.add(fileBlockRepository.save(fileBlockPS).getId());
 		}
 		return updateFileBlockIds;
 	}
 
 	private List<Long> updateListBlock(List<ListBlockUpdateRequest> subData){
 		List<Long> updateListBlockIds = new ArrayList<>();
-		for(ListBlockUpdateRequest UpdateRequest : subData){
-			ListBlock listBlockPS = listBlockRepository.findListBlock(UpdateRequest.getListId());
-			ListBlock listBlock = ListBlockUpdateRequest.toEntity(UpdateRequest);
-			listBlockPS.update(listBlock);
-			updateListBlockIds.add(listBlockRepository.save(listBlockPS).getId());
+		for(ListBlockUpdateRequest updateRequest : subData){
+			if(updateRequest.getListId() == null){
+				ListBlock listBlock = new ListBlock(updateRequest.getListUUID(),updateRequest.getListLabel(),updateRequest.getListTitle(),updateRequest.getListDescription(),updateRequest.getIsLink());
+				updateListBlockIds.add(listBlockRepository.save(listBlock).getId());
+			}else{
+				ListBlock listBlockPS = listBlockRepository.findListBlock(updateRequest.getListId());
+				ListBlock listBlock = ListBlockUpdateRequest.toEntity(updateRequest);
+				listBlockPS.update(listBlock);
+				updateListBlockIds.add(listBlockRepository.save(listBlockPS).getId());
+			}
 		}
 		return updateListBlockIds;
+	}
+
+	private Long updateStyleSetting(StyleSettingUpdateRequest updateRequest){
+		StyleSetting styleSetting = styleSettingRepository.findStyleBlock(updateRequest.getStyleSettingId());
+
+		BackgroundSetting backgroundSetting = backgroundSettingRepository.getById(styleSetting.getBackgroundSetting().getId());
+		backgroundSetting.update(updateRequest.getBackgroundSetting().toEntity(updateRequest.getBackgroundSetting()));
+		backgroundSettingRepository.save(backgroundSetting);
+		BlockSetting blockSetting = blockSettingRepository.getById(styleSetting.getBlockSetting().getId());
+		blockSetting.update(updateRequest.getBlockSetting().toEntity(updateRequest.getBlockSetting()));
+		blockSettingRepository.save(blockSetting);
+		ThemeSetting themeSetting = themeSettingRepository.getById(styleSetting.getThemeSetting().getId());
+		themeSetting.update(updateRequest.getThemeSetting().toEntity(updateRequest.getThemeSetting()));
+		themeSettingRepository.save(themeSetting);
+		styleSetting.update(styleSetting);
+
+		return styleSettingRepository.save(styleSetting).getId();
 	}
 	private void addBlockInfoToArray(ArrayNode blockInfoArray, ObjectMapper jsonMapper, BlockType blockType, Long position, Long blockId, BlockRequest block) {
 		String currentBlockTypeTitle = blockType.getEngTitle();
