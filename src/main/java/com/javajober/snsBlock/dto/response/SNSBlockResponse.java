@@ -1,12 +1,13 @@
 package com.javajober.snsBlock.dto.response;
 
+import com.javajober.core.util.CommonResponse;
 import com.javajober.snsBlock.domain.SNSBlock;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class SNSBlockResponse {
+public class SNSBlockResponse implements CommonResponse {
 	private Long snsBlockId;
 	private String snsUUID;
 	private String snsType;
@@ -26,9 +27,10 @@ public class SNSBlockResponse {
 
 	public static SNSBlockResponse from (final SNSBlock snsBlock) {
 		return SNSBlockResponse.builder()
-			.snsBlockId(snsBlock.getId())
-			.snsUUID(snsBlock.getSnsUUID())
-			.snsType(snsBlock.getSnsURL())
-			.build();
+				.snsBlockId(snsBlock.getId())
+				.snsUUID(snsBlock.getSnsUUID())
+				.snsType(snsBlock.getSnsType().getEngTitle())
+				.snsURL(snsBlock.getSnsURL())
+				.build();
 	}
 }

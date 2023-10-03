@@ -76,5 +76,6 @@ public class SpaceWall {
         this.shareURL = shareURL;
         this.addSpace = addSpace;
         this.flag = flag;
+
     }
 }

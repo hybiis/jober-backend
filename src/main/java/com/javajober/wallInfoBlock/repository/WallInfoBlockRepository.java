@@ -9,7 +9,10 @@ import com.javajober.core.message.ErrorMessage;
 import com.javajober.snsBlock.domain.SNSBlock;
 import com.javajober.wallInfoBlock.domain.WallInfoBlock;
 
+import java.util.Optional;
+
 public interface WallInfoBlockRepository extends Repository<WallInfoBlock, Long> {
+
 	WallInfoBlock save(WallInfoBlock wallInfoBlock);
 
 	Optional<WallInfoBlock> findById(Long id);

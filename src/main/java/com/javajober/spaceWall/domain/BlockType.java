@@ -15,6 +15,7 @@ public enum BlockType {
     TEMPLATE_BLOCK("templateBlock", "템플릿 블록"),
     SNS_BLOCK("snsBlock", "소셜 블록"),
     FILE_BLOCK("fileBlock", "파일 블록"),
+    STYLE_SETTING("styleSetting", "스타일 블록"),
     EMPTY("empty", "없음");
 
     private final String engTitle;
@@ -27,8 +28,8 @@ public enum BlockType {
 
     public static BlockType findBlockTypeByString(String type) {
         return Arrays.stream(values())
-            .filter(blockType -> blockType.getEngTitle().equals(type))
-            .findAny()
-            .orElseThrow(() -> new Exception404(ErrorMessage.INVALID_BLOCK_TYPE));
+                .filter(blockType -> blockType.getEngTitle().equals(type))
+                .findAny()
+                .orElseThrow(() -> new Exception404(ErrorMessage.INVALID_BLOCK_TYPE));
     }
 }

@@ -30,6 +30,11 @@ public enum ErrorMessage {
 	INVALID_BLOCK_TYPE("유효하지 않은 블록 타입입니다."),
 	INVALID_SPACE_WALL_CATEGORY_TYPE("유효하지 않은 카테고리 타입입니다."),
 
+	SPACE_WALL_NOT_FOUND("존재하지 않는 공유페이지 입니다."),
+
+	LIST_BLOCK_NOT_FOUND("존재하지 않는 리스트 블록입니다."),
+	STYLE_SETTING_BLOCK_NOT_FOUND("존재하지 않는 스타일 블록입니다."),
+
 	NOT_FOUND("요청하신 데이터를 찾을 수 없습니다.");
 
 

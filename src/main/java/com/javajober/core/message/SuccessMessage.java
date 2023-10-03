@@ -7,7 +7,8 @@ public enum SuccessMessage {
 
 
 	HOME_SUCCESS("홈 조회를 성공했습니다."),
-	SPACE_WALL_TEMPORARY_QUERY_SUCCESS("임시 저장 조회를 성공했습니다."),
+	SPACE_WALL_TEMPORARY_READ_SUCCESS("임시 저장 조회를 성공했습니다."),
+	SPACE_WALL_READ_SUCCESS("공유페이지 조회를 성공했습니다."),
 
 	PERSONAL_SPACE_QUERY_SUCCESS("개인스페이스 조회를 성공했습니다."),
 	ORGANIZATION_SPACE_QUERY_SUCCESS("단체스페이스 조회를 성공했습니다."),
@@ -21,6 +22,8 @@ public enum SuccessMessage {
 	READ_SUCCESS("성공적으로 조회되었습니다."),
 	UPDATE_SUCCESS("성공적으로 수정되었습니다."),
 	DELETE_SUCCESS("성공적으로 삭제되었습니다."),
+
+	SPACE_WALL_TEMPORARY_DELETE_SUCCESS("공유페이지 임시 저장 삭제를 성공했습니다."),
 
 	TEMPLATE_BLOCK_SAVE_SUCCESS("템플릿 블록 저장에 성공했습니다."),
 	TEMPLATE_BLOCK_READ_SUCCESS("템플릿 블록 조회에 성공했습니다."),

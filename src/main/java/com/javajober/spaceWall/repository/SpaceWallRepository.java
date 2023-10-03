@@ -17,8 +17,18 @@ public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
     List<SpaceWall> findSpaceWalls(@Param("memberId") Long memberId, @Param("addSpaceId") Long addSpaceId);
 
     boolean existsByAddSpaceId(Long addSpaceId);
-  
+
     SpaceWall save(SpaceWall spaceWall);
+
+    List<SpaceWall> saveAll(Iterable<SpaceWall> entities);
+
+    default List<SpaceWall> findSpaceWallsOrThrow(final Long memberId, final Long addSpaceId) {
+        List<SpaceWall> spaceWalls = findSpaceWalls(memberId, addSpaceId);
+        if (spaceWalls.isEmpty()) {
+            throw new Exception404(ErrorMessage.NOT_FOUND);
+        }
+        return spaceWalls;
+    }
 
     default SpaceWall getById(final Long memberId, final Long spaceWallId) {
         return findSpaceWalls(memberId, spaceWallId).stream()
@@ -29,4 +39,5 @@ public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
     Optional<SpaceWall> findById(Long spaceWallId);
 
     SpaceWall deleteById(Long spaceWallId);
+
 }

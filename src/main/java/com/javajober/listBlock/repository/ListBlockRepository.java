@@ -9,6 +9,8 @@ import com.javajober.core.message.ErrorMessage;
 import com.javajober.listBlock.domain.ListBlock;
 import com.javajober.snsBlock.domain.SNSBlock;
 
+import java.util.Optional;
+
 public interface ListBlockRepository extends Repository<ListBlock, Long> {
 
 	ListBlock save(ListBlock listBlock);
@@ -19,4 +21,5 @@ public interface ListBlockRepository extends Repository<ListBlock, Long> {
 		return findById(id)
 			.orElseThrow(() -> new Exception404(ErrorMessage.NOT_FOUND));
 	}
+
 }

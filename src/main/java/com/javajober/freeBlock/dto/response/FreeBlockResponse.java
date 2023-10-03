@@ -1,13 +1,14 @@
 package com.javajober.freeBlock.dto.response;
 
+import com.javajober.core.util.CommonResponse;
 import com.javajober.freeBlock.domain.FreeBlock;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class FreeBlockResponse {
+public class FreeBlockResponse implements CommonResponse {
 
-    private Long freeId;
+    private Long freeBlockId;
     private String freeTitle;
     private String freeContent;
 
@@ -16,15 +17,15 @@ public class FreeBlockResponse {
     }
 
     @Builder
-    public FreeBlockResponse(final Long freeId, final String freeTitle, final String freeContent) {
-        this.freeId = freeId;
+    public FreeBlockResponse(final Long freeBlockId, final String freeTitle, final String freeContent) {
+        this.freeBlockId = freeBlockId;
         this.freeTitle = freeTitle;
         this.freeContent = freeContent;
     }
 
     public static FreeBlockResponse from(FreeBlock freeBlock) {
         return FreeBlockResponse.builder()
-                .freeId(freeBlock.getId())
+                .freeBlockId(freeBlock.getId())
                 .freeTitle(freeBlock.getFreeTitle())
                 .freeContent(freeBlock.getFreeContent())
                 .build();
