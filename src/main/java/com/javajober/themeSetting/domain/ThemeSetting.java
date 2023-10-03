@@ -43,5 +43,7 @@ public class ThemeSetting {
     public ThemeSetting(final String theme) {
         this.theme = theme;
     }
+
+    public void update(ThemeSetting themeSetting){this.theme = themeSetting.theme;}
 }
 

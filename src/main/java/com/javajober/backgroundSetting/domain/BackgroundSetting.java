@@ -48,4 +48,9 @@ public class BackgroundSetting {
         this.gradation = gradation;
         this.styleImageURL = styleImageURL;
     }
+    public void update(BackgroundSetting backgroundSetting){
+        this.solidColor = backgroundSetting.solidColor;
+        this.gradation = backgroundSetting.gradation;
+        this.styleImageURL = backgroundSetting.styleImageURL;
+    }
 }
