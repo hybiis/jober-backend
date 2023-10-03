@@ -57,11 +57,11 @@ public class SpaceWallController {
     }
 
     @PutMapping("/wall")
-    public ResponseEntity<?> update(@RequestBody final SpaceWallUpdateRequest spaceWallUpdateRequest){
+    public ResponseEntity<ApiUtils.ApiResponse<SpaceWallSaveResponse>> update(@RequestBody final SpaceWallUpdateRequest spaceWallUpdateRequest){
 
-        spaceWallService.update(spaceWallUpdateRequest, FlagType.SAVED);
+        SpaceWallSaveResponse response = spaceWallService.update(spaceWallUpdateRequest, FlagType.SAVED);
 
-        return  ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.CREATE_SUCCESS, null));
+        return  ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.CREATE_SUCCESS, response));
     }
 
     @GetMapping("/wall/{memberId}/{addSpaceId}/{spaceWallId}")
