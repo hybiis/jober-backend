@@ -84,7 +84,7 @@ public class TemplateBlockService {
 	}
 
 	@Transactional
-	public void update(@RequestBody final TemplateBlockRequests<TemplateBlockUpdateRequest> templateBlockRequests){
+	public void update(final TemplateBlockRequests<TemplateBlockUpdateRequest> templateBlockRequests){
 
 		for(TemplateBlockUpdateRequest templateBlockRequest : templateBlockRequests.getSubData()){
 

@@ -8,6 +8,7 @@ import com.javajober.core.error.exception.Exception404;
 import com.javajober.core.message.ErrorMessage;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
 
@@ -24,4 +25,8 @@ public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
                 .findFirst()
                 .orElseThrow(() -> new Exception404(ErrorMessage.ADD_SPACE_NOT_FOUND));
     }
+
+    Optional<SpaceWall> findById(Long spaceWallId);
+
+    SpaceWall deleteById(Long spaceWallId);
 }

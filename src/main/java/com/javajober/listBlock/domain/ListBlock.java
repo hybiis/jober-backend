@@ -56,4 +56,11 @@ public class ListBlock {
         this.listDescription = listDescription;
         this.isLink = isLink;
     }
+    public void update(ListBlock listBlock){
+        this.listUUID = listBlock.listUUID;
+        this.listLabel = listBlock.listLabel;
+        this.listTitle = listBlock.listTitle;
+        this.listDescription = listBlock.listDescription;
+        this.isLink = listBlock.isLink;
+    }
 }

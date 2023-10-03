@@ -4,6 +4,7 @@ import com.javajober.core.message.SuccessMessage;
 import com.javajober.core.util.ApiUtils;
 import com.javajober.spaceWall.domain.FlagType;
 import com.javajober.spaceWall.dto.request.SpaceWallRequest;
+import com.javajober.spaceWall.dto.request.SpaceWallUpdateRequest;
 import com.javajober.spaceWall.dto.response.SpaceWallResponse;
 import com.javajober.spaceWall.service.SpaceWallService;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,14 @@ public class SpaceWallController {
         spaceWallService.save(spaceWallRequest, FlagType.PENDING);
 
         return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.CREATE_SUCCESS, null));
+    }
+
+    @PutMapping("/wall")
+    public ResponseEntity<?> update(@RequestBody final SpaceWallUpdateRequest spaceWallUpdateRequest){
+
+        spaceWallService.update(spaceWallUpdateRequest, FlagType.SAVED);
+
+        return  ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.CREATE_SUCCESS, null));
     }
 
 }

@@ -68,7 +68,7 @@ public class FileBlockService {
             deleteFile(fileNamePS);
 
             String fileName = uploadFile(file);
-            FileBlock fileBlock = FileBlockUpdateRequest.toEntity(updateRequest, fileName);
+            FileBlock fileBlock = FileBlockUpdateRequest.toEntity(updateRequest);
             fileBlockPS.update(fileBlock);
 
             fileBlockRepository.save(fileBlockPS);

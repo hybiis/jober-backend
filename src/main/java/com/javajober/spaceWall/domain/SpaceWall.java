@@ -70,4 +70,11 @@ public class SpaceWall {
         this.spaceWallCategoryType = spaceWallCategoryType;
         this.flag = flag;
     }
+
+    public void update(SpaceWall spaceWall){
+        this.blocks = blocks;
+        this.shareURL = shareURL;
+        this.addSpace = addSpace;
+        this.flag = flag;
+    }
 }
