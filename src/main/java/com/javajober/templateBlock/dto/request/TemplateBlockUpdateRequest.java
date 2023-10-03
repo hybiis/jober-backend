@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class TemplateBlockUpdateRequest {
 
-	private Long id;
+	private Long templateId;
 	private String templateUUID;
 	private String templateTitle;
 	private String templateDescription;
