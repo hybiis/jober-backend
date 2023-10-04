@@ -1,4 +1,4 @@
-package com.javajober.spaceWall.dto.request;
+package com.javajober.spaceWall.filedto;
 
 import lombok.Getter;
 

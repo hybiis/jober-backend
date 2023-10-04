@@ -1,4 +1,4 @@
-package com.javajober.styleSetting.dto.request;
+package com.javajober.styleSetting.filedto;
  ;
  import com.javajober.backgroundSetting.domain.BackgroundSetting;
  import com.javajober.backgroundSetting.dto.request.BackgroundSettingSaveRequest;

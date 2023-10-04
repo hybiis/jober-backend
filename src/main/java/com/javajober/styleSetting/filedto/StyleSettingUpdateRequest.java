@@ -1,4 +1,4 @@
-package com.javajober.styleSetting.dto.request;
+package com.javajober.styleSetting.filedto;
 
 import com.javajober.backgroundSetting.dto.request.BackgroundSettingUpdateRequest;
 import com.javajober.blockSetting.dto.request.BlockSettingUpdateRequest;
@@ -17,10 +17,4 @@ public class StyleSettingUpdateRequest {
 
 	}
 
-	public StyleSettingUpdateRequest(final BackgroundSettingUpdateRequest backgroundSetting,
-		final BlockSettingUpdateRequest blockSetting, final ThemeSettingUpdateRequest themeSetting) {
-		this.backgroundSetting = backgroundSetting;
-		this.blockSetting = blockSetting;
-		this.themeSetting = themeSetting;
-	}
 }
