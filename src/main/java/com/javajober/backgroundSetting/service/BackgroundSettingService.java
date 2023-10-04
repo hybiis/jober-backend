@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javajober.backgroundSetting.domain.BackgroundSetting;
-import com.javajober.backgroundSetting.dto.request.BackgroundSettingSaveRequest;
+import com.javajober.backgroundSetting.filedto.BackgroundSettingSaveRequest;
 import com.javajober.backgroundSetting.repository.BackgroundSettingRepository;
 
 @Service

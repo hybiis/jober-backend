@@ -1,7 +1,7 @@
 package com.javajober.styleSetting.filedto;
  ;
  import com.javajober.backgroundSetting.domain.BackgroundSetting;
- import com.javajober.backgroundSetting.dto.request.BackgroundSettingSaveRequest;
+ import com.javajober.backgroundSetting.filedto.BackgroundSettingSaveRequest;
  import com.javajober.blockSetting.domain.BlockSetting;
  import com.javajober.blockSetting.dto.request.BlockSettingSaveRequest;
  import com.javajober.styleSetting.domain.StyleSetting;

@@ -1,4 +1,4 @@
-package com.javajober.backgroundSetting.dto.request;
+package com.javajober.backgroundSetting.filedto;
 
 import com.javajober.backgroundSetting.domain.BackgroundSetting;
 
