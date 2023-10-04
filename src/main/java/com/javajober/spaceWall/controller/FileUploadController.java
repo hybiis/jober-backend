@@ -4,7 +4,7 @@ import com.javajober.core.component.FileImageService;
 import com.javajober.core.message.SuccessMessage;
 import com.javajober.core.util.ApiUtils;
 import com.javajober.spaceWall.domain.FlagType;
-import com.javajober.spaceWall.dto.request.SpaceWallRequest;
+import com.javajober.spaceWall.filedto.SpaceWallRequest;
 import com.javajober.spaceWall.dto.response.SpaceWallSaveResponse;
 import com.javajober.spaceWall.service.FileUploadService;
 import org.springframework.http.HttpStatus;

@@ -29,7 +29,7 @@ import com.javajober.spaceWall.domain.BlockType;
 import com.javajober.spaceWall.domain.FlagType;
 import com.javajober.spaceWall.domain.SpaceWall;
 import com.javajober.spaceWall.dto.request.BlockRequest;
-import com.javajober.spaceWall.dto.request.SpaceWallRequest;
+import com.javajober.spaceWall.filedto.SpaceWallRequest;
 import com.javajober.spaceWall.dto.response.SpaceWallSaveResponse;
 import com.javajober.spaceWall.repository.SpaceWallRepository;
 import com.javajober.spaceWallCategory.domain.SpaceWallCategoryType;
