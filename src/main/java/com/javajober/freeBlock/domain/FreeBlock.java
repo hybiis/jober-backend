@@ -48,9 +48,9 @@ public class FreeBlock {
         this.freeContent = freeContent;
     }
 
-    public void update(FreeBlock freeBlock) {
-        this.freeTitle = freeBlock.getFreeTitle();
-        this.freeContent = freeBlock.getFreeContent();
+    public void update(final String freeTitle, final String freeContent) {
+        this.freeTitle = freeTitle;
+        this.freeContent = freeContent;
     }
 
     public void setDeletedAt() {

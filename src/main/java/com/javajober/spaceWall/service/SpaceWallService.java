@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.javajober.backgroundSetting.dto.request.BackgroundSettingUpdateRequest;
+import com.javajober.blockSetting.dto.request.BlockSettingUpdateRequest;
 import com.javajober.fileBlock.dto.request.FileBlockStringRequest;
-import com.javajober.fileBlock.dto.request.FileBlockUpdateRequest;
+import com.javajober.fileBlock.filedto.FileBlockUpdateRequest;
 import com.javajober.freeBlock.dto.request.FreeBlockUpdateRequest;
 import com.javajober.listBlock.dto.request.ListBlockUpdateRequest;
 import com.javajober.snsBlock.domain.SNSType;
@@ -30,14 +32,17 @@ import com.javajober.backgroundSetting.domain.BackgroundSetting;
 import com.javajober.blockSetting.domain.BlockSetting;
 import com.javajober.spaceWall.dto.request.*;
 import com.javajober.spaceWall.dto.response.SpaceWallSaveResponse;
+import com.javajober.spaceWall.filedto.DataUpdateRequest;
+import com.javajober.spaceWall.filedto.SpaceWallUpdateRequest;
 import com.javajober.styleSetting.domain.StyleSetting;
 import com.javajober.styleSetting.dto.request.StyleSettingStringRequest;
-import com.javajober.styleSetting.dto.request.StyleSettingUpdateRequest;
+import com.javajober.styleSetting.filedto.StyleSettingUpdateRequest;
 import com.javajober.templateBlock.dto.request.TemplateBlockUpdateRequest;
 import com.javajober.themeSetting.domain.ThemeSetting;
 import com.javajober.backgroundSetting.repository.BackgroundSettingRepository;
 import com.javajober.blockSetting.repository.BlockSettingRepository;
 import com.javajober.styleSetting.repository.StyleSettingRepository;
+import com.javajober.themeSetting.dto.request.ThemeSettingUpdateRequest;
 import com.javajober.themeSetting.repository.ThemeSettingRepository;
 import com.javajober.snsBlock.domain.SNSBlock;
 import com.javajober.snsBlock.dto.request.SNSBlockRequest;
@@ -324,10 +329,9 @@ public class SpaceWallService {
 				FreeBlock freeBlock = new FreeBlock(updateRequest.getFreeTitle(),updateRequest.getFreeContent());
 				updatedFreeBlockIds.add(freeBlockRepository.save(freeBlock).getId());
 			}else {
-				FreeBlock freeBlockPS = freeBlockRepository.findFreeBlock(updateRequest.getFreeBlockId());
-				FreeBlock freeBlock = FreeBlockUpdateRequest.toEntity(updateRequest);
-				freeBlockPS.update(freeBlock);
-				updatedFreeBlockIds.add(freeBlockRepository.save(freeBlockPS).getId());
+				FreeBlock freeBlock = freeBlockRepository.findFreeBlock(updateRequest.getFreeBlockId());
+				freeBlock.update(updateRequest.getFreeTitle(), updateRequest.getFreeContent());
+				updatedFreeBlockIds.add(freeBlockRepository.save(freeBlock).getId());
 			}
 		}
 		return updatedFreeBlockIds;
@@ -384,10 +388,9 @@ public class SpaceWallService {
 				ListBlock listBlock = new ListBlock(updateRequest.getListUUID(),updateRequest.getListLabel(),updateRequest.getListTitle(),updateRequest.getListDescription(),updateRequest.getIsLink());
 				updateListBlockIds.add(listBlockRepository.save(listBlock).getId());
 			}else{
-				ListBlock listBlockPS = listBlockRepository.findListBlock(updateRequest.getListBlockId());
-				ListBlock listBlock = ListBlockUpdateRequest.toEntity(updateRequest);
-				listBlockPS.update(listBlock);
-				updateListBlockIds.add(listBlockRepository.save(listBlockPS).getId());
+				ListBlock listBlock = listBlockRepository.findListBlock(updateRequest.getListBlockId());
+				listBlock.update(updateRequest.getListUUID(), updateRequest.getListLabel(), updateRequest.getListTitle(), updateRequest.getListDescription(), updateRequest.getIsLink());
+				updateListBlockIds.add(listBlockRepository.save(listBlock).getId());
 			}
 		}
 		return updateListBlockIds;
@@ -395,19 +398,29 @@ public class SpaceWallService {
 
 	private Long updateStyleSetting(StyleSettingUpdateRequest updateRequest){
 		StyleSetting styleSetting = styleSettingRepository.findStyleBlock(updateRequest.getStyleSettingBlockId());
-
-		BackgroundSetting backgroundSetting = backgroundSettingRepository.getById(styleSetting.getBackgroundSetting().getId());
-		backgroundSetting.update(updateRequest.getBackgroundSetting().toEntity(updateRequest.getBackgroundSetting()));
-		backgroundSettingRepository.save(backgroundSetting);
-		BlockSetting blockSetting = blockSettingRepository.getById(styleSetting.getBlockSetting().getId());
-		blockSetting.update(updateRequest.getBlockSetting().toEntity(updateRequest.getBlockSetting()));
-		blockSettingRepository.save(blockSetting);
-		ThemeSetting themeSetting = themeSettingRepository.getById(styleSetting.getThemeSetting().getId());
-		themeSetting.update(updateRequest.getThemeSetting().toEntity(updateRequest.getThemeSetting()));
-		themeSettingRepository.save(themeSetting);
+		updateBackgroundSetting(updateRequest.getBackgroundSetting());
+		updateBlockSetting(updateRequest.getBlockSetting());
+		updateThemeSetting(updateRequest.getThemeSetting());
 		styleSetting.update(styleSetting);
-
 		return styleSettingRepository.save(styleSetting).getId();
+	}
+
+	private Long updateBackgroundSetting(BackgroundSettingUpdateRequest updateRequest){
+		BackgroundSetting backgroundSetting = backgroundSettingRepository.getById(updateRequest.getBackgroundSettingBlockId());
+		backgroundSetting.update(updateRequest.getSolidColor(), updateRequest.getGradation());
+		return backgroundSettingRepository.save(backgroundSetting).getId();
+	}
+
+	private Long updateBlockSetting(BlockSettingUpdateRequest updateRequest){
+		BlockSetting blockSetting = blockSettingRepository.getById(updateRequest.getBlockSettingBlockId());
+		blockSetting.update(updateRequest.getShape(), updateRequest.getStyle(),updateRequest.getStyleColor(),updateRequest.getGradation());
+		return blockSettingRepository.save(blockSetting).getId();
+	}
+
+	private Long updateThemeSetting(ThemeSettingUpdateRequest updateRequest){
+		ThemeSetting themeSetting = themeSettingRepository.getById(updateRequest.getThemeSettingBlockId());
+		themeSetting.update(updateRequest.getTheme());
+		return themeSettingRepository.save(themeSetting).getId();
 	}
 
 	private void addBlockInfoToArray(ArrayNode blockInfoArray, ObjectMapper jsonMapper, BlockType blockType, Long position, Long blockId, BlockRequest block) {

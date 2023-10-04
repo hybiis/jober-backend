@@ -49,10 +49,9 @@ public class FreeBlockService {
     public void update(FreeBlockUpdateRequests updateRequests) {
 
         for (FreeBlockUpdateRequest updateRequest : updateRequests.getSubData()) {
-            FreeBlock freeBlockPS = freeBlockRepository.findFreeBlock(updateRequest.getFreeBlockId());
-            FreeBlock freeBlock = FreeBlockUpdateRequest.toEntity(updateRequest);
-            freeBlockPS.update(freeBlock);
-            freeBlockRepository.save(freeBlockPS);
+            FreeBlock freeBlock = freeBlockRepository.findFreeBlock(updateRequest.getFreeBlockId());
+            freeBlock.update(updateRequest.getFreeTitle(), updateRequest.getFreeContent());
+            freeBlockRepository.save(freeBlock);
         }
     }
 }

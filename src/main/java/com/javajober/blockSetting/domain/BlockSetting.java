@@ -54,10 +54,10 @@ public class BlockSetting {
         this.gradation = gradation;
 
     }
-    public void update(BlockSetting blockSetting){
-        this.shape = blockSetting.shape;
-        this.style = blockSetting.style;
-        this.styleColor = blockSetting.styleColor;
-        this.gradation = blockSetting.gradation;
+    public void update(final String shape, final String style, final String styleColor, final Boolean gradation) {
+        this.shape = shape;
+        this.style = style;
+        this.styleColor = styleColor;
+        this.gradation = gradation;
     }
 }

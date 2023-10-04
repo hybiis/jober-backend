@@ -9,7 +9,7 @@ public class BackgroundSettingUpdateRequest {
 
 	private Long backgroundSettingBlockId;
 	private String solidColor;
-	private boolean gradation;
+	private Boolean gradation;
 
 	public BackgroundSettingUpdateRequest(){
 
@@ -17,7 +17,7 @@ public class BackgroundSettingUpdateRequest {
 	public BackgroundSetting toEntity(BackgroundSettingUpdateRequest updateRequest) {
 		return BackgroundSetting.builder()
 			.solidColor(updateRequest.getSolidColor())
-			.gradation(updateRequest.isGradation())
+			.gradation(updateRequest.getGradation())
 			.build();
 	}
 }
