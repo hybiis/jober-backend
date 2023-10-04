@@ -37,10 +37,7 @@ import com.javajober.wallInfoBlock.repository.WallInfoBlockRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -71,7 +68,7 @@ public class SpaceWallFindService {
         this.listBlockRepository = listBlockRepository;
         this.styleSettingRepository = styleSettingRepository;
     }
-    
+
     @Transactional
     public SpaceWallResponse find(Long memberId, Long addSpaceId, Long spaceWallId, FlagType flag) throws JsonProcessingException {
 
@@ -85,7 +82,7 @@ public class SpaceWallFindService {
         StyleSettingResponse styleSettingResponse = new StyleSettingResponse();
 
         Map<Long, List<JsonNode>> groupedNodesByPosition = StreamSupport.stream(rootNode.spliterator(), false)
-                .sorted((a, b) -> a.get("position").asInt() - b.get("position").asInt())
+                .sorted(Comparator.comparingInt(a -> a.get("position").asInt()))
                 .collect(Collectors.groupingBy(node -> (long) node.get("position").asInt()));
 
         Long maxPosition = groupedNodesByPosition.keySet().stream()

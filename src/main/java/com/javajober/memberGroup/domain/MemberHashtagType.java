@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum MemberHashtagType {
 
     FRIEND("친구"),
-    COLLEAGUE("직장동료");
+    COLLEAGUE("직장동료"),
+    EMPTY("없음");
 
     private final String description;
 

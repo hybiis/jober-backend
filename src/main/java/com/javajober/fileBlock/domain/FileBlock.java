@@ -23,12 +23,14 @@ public class FileBlock {
     @Column(name = "file_title", length = 100, nullable = false)
     private String fileTitle;
 
-    @Lob
     @Column(name = "file_description",length = 1000, nullable = false)
     private String fileDescription;
 
-    @Column(name = "file_name")
+    @Column(name = "file_name", columnDefinition = "text")
     private String fileName;
+
+    @Column(name = "file", columnDefinition = "text")
+    private String file;
 
     @CreatedDate
     @Column(name="created_at")
@@ -46,16 +48,18 @@ public class FileBlock {
     }
 
     @Builder
-    public FileBlock(final String fileTitle, final String fileDescription, final String fileName) {
+    public FileBlock(final String fileTitle, final String fileDescription, final String fileName, final String file) {
         this.fileTitle = fileTitle;
         this.fileDescription = fileDescription;
         this.fileName = fileName;
+        this.file = file;
     }
 
     public void update(final String fileTitle, final String fileDescription, final String fileName) {
         this.fileTitle = fileTitle;
         this.fileDescription = fileDescription;
         this.fileName = fileName;
+
     }
 
     public void setDeletedAt() {

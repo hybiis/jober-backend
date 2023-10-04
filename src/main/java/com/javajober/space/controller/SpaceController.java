@@ -3,6 +3,7 @@ package com.javajober.space.controller;
 import com.javajober.core.message.ErrorMessage;
 import com.javajober.core.message.SuccessMessage;
 import com.javajober.core.util.ApiUtils;
+import com.javajober.space.domain.SpaceType;
 import com.javajober.space.service.SpaceService;
 import com.javajober.space.dto.response.DataResponse;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,9 @@ public class SpaceController {
             DataResponse data = spaceService.getEmployeeData(memberId, addSpaceId, spaceType);
 
             SuccessMessage successMessage;
-            if ("PERSONAL".equalsIgnoreCase(spaceType)) {
+            if (SpaceType.PERSONAL.name().equalsIgnoreCase(spaceType)) {
                 successMessage = SuccessMessage.PERSONAL_SPACE_QUERY_SUCCESS;
-            } else if ("ORANIZATION".equalsIgnoreCase(spaceType)) {
+            } else if (SpaceType.ORGANIZATION.name().equalsIgnoreCase(spaceType)) {
                 successMessage = SuccessMessage.ORGANIZATION_SPACE_QUERY_SUCCESS;
             } else {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_SPACE_TYPE.getMessage());

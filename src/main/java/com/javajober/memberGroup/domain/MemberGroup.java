@@ -24,7 +24,7 @@ public class MemberGroup {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "member_hashtag_type", nullable = false)
+    @Column(name = "member_hashtag_type")
     private MemberHashtagType memberHashtagType;
 
     @Enumerated(EnumType.STRING)

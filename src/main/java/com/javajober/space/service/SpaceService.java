@@ -8,8 +8,10 @@ import com.javajober.space.domain.AddSpace;
 import com.javajober.space.repository.AddSpaceRepository;
 import com.javajober.space.dto.response.DataResponse;
 import com.javajober.space.dto.response.MemberGroupResponse;
+import com.javajober.spaceWall.domain.SpaceWall;
 import com.javajober.spaceWall.repository.SpaceWallRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +33,7 @@ public class SpaceService {
         this.spaceWallRepository = spaceWallRepository;
     }
 
+    @Transactional
     public DataResponse getEmployeeData(Long memberId, Long addSpaceId, String spaceType) {
         AddSpace addSpace = addSpaceRepository.findAddSpace(addSpaceId);
         Member member = memberRepository.findMember(memberId);
@@ -39,8 +42,17 @@ public class SpaceService {
             throw new IllegalArgumentException("Invalid request parameters");
         }
 
-
         boolean hasWall = spaceWallRepository.existsByAddSpaceId(addSpaceId);
+        List<SpaceWall> spaceWalls = spaceWallRepository.findSpaceWalls(memberId, addSpaceId);
+
+        Long spaceWallId = null;
+        if (hasWall) {
+            List<SpaceWall> foundSpaceWalls = spaceWallRepository.findByAddSpaceId(addSpaceId);
+            if (!foundSpaceWalls.isEmpty()) {
+                spaceWallId = foundSpaceWalls.get(0).getId();
+            }
+        }
+
         List<MemberGroup> memberGroups = memberGroupRepository.findAllByAddSpaceId(addSpaceId);
         List<MemberGroupResponse> list = memberGroups.stream()
                 .map(mg -> new MemberGroupResponse(
@@ -51,6 +63,10 @@ public class SpaceService {
                         mg.getMember().getPhoneNumber()
                 )).collect(Collectors.toList());
 
-        return new DataResponse(hasWall, list);
+        return DataResponse.builder()
+                .hasWall(hasWall)
+                .spaceWallId(spaceWallId)
+                .list(list)
+                .build();
     }
 }

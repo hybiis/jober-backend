@@ -18,7 +18,7 @@ public class BackgroundStringRequest {
         return BackgroundSetting.builder()
                 .solidColor(this.getSolidColor())
                 .gradation(this.getGradation())
-                .styleImageURL(this.styleImgURL)
+                .styleImageURL(this.getStyleImgURL())
                 .build();
     }
 }

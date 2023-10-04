@@ -9,6 +9,7 @@ public class FileBlockStringRequest {
     private String fileTitle;
     private String fileDescription;
     private String fileName;
+    private String file;
 
     public FileBlockStringRequest() {
     }
@@ -18,6 +19,7 @@ public class FileBlockStringRequest {
                 .fileTitle(fileBlockStringRequest.getFileTitle())
                 .fileDescription(fileBlockStringRequest.getFileDescription())
                 .fileName(fileBlockStringRequest.getFileName())
+                .file(fileBlockStringRequest.getFile())
                 .build();
     }
 }

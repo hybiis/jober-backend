@@ -11,6 +11,7 @@ import com.javajober.backgroundSetting.filedto.BackgroundSettingUpdateRequest;
 import com.javajober.blockSetting.dto.request.BlockSettingUpdateRequest;
 import com.javajober.fileBlock.dto.request.FileBlockStringRequest;
 import com.javajober.fileBlock.dto.request.FileBlockStringUpdateRequest;
+import com.javajober.fileBlock.filedto.FileBlockUpdateRequest;
 import com.javajober.freeBlock.dto.request.FreeBlockUpdateRequest;
 import com.javajober.listBlock.dto.request.ListBlockUpdateRequest;
 import com.javajober.snsBlock.domain.SNSType;
