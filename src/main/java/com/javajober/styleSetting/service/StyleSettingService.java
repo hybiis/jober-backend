@@ -1,11 +1,7 @@
 package com.javajober.styleSetting.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-
-import com.javajober.styleSetting.domain.StyleSetting;
-import com.javajober.styleSetting.dto.request.StyleSettingSaveRequest;
 import com.javajober.backgroundSetting.repository.BackgroundSettingRepository;
 import com.javajober.blockSetting.repository.BlockSettingRepository;
 import com.javajober.styleSetting.repository.StyleSettingRepository;

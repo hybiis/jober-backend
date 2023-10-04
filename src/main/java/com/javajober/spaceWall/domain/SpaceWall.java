@@ -2,7 +2,7 @@ package com.javajober.spaceWall.domain;
 
 import com.javajober.space.domain.AddSpace;
 import com.javajober.member.domain.Member;
-import com.javajober.spaceWall.dto.request.DataUpdateRequest;
+import com.javajober.spaceWall.filedto.DataUpdateRequest;
 import com.javajober.spaceWallCategory.domain.SpaceWallCategoryType;
 
 import lombok.Builder;

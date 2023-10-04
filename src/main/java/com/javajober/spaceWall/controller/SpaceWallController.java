@@ -6,7 +6,7 @@ import com.javajober.core.util.ApiUtils;
 import com.javajober.spaceWall.domain.FlagType;
 import com.javajober.spaceWall.dto.request.DeleteTemporaryRequest;
 import com.javajober.spaceWall.dto.request.SpaceWallStringRequest;
-import com.javajober.spaceWall.dto.request.SpaceWallUpdateRequest;
+import com.javajober.spaceWall.filedto.SpaceWallUpdateRequest;
 import com.javajober.spaceWall.dto.response.SpaceWallResponse;
 import com.javajober.spaceWall.dto.response.SpaceWallSaveResponse;
 import com.javajober.spaceWall.dto.response.SpaceWallTemporaryResponse;
