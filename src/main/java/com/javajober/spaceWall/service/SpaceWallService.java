@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.javajober.fileBlock.dto.request.FileBlockStringRequest;
-import com.javajober.fileBlock.dto.request.FileBlockUpdateRequest;
+import com.javajober.fileBlock.filedto.FileBlockUpdateRequest;
 import com.javajober.freeBlock.dto.request.FreeBlockUpdateRequest;
 import com.javajober.listBlock.dto.request.ListBlockUpdateRequest;
 import com.javajober.snsBlock.domain.SNSType;

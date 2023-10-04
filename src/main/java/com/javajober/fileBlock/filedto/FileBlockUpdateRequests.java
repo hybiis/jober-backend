@@ -1,4 +1,4 @@
-package com.javajober.fileBlock.dto.request;
+package com.javajober.fileBlock.filedto;
 
 import lombok.Getter;
 

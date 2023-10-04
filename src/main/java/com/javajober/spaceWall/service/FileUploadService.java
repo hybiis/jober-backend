@@ -10,7 +10,7 @@ import com.javajober.blockSetting.domain.BlockSetting;
 import com.javajober.blockSetting.repository.BlockSettingRepository;
 import com.javajober.core.component.FileImageService;
 import com.javajober.fileBlock.domain.FileBlock;
-import com.javajober.fileBlock.dto.request.FileBlockSaveRequest;
+import com.javajober.fileBlock.filedto.FileBlockSaveRequest;
 import com.javajober.fileBlock.repository.FileBlockRepository;
 import com.javajober.freeBlock.domain.FreeBlock;
 import com.javajober.freeBlock.dto.request.FreeBlockSaveRequest;
