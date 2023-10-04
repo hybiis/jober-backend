@@ -1,4 +1,4 @@
-package com.javajober.wallInfoBlock.dto.request;
+package com.javajober.wallInfoBlock.filedto;
 
 import com.javajober.wallInfoBlock.domain.WallInfoBlock;
 

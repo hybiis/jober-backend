@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.javajober.spaceWall.dto.request.BlockRequest;
 import com.javajober.styleSetting.filedto.StyleSettingUpdateRequest;
-import com.javajober.wallInfoBlock.dto.request.WallInfoBlockUpdateRequest;
+import com.javajober.wallInfoBlock.filedto.WallInfoBlockUpdateRequest;
 
 import lombok.Getter;
 

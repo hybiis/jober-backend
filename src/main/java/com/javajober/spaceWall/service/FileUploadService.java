@@ -42,7 +42,7 @@ import com.javajober.templateBlock.repository.TemplateBlockRepository;
 import com.javajober.themeSetting.domain.ThemeSetting;
 import com.javajober.themeSetting.repository.ThemeSettingRepository;
 import com.javajober.wallInfoBlock.domain.WallInfoBlock;
-import com.javajober.wallInfoBlock.dto.request.WallInfoBlockRequest;
+import com.javajober.wallInfoBlock.filedto.WallInfoBlockRequest;
 import com.javajober.wallInfoBlock.repository.WallInfoBlockRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
