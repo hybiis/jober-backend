@@ -6,6 +6,7 @@ import com.javajober.core.util.ApiUtils;
 import com.javajober.spaceWall.domain.FlagType;
 import com.javajober.spaceWall.dto.request.DeleteTemporaryRequest;
 import com.javajober.spaceWall.dto.request.SpaceWallStringRequest;
+import com.javajober.spaceWall.dto.request.SpaceWallStringUpdateRequest;
 import com.javajober.spaceWall.filedto.SpaceWallUpdateRequest;
 import com.javajober.spaceWall.dto.response.SpaceWallResponse;
 import com.javajober.spaceWall.dto.response.SpaceWallSaveResponse;
@@ -59,7 +60,7 @@ public class SpaceWallController {
     }
 
     @PutMapping("/wall")
-    public ResponseEntity<ApiUtils.ApiResponse<SpaceWallSaveResponse>> update(@RequestBody final SpaceWallUpdateRequest spaceWallUpdateRequest){
+    public ResponseEntity<ApiUtils.ApiResponse<SpaceWallSaveResponse>> update(@RequestBody final SpaceWallStringUpdateRequest spaceWallUpdateRequest){
 
         SpaceWallSaveResponse response = spaceWallService.update(spaceWallUpdateRequest, FlagType.SAVED);
 

@@ -54,10 +54,10 @@ public class WallInfoBlock {
         this.wallInfoDescription = wallInfoDescription;
     }
 
-    public void update(WallInfoBlock wallInfoBlock){
-        this.wallInfoBackgroundImageUrl = wallInfoBlock.wallInfoBackgroundImageUrl;
-        this.wallInfoProfileImageUrl = wallInfoBlock.wallInfoProfileImageUrl;
-        this.wallInfoTitle = wallInfoBlock.wallInfoTitle;
-        this.wallInfoDescription = wallInfoBlock.wallInfoDescription;
+    public void update(final String wallInfoBackgroundImageUrl, final String wallInfoProfileImageUrl, final String wallInfoTitle, final String wallInfoDescription){
+        this.wallInfoBackgroundImageUrl = wallInfoBackgroundImageUrl;
+        this.wallInfoProfileImageUrl = wallInfoProfileImageUrl;
+        this.wallInfoTitle = wallInfoTitle;
+        this.wallInfoDescription = wallInfoDescription;
     }
 }

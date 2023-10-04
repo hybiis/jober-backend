@@ -52,10 +52,10 @@ public class FileBlock {
         this.fileName = fileName;
     }
 
-    public void update(FileBlock fileBlock) {
-        this.fileTitle = fileBlock.getFileTitle();
-        this.fileDescription = fileBlock.getFileDescription();
-        this.fileName = fileBlock.getFileName();
+    public void update(final String fileTitle, final String fileDescription, final String fileName) {
+        this.fileTitle = fileTitle;
+        this.fileDescription = fileDescription;
+        this.fileName = fileName;
     }
 
     public void setDeletedAt() {

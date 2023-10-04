@@ -6,10 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.javajober.backgroundSetting.dto.request.BackgroundSettingUpdateRequest;
+import com.javajober.backgroundSetting.dto.request.BackgroundStringUpdateRequest;
+import com.javajober.backgroundSetting.filedto.BackgroundSettingUpdateRequest;
 import com.javajober.blockSetting.dto.request.BlockSettingUpdateRequest;
 import com.javajober.fileBlock.dto.request.FileBlockStringRequest;
-import com.javajober.fileBlock.filedto.FileBlockUpdateRequest;
+import com.javajober.fileBlock.dto.request.FileBlockStringUpdateRequest;
 import com.javajober.freeBlock.dto.request.FreeBlockUpdateRequest;
 import com.javajober.listBlock.dto.request.ListBlockUpdateRequest;
 import com.javajober.snsBlock.domain.SNSType;
@@ -32,11 +33,10 @@ import com.javajober.backgroundSetting.domain.BackgroundSetting;
 import com.javajober.blockSetting.domain.BlockSetting;
 import com.javajober.spaceWall.dto.request.*;
 import com.javajober.spaceWall.dto.response.SpaceWallSaveResponse;
-import com.javajober.spaceWall.filedto.DataUpdateRequest;
-import com.javajober.spaceWall.filedto.SpaceWallUpdateRequest;
+import com.javajober.spaceWall.filedto.SpaceWallRequest;
 import com.javajober.styleSetting.domain.StyleSetting;
 import com.javajober.styleSetting.dto.request.StyleSettingStringRequest;
-import com.javajober.styleSetting.filedto.StyleSettingUpdateRequest;
+import com.javajober.styleSetting.dto.request.StyleSettingStringUpdateRequest;
 import com.javajober.templateBlock.dto.request.TemplateBlockUpdateRequest;
 import com.javajober.themeSetting.domain.ThemeSetting;
 import com.javajober.backgroundSetting.repository.BackgroundSettingRepository;
@@ -57,7 +57,7 @@ import com.javajober.templateBlock.dto.request.TemplateBlockRequest;
 import com.javajober.templateBlock.repository.TemplateBlockRepository;
 import com.javajober.wallInfoBlock.domain.WallInfoBlock;
 import com.javajober.wallInfoBlock.dto.request.WallInfoBlockStringRequest;
-import com.javajober.wallInfoBlock.dto.request.WallInfoBlockUpdateRequest;
+import com.javajober.wallInfoBlock.dto.request.WallInfoBlockStringUpdateRequest;
 import com.javajober.wallInfoBlock.repository.WallInfoBlockRepository;
 
 import org.springframework.stereotype.Service;
@@ -185,9 +185,9 @@ public class SpaceWallService {
 	}
 
 	@Transactional
-	public SpaceWallSaveResponse update(final SpaceWallUpdateRequest spaceWallUpdateRequest, FlagType flagType){
+	public SpaceWallSaveResponse update(final SpaceWallStringUpdateRequest spaceWallUpdateRequest, FlagType flagType){
 
-		DataUpdateRequest dataUpdateRequest = spaceWallUpdateRequest.getData();
+		DataStringUpdateRequest dataUpdateRequest = spaceWallUpdateRequest.getData();
 
 		Long spaceWallId = dataUpdateRequest.getSpaceWallId();
 		Long addSpaceId = dataUpdateRequest.getSpaceId();
@@ -203,7 +203,7 @@ public class SpaceWallService {
 		ObjectMapper jsonMapper = new ObjectMapper();
 		ArrayNode blockInfoArray = jsonMapper.createArrayNode();
 
-		WallInfoBlockUpdateRequest wallInfoBlockRequest = spaceWallUpdateRequest.getData().getWallInfoBlock();
+		WallInfoBlockStringUpdateRequest wallInfoBlockRequest = spaceWallUpdateRequest.getData().getWallInfoBlock();
 		Long wallInfoBlock = updateWallInfoBlock(wallInfoBlockRequest);
 		String wallInfoBlockType  = BlockType.WALL_INFO_BLOCK.getEngTitle();
 		Long blockStartPosition = 1L;
@@ -229,7 +229,7 @@ public class SpaceWallService {
 					updateTemplateBlockIds.forEach(templateBlockId -> addBlockInfoToArray(blockInfoArray, jsonMapper, blockType, position, templateBlockId, block));
 					break;
 				case FILE_BLOCK:
-					List<FileBlockUpdateRequest> fileBlockRequests = jsonMapper.convertValue(block.getSubData(), new TypeReference<List<FileBlockUpdateRequest>>() {});
+					List<FileBlockStringUpdateRequest> fileBlockRequests = jsonMapper.convertValue(block.getSubData(), new TypeReference<List<FileBlockStringUpdateRequest>>() {});
 					List<Long> updateFileBlockIds = updateFileBlocks(fileBlockRequests);
 					updateFileBlockIds.forEach(fileBlockId -> addBlockInfoToArray(blockInfoArray, jsonMapper, blockType, position, fileBlockId, block));
 					break;
@@ -240,7 +240,7 @@ public class SpaceWallService {
 			}
 		});
 
-		StyleSettingUpdateRequest styleSettingUpdateRequest = dataUpdateRequest.getStyleSetting();
+		StyleSettingStringUpdateRequest styleSettingUpdateRequest = dataUpdateRequest.getStyleSetting();
 		Long styleSetting = updateStyleSetting(styleSettingUpdateRequest);
 		String styleSettingString = "styleSetting";
 		Long stylePosition = blocksPositionCounter.getAndIncrement();
@@ -315,11 +315,10 @@ public class SpaceWallService {
 		return styleSettingRepository.save(styleSetting).getId();
 	}
 
-	private Long updateWallInfoBlock(WallInfoBlockUpdateRequest wallInfoBlockRequest) {
-		WallInfoBlock wallInfoBlockPS = wallInfoBlockRepository.findWallInfoBlock(wallInfoBlockRequest.getWallInfoBlockId());
-		WallInfoBlock wallInfoBlock = WallInfoBlockUpdateRequest.toEntity(wallInfoBlockRequest);
-		wallInfoBlockPS.update(wallInfoBlock);
-		return wallInfoBlockRepository.save(wallInfoBlockPS).getId();
+	private Long updateWallInfoBlock(WallInfoBlockStringUpdateRequest wallInfoBlockRequest) {
+		WallInfoBlock wallInfoBlock = wallInfoBlockRepository.findWallInfoBlock(wallInfoBlockRequest.getWallInfoBlockId());
+		wallInfoBlock.update(wallInfoBlockRequest.getWallInfoTitle(), wallInfoBlockRequest.getWallInfoDescription(), wallInfoBlockRequest.getBackgroundImgURL(), wallInfoBlockRequest.getWallInfoImgURL());
+		return wallInfoBlockRepository.save(wallInfoBlock).getId();
 	}
 
 	private List<Long> updateFreeBlocks(List<FreeBlockUpdateRequest> subData) {
@@ -370,13 +369,17 @@ public class SpaceWallService {
 		return updateTemplateBlockIds;
 	}
 
-	private List<Long> updateFileBlocks(List<FileBlockUpdateRequest> subData) {
+	private List<Long> updateFileBlocks(List<FileBlockStringUpdateRequest> subData) {
 		List<Long> updateFileBlockIds = new ArrayList<>();
-		for (FileBlockUpdateRequest updateRequest : subData) {
-			FileBlock fileBlockPS = fileBlockRepository.findFileBlock(updateRequest.getFileBlockId());
-			FileBlock fileBlock = FileBlockUpdateRequest.toEntity(updateRequest, fileBlockPS.getFileName());
-			fileBlockPS.update(fileBlock);
-			updateFileBlockIds.add(fileBlockRepository.save(fileBlockPS).getId());
+		for (FileBlockStringUpdateRequest updateRequest : subData) {
+			if(updateRequest.getFileBlockId() == null){
+				FileBlock fileBlock = new FileBlock(updateRequest.getFileTitle(), updateRequest.getFileDescription(),updateRequest.getFileName());
+				updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
+			}else{
+				FileBlock fileBlock = fileBlockRepository.findFileBlock(updateRequest.getFileBlockId());
+				fileBlock.update(updateRequest.getFileTitle(), updateRequest.getFileDescription(), updateRequest.getFileName());
+				updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
+			}
 		}
 		return updateFileBlockIds;
 	}
@@ -396,7 +399,7 @@ public class SpaceWallService {
 		return updateListBlockIds;
 	}
 
-	private Long updateStyleSetting(StyleSettingUpdateRequest updateRequest){
+	private Long updateStyleSetting(StyleSettingStringUpdateRequest updateRequest){
 		StyleSetting styleSetting = styleSettingRepository.findStyleBlock(updateRequest.getStyleSettingBlockId());
 		updateBackgroundSetting(updateRequest.getBackgroundSetting());
 		updateBlockSetting(updateRequest.getBlockSetting());
@@ -405,9 +408,9 @@ public class SpaceWallService {
 		return styleSettingRepository.save(styleSetting).getId();
 	}
 
-	private Long updateBackgroundSetting(BackgroundSettingUpdateRequest updateRequest){
+	private Long updateBackgroundSetting(BackgroundStringUpdateRequest updateRequest){
 		BackgroundSetting backgroundSetting = backgroundSettingRepository.getById(updateRequest.getBackgroundSettingBlockId());
-		backgroundSetting.update(updateRequest.getSolidColor(), updateRequest.getGradation());
+		backgroundSetting.update(updateRequest.getSolidColor(), updateRequest.getGradation(), updateRequest.getStyleImgURL());
 		return backgroundSettingRepository.save(backgroundSetting).getId();
 	}
 

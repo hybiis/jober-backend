@@ -20,10 +20,4 @@ public class WallInfoBlockUpdateRequest {
 		this.wallInfoDescription = wallInfoDescription;
 	}
 
-	public static WallInfoBlock toEntity(WallInfoBlockUpdateRequest wallInfoBlock) {
-		return WallInfoBlock.builder()
-			.wallInfoTitle(wallInfoBlock.getWallInfoTitle())
-			.wallInfoDescription(wallInfoBlock.getWallInfoDescription())
-			.build();
-	}
 }

@@ -48,8 +48,9 @@ public class BackgroundSetting {
         this.gradation = gradation;
         this.styleImageURL = styleImageURL;
     }
-    public void update(final String solidColor, final Boolean gradation) {
+    public void update(final String solidColor, final Boolean gradation, final String styleImageURL) {
         this.solidColor = solidColor;
         this.gradation = gradation;
+        this.styleImageURL = styleImageURL;
     }
 }
