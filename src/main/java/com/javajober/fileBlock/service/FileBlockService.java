@@ -68,7 +68,7 @@ public class FileBlockService {
             deleteFile(fileNamePS);
 
             String fileName = uploadFile(file);
-            fileBlockPS.update(updateRequest.getFileTitle(), updateRequest.getFileDescription(), fileName);
+            fileBlockPS.fileUpdate(updateRequest.getFileTitle(), updateRequest.getFileDescription(), fileName);
 
             fileBlockRepository.save(fileBlockPS);
         }

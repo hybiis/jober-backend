@@ -55,13 +55,24 @@ public class FileBlock {
         this.file = file;
     }
 
-    public void update(final String fileTitle, final String fileDescription, final String fileName) {
+    @Builder
+    public FileBlock(final String fileTitle, final String fileDescription, final String fileName) {
         this.fileTitle = fileTitle;
         this.fileDescription = fileDescription;
         this.fileName = fileName;
-
+    }
+    public void update(final String fileTitle, final String fileDescription, final String fileName, final String file) {
+        this.fileTitle = fileTitle;
+        this.fileDescription = fileDescription;
+        this.fileName = fileName;
+        this.file = file;
     }
 
+    public void fileUpdate(final String fileTitle, final String fileDescription, final String fileName) {
+        this.fileTitle = fileTitle;
+        this.fileDescription = fileDescription;
+        this.fileName = fileName;
+    }
     public void setDeletedAt() {
         this.deletedAt = LocalDateTime.now();
     }

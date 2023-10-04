@@ -401,7 +401,7 @@ public class FileUploadService {
                 updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
             }else{
                 FileBlock fileBlock = fileBlockRepository.findFileBlock(updateRequest.getFileBlockId());
-                fileBlock.update(updateRequest.getFileTitle(), updateRequest.getFileDescription(), fileName);
+                fileBlock.fileUpdate(updateRequest.getFileTitle(), updateRequest.getFileDescription(), fileName);
                 updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
             }
         }

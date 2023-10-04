@@ -374,11 +374,11 @@ public class SpaceWallService {
 		List<Long> updateFileBlockIds = new ArrayList<>();
 		for (FileBlockStringUpdateRequest updateRequest : subData) {
 			if(updateRequest.getFileBlockId() == null){
-				FileBlock fileBlock = new FileBlock(updateRequest.getFileTitle(), updateRequest.getFileDescription(),updateRequest.getFileName());
+				FileBlock fileBlock = new FileBlock(updateRequest.getFileTitle(), updateRequest.getFileDescription(),updateRequest.getFileName(),updateRequest.getFile());
 				updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
 			}else{
 				FileBlock fileBlock = fileBlockRepository.findFileBlock(updateRequest.getFileBlockId());
-				fileBlock.update(updateRequest.getFileTitle(), updateRequest.getFileDescription(), updateRequest.getFileName());
+				fileBlock.update(updateRequest.getFileTitle(), updateRequest.getFileDescription(), updateRequest.getFileName(),updateRequest.getFile());
 				updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
 			}
 		}
