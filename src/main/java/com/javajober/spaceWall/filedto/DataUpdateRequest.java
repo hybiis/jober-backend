@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 public class DataUpdateRequest {
 
+	private String category;
 	private Long memberId;
 	private Long spaceId;
 	private Long spaceWallId;
@@ -22,7 +23,8 @@ public class DataUpdateRequest {
 	private DataUpdateRequest(){
 	}
 
-	public DataUpdateRequest(final Long spaceWallId, final Long spaceId, final Long memberId, final String shareURL, final WallInfoBlockUpdateRequest wallInfoBlock, final List<BlockRequest> blocks, final StyleSettingUpdateRequest styleSetting) {
+	public DataUpdateRequest(final String category, final Long spaceWallId, final Long spaceId, final Long memberId, final String shareURL, final WallInfoBlockUpdateRequest wallInfoBlock, final List<BlockRequest> blocks, final StyleSettingUpdateRequest styleSetting) {
+		this.category = category;
 		this.spaceWallId = spaceWallId;
 		this.spaceId = spaceId;
 		this.memberId = memberId;

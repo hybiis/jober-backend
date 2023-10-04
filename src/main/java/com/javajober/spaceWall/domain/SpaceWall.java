@@ -78,6 +78,11 @@ public class SpaceWall {
         this.shareURL = request.getShareURL();
         this.flag = flag;
     }
+    public void fileUpdate(final DataUpdateRequest request, final FlagType flag, final String blockInfoArrayAsString){
+        this.blocks = blockInfoArrayAsString;
+        this.shareURL = request.getShareURL();
+        this.flag = flag;
+    }
 
     public void markAsDeleted() {
         this.deletedAt = LocalDateTime.now();

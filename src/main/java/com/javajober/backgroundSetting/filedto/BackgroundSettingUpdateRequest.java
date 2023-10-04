@@ -14,10 +14,5 @@ public class BackgroundSettingUpdateRequest {
 	public BackgroundSettingUpdateRequest(){
 
 	}
-	public BackgroundSetting toEntity(BackgroundSettingUpdateRequest updateRequest) {
-		return BackgroundSetting.builder()
-			.solidColor(updateRequest.getSolidColor())
-			.gradation(updateRequest.getGradation())
-			.build();
-	}
+
 }
