@@ -318,7 +318,7 @@ public class SpaceWallService {
 
 	private Long updateWallInfoBlock(WallInfoBlockStringUpdateRequest wallInfoBlockRequest) {
 		WallInfoBlock wallInfoBlock = wallInfoBlockRepository.findWallInfoBlock(wallInfoBlockRequest.getWallInfoBlockId());
-		wallInfoBlock.update(wallInfoBlockRequest.getWallInfoTitle(), wallInfoBlockRequest.getWallInfoDescription(), wallInfoBlockRequest.getBackgroundImgURL(), wallInfoBlockRequest.getWallInfoImgURL());
+		wallInfoBlock.update(wallInfoBlockRequest.getBackgroundImgURL(), wallInfoBlockRequest.getWallInfoImgURL(), wallInfoBlockRequest.getWallInfoTitle(), wallInfoBlockRequest.getWallInfoDescription());
 		return wallInfoBlockRepository.save(wallInfoBlock).getId();
 	}
 
