@@ -340,7 +340,7 @@ public class FileUploadService {
         WallInfoBlock wallInfoBlock = wallInfoBlockRepository.findWallInfoBlock(wallInfoBlockRequest.getWallInfoBlockId());
         String backgroundImgName = fileImageService.uploadFile(backgroundImgURL);
         String wallInfoImgName = fileImageService.uploadFile(wallInfoImgURL);
-        wallInfoBlock.update(wallInfoBlockRequest.getWallInfoTitle(), wallInfoBlockRequest.getWallInfoDescription(), backgroundImgName, wallInfoImgName);
+        wallInfoBlock.update(backgroundImgName, wallInfoImgName, wallInfoBlockRequest.getWallInfoTitle(), wallInfoBlockRequest.getWallInfoDescription());
         return wallInfoBlockRepository.save(wallInfoBlock).getId();
     }
 
