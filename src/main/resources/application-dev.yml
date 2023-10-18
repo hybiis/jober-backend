@@ -12,7 +12,7 @@ spring:
     url: jdbc:h2:tcp://localhost/~/javajober;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=true
     driver-class-name: org.h2.Driver
     username: team3
-    password: 1234
+    password:
 
   h2:
     console:
@@ -23,9 +23,8 @@ spring:
   jpa:
     open-in-view: false
     generate-ddl: false
-#    hibernate:
-#      ddl-auto: create-drop
-    hibernate.hbmddl.auto: update
+    hibernate:
+      ddl-auto: create-drop
     database: h2
     properties:
       hibernate:
