@@ -39,6 +39,7 @@ public class SecurityConfig {
 			.authorizeRequests()
 			.antMatchers("/members/login").permitAll()
 			.antMatchers("/members/signup").permitAll()
+			.antMatchers("/healthCheck").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.exceptionHandling()
