@@ -36,19 +36,18 @@ public class MemberController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponse.Response<MemberSignupResponse>> signup(@RequestBody @Valid MemberSignupRequest memberSignupRequest,
-		BindingResult bindingResult) {
+	public ResponseEntity<ApiResponse.Response<MemberSignupResponse>> signup(@RequestBody @Valid MemberSignupRequest memberSignupRequest) {
 
-		MemberSignupResponse data = memberService.signup(memberSignupRequest, bindingResult);
+		MemberSignupResponse data = memberService.signup(memberSignupRequest);
 
 		return ApiResponse.response(ApiStatus.OK, "회원가입에 성공했습니다.", data);
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<ApiResponse.Response<MemberLoginResponse>> login(@RequestBody @Valid MemberLoginRequest loginDto, BindingResult bindingResult) {
+	public ResponseEntity<ApiResponse.Response<MemberLoginResponse>> login(@RequestBody @Valid MemberLoginRequest loginDto) {
 		try {
 
-			MemberLoginResponse data = memberService.login(loginDto,bindingResult);
+			MemberLoginResponse data = memberService.login(loginDto);
 
 			return ApiResponse.response(ApiStatus.OK, "로그인에 성공했습니다.", data);
 		} catch (IllegalArgumentException e) {

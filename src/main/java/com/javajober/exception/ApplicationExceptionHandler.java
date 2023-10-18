@@ -1,6 +1,10 @@
 package com.javajober.exception;
 
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,5 +42,10 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiResponse.InvalidResponse> handleMethodArgumentTypeMismatchException (MethodArgumentTypeMismatchException e) {
         return ApiResponse.invalidResponse(ApiStatus.OBJECT_EMPTY, e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse.InvalidResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        return ApiResponse.invalidResponse(ApiStatus.INVALID_DATA, e.getMessage());
     }
 }
