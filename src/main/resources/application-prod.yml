@@ -1,31 +1,45 @@
 server:
   port: 5000
 
-logging.level:
-  root: info
-  org.hibernate:
-    SQL: info
-    type.descriptor.sql.BasicBinder: info
-
 spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
   datasource:
+    hikari:
+      pool-name: SpringBootJPAHikariCP
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 10000
+      validation-timeout: 10000
+      max-lifetime: 300000
+      connection-init-sql: set wait_timeout = 600
     url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${rds.username}
     password: ${rds.password}
 
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-
   jpa:
-    open-in-view: false
-    generate-ddl: false
     hibernate:
       ddl-auto: none
-    database: h2
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     properties:
       hibernate:
-        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+      default_batch_fetch_size: 100
+    open-in-view: true
+
+servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 30MB
+
+jwt:
+  key: ${jwt_secret_key}

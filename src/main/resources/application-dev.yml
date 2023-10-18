@@ -12,7 +12,7 @@ spring:
     url: jdbc:h2:tcp://localhost/~/javajober;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=true
     driver-class-name: org.h2.Driver
     username: team3
-    password:
+    password: 1234
 
   h2:
     console:
@@ -23,9 +23,17 @@ spring:
   jpa:
     open-in-view: false
     generate-ddl: false
-    hibernate:
-      ddl-auto: update
+#    hibernate:
+#      ddl-auto: create-drop
+    hibernate.hbmddl.auto: update
     database: h2
     properties:
       hibernate:
         format_sql: true
+        show_sql: true
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 30MB
