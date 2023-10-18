@@ -2,6 +2,8 @@ package com.javajober.member.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -9,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Setter
 @Getter
 @Table(name = "member")
 @EntityListeners(AuditingEntityListener.class)
@@ -49,7 +52,7 @@ public class Member {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    protected Member() {
+    public Member() {
 
     }
 
