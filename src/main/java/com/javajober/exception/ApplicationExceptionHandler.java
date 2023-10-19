@@ -27,16 +27,19 @@ public class ApplicationExceptionHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ApiResponse.InvalidResponse> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        log.error(e.getMessage());
         return ApiResponse.invalidResponse(ApiStatus.OBJECT_EMPTY, e.getMessage());
     }
 
     @ExceptionHandler(MissingPathVariableException.class)
     public ResponseEntity<ApiResponse.InvalidResponse> handleServletRequestBindingException (MissingPathVariableException e) {
+        log.error(e.getMessage());
         return ApiResponse.invalidResponse(ApiStatus.OBJECT_EMPTY, e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiResponse.InvalidResponse> handleMethodArgumentTypeMismatchException (MethodArgumentTypeMismatchException e) {
+        log.error(e.getMessage());
         return ApiResponse.invalidResponse(ApiStatus.OBJECT_EMPTY, e.getMessage());
     }
 }

@@ -40,3 +40,5 @@ out/
 firebase/
 application-secret.yml
 
+#jwt secretKey
+application-jwt.yml

@@ -1,0 +1,69 @@
+package com.javajober.member.service;
+
+
+import javax.transaction.Transactional;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
+import com.javajober.member.domain.Member;
+import com.javajober.member.dto.MemberLoginRequest;
+import com.javajober.member.dto.MemberLoginResponse;
+import com.javajober.member.dto.MemberSignupRequest;
+import com.javajober.member.dto.MemberSignupResponse;
+import com.javajober.member.repository.MemberRepository;
+import com.javajober.refreshToken.repository.RefreshTokenRepository;
+import com.javajober.security.JwtTokenizer;
+import com.javajober.refreshToken.domain.RefreshToken;
+
+@Service
+public class MemberService {
+	private final MemberRepository memberRepository;
+	private final PasswordEncoder passwordEncoder;
+	private final JwtTokenizer jwtTokenizer;
+	private final RefreshTokenRepository refreshTokenRepository;
+
+	public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, JwtTokenizer jwtTokenizer,
+		RefreshTokenRepository refreshTokenRepository) {
+		this.memberRepository = memberRepository;
+		this.passwordEncoder = passwordEncoder;
+		this.jwtTokenizer = jwtTokenizer;
+		this.refreshTokenRepository = refreshTokenRepository;
+	}
+
+	@Transactional
+	public MemberSignupResponse signup(MemberSignupRequest memberSignupRequest, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			throw new ApplicationException(ApiStatus.INVALID_DATA, "잘못된 요청입니다.");
+		}
+
+		Member member = memberSignupRequest.toEntity(memberSignupRequest);
+		member.setPassword(passwordEncoder.encode(memberSignupRequest.getPassword()));
+		Member saveMember = memberRepository.save(member);
+
+		return new MemberSignupResponse(saveMember);
+	}
+
+	@Transactional
+	public MemberLoginResponse login(MemberLoginRequest loginDto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			throw new ApplicationException(ApiStatus.INVALID_DATA, "잘못된 요청입니다.");
+		}
+		Member member = memberRepository.findMember(loginDto.getEmail());
+
+		if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword())) {
+			throw new ApplicationException(ApiStatus.NOT_FOUND, "비밀번호가 일치하지 않습니다.");
+		}
+
+		String accessToken = jwtTokenizer.createAccessToken(member.getId(), member.getMemberEmail());
+		String refreshToken = jwtTokenizer.createRefreshToken(member.getId(), member.getMemberEmail());
+
+		RefreshToken refreshTokenEntity = new RefreshToken(member.getId(),refreshToken);
+		refreshTokenRepository.save(refreshTokenEntity);
+
+		return new MemberLoginResponse(member,accessToken,refreshToken);
+	}
+}

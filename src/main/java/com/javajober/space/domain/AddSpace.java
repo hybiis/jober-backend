@@ -1,6 +1,7 @@
 package com.javajober.space.domain;
 
 import com.javajober.member.domain.Member;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,6 +27,9 @@ public class AddSpace {
     @Column(name = "space_type", nullable = false)
     private SpaceType spaceType;
 
+    @Column(name = "representative_name", nullable = false)
+    private String representativeName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id", nullable = false)
     private Member member;
@@ -45,9 +49,11 @@ public class AddSpace {
 
     }
 
-    public AddSpace (final String spaceTitle, final SpaceType spaceType, Member member) {
+    @Builder
+    public AddSpace (final String spaceTitle, final SpaceType spaceType, final Member member, final String representativeName) {
         this.spaceTitle = spaceTitle;
         this.spaceType = spaceType;
         this.member = member;
+        this.representativeName= representativeName;
     }
 }

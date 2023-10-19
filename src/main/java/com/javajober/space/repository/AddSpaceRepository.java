@@ -16,12 +16,14 @@ import org.springframework.data.repository.query.Param;
 
 public interface AddSpaceRepository extends Repository<AddSpace, Long> {
 
-	@Query("SELECT a FROM AddSpace a JOIN FETCH a.member WHERE a.member.id = :memberId AND a.spaceType IN :spaceTypes")
-	List<AddSpace> findSpacesByMemberIdAndSpaceTypes(final Long memberId, final List<SpaceType> spaceTypes);
+	AddSpace save(final AddSpace addSpace);
 
 	Optional<AddSpace> findById(final Long id);
 
 	Optional<AddSpace> findBySpaceTypeAndId(final SpaceType spaceType, final Long memberId);
+
+	@Query("SELECT a FROM AddSpace a JOIN FETCH a.member WHERE a.member.id = :memberId AND a.spaceType IN :spaceTypes")
+	List<AddSpace> findSpacesByMemberIdAndSpaceTypes(final Long memberId, final List<SpaceType> spaceTypes);
 
 	@Query("SELECT s.id FROM AddSpace s WHERE s.spaceType = :spaceType AND s.member.id = :memberId")
 	List<Long> findAddSpaceIdBySpaceTypeAndMemberId(@Param("spaceType") final SpaceType spaceType, @Param("memberId") final Long memberId);

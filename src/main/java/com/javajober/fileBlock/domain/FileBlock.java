@@ -60,6 +60,7 @@ public class FileBlock {
         this.fileDescription = fileDescription;
         this.fileName = fileName;
     }
+
     public void update(final String fileTitle, final String fileDescription, final String fileName, final String file) {
         this.fileTitle = fileTitle;
         this.fileDescription = fileDescription;
@@ -72,6 +73,7 @@ public class FileBlock {
         this.fileDescription = fileDescription;
         this.fileName = fileName;
     }
+
     public void setDeletedAt() {
         this.deletedAt = LocalDateTime.now();
     }

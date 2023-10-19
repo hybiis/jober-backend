@@ -2,7 +2,11 @@ package com.javajober.space.domain;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import lombok.Getter;
+
+import java.util.Arrays;
 
 @Getter
 public enum SpaceType {
@@ -21,5 +25,12 @@ public enum SpaceType {
     @JsonValue
     public String getEngTitle() {
         return engTitle;
+    }
+
+    public static SpaceType findSpaceTypeByString(final String type) {
+        return Arrays.stream(values())
+                .filter(spaceType -> spaceType.getEngTitle().equals(type))
+                .findAny()
+                .orElseThrow(() -> new ApplicationException(ApiStatus.INVALID_DATA, "존재하지 않는 space type입니다."));
     }
 }
