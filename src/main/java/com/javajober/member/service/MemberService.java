@@ -5,7 +5,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import com.javajober.exception.ApiStatus;
 import com.javajober.exception.ApplicationException;
@@ -35,11 +34,7 @@ public class MemberService {
 	}
 
 	@Transactional
-	public MemberSignupResponse signup(MemberSignupRequest memberSignupRequest, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			throw new ApplicationException(ApiStatus.INVALID_DATA, "잘못된 요청입니다.");
-		}
-
+	public MemberSignupResponse signup(MemberSignupRequest memberSignupRequest) {
 		Member member = memberSignupRequest.toEntity(memberSignupRequest);
 		member.setPassword(passwordEncoder.encode(memberSignupRequest.getPassword()));
 		Member saveMember = memberRepository.save(member);
@@ -48,10 +43,7 @@ public class MemberService {
 	}
 
 	@Transactional
-	public MemberLoginResponse login(MemberLoginRequest loginDto, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			throw new ApplicationException(ApiStatus.INVALID_DATA, "잘못된 요청입니다.");
-		}
+	public MemberLoginResponse login(MemberLoginRequest loginDto) {
 		Member member = memberRepository.findMember(loginDto.getEmail());
 
 		if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword())) {

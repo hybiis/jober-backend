@@ -3,7 +3,6 @@ package com.javajober.member.controller;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +23,7 @@ import com.javajober.refreshToken.dto.RefreshTokenRequest;
 
 @RestController
 @Validated
-@RequestMapping("/members")
+@RequestMapping("api/members")
 public class MemberController {
 	private final MemberService memberService;
 	private final RefreshTokenService refreshTokenService;
@@ -36,19 +35,18 @@ public class MemberController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponse.Response<MemberSignupResponse>> signup(@RequestBody @Valid MemberSignupRequest memberSignupRequest,
-		BindingResult bindingResult) {
+	public ResponseEntity<ApiResponse.Response<MemberSignupResponse>> signup(@RequestBody @Valid MemberSignupRequest memberSignupRequest) {
 
-		MemberSignupResponse data = memberService.signup(memberSignupRequest, bindingResult);
+		MemberSignupResponse data = memberService.signup(memberSignupRequest);
 
 		return ApiResponse.response(ApiStatus.OK, "회원가입에 성공했습니다.", data);
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<ApiResponse.Response<MemberLoginResponse>> login(@RequestBody @Valid MemberLoginRequest loginDto, BindingResult bindingResult) {
+	public ResponseEntity<ApiResponse.Response<MemberLoginResponse>> login(@RequestBody @Valid MemberLoginRequest loginDto) {
 		try {
 
-			MemberLoginResponse data = memberService.login(loginDto,bindingResult);
+			MemberLoginResponse data = memberService.login(loginDto);
 
 			return ApiResponse.response(ApiStatus.OK, "로그인에 성공했습니다.", data);
 		} catch (IllegalArgumentException e) {
