@@ -61,12 +61,12 @@ public class SpaceWallController {
     }
 
     @GetMapping("/wall/{memberId}/{addSpaceId}/{spaceWallId}")
-    public ResponseEntity<ApiUtils.ApiResponse<SpaceWallResponse>> find (
+    public ResponseEntity<ApiResponse.Response<SpaceWallResponse>> find (
             @PathVariable final Long memberId, @PathVariable final Long addSpaceId, @PathVariable final Long spaceWallId){
 
         SpaceWallResponse data = spaceWallFindService.find(memberId, addSpaceId, spaceWallId, FlagType.SAVED);
 
-        return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.SPACE_WALL_READ_SUCCESS, data));
+        return ApiResponse.response(ApiStatus.OK, "공유페이지 조회를 성공했습니다.", data);
     }
 
     @GetMapping("/wall-temporary/{memberId}/{addSpaceId}/{spaceWallId}")
@@ -78,12 +78,12 @@ public class SpaceWallController {
         return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.SPACE_WALL_TEMPORARY_READ_SUCCESS, data));
     }
 
-    @GetMapping("/wall/{shareURL}")
-    public ResponseEntity<ApiUtils.ApiResponse<SpaceWallResponse>> findByShareURL(@PathVariable final String shareURL) {
+    @GetMapping("/wall/shareURL/{shareURL}")
+    public ResponseEntity<ApiResponse.Response<SpaceWallResponse>> findByShareURL(@PathVariable final String shareURL) {
 
         SpaceWallResponse data = spaceWallFindService.findByShareURL(shareURL);
 
-        return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.SPACE_WALL_READ_SUCCESS, data));
+        return ApiResponse.response(ApiStatus.OK, "공유페이지 조회를 성공했습니다.", data);
     }
 
     @GetMapping("/wall/has-duplicate/{shareURL}")

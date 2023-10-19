@@ -1,5 +1,7 @@
 package com.javajober.spaceWall.repository;
 
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import com.javajober.spaceWall.domain.FlagType;
 import com.javajober.spaceWall.domain.SpaceWall;
 import org.springframework.data.jpa.repository.Query;
@@ -39,16 +41,16 @@ public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
     default SpaceWall getById(final Long memberId, final Long spaceWallId) {
         return findSpaceWalls(memberId, spaceWallId).stream()
                 .findFirst()
-                .orElseThrow(() -> new Exception404(ErrorMessage.ADD_SPACE_NOT_FOUND));
+                .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 스페이스입니다."));
     }
 
     default SpaceWall findSpaceWall(Long id, Long addSpaceId, Long memberId, FlagType flag) {
         return findByIdAndAddSpaceIdAndMemberIdAndFlag(id, addSpaceId, memberId, flag)
-                .orElseThrow(() -> new Exception404(ErrorMessage.SPACE_WALL_NOT_FOUND));
+                .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "공유페이지를 찾을 수 없습니다."));
     }
 
     default SpaceWall getByShareURL(final String shareURL) {
         return findByShareURL(shareURL)
-                .orElseThrow(() -> new Exception404(ErrorMessage.SHARE_URL_NOT_FOUND));
+                .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않은 share url입니다."));
     }
 }

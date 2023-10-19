@@ -17,7 +17,7 @@ VALUES ('변백현', 'baek2@gmail.com', '$2a$10$RdYW3w/9DZ/hU.Nklx1RyOy5RC7yNqQk
        ('박다은', 'daeun138@gmail.com', '$2a$10$RdYW3w/9DZ/hU.Nklx1RyOy5RC7yNqQk0JqIZXtw6HorY3Trkch86', '010-6789-2671', 'FREE', NOW(), NOW(), NULL),
        ('최수하', 'sooha139@gmail.com', '$2a$10$RdYW3w/9DZ/hU.Nklx1RyOy5RC7yNqQk0JqIZXtw6HorY3Trkch86', '010-6890-3782', 'FREE', NOW(), NOW(), NULL),
        ('김지하', 'jinha140@gmail.com', '$2a$10$RdYW3w/9DZ/hU.Nklx1RyOy5RC7yNqQk0JqIZXtw6HorY3Trkch86', '010-6901-4893', 'FREE', NOW(), NOW(), NULL);
-// password : abcd1234@
+-- password : abcd1234@
 
 INSERT INTO add_space (space_title, space_type, representative_name, member_id, created_at, updated_at, deleted_at)
 VALUES ('변백현', 'PERSONAL','변백현', 1, NOW(), NOW(), NULL),
