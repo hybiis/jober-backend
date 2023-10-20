@@ -7,8 +7,6 @@ import com.javajober.spaceWall.domain.SpaceWall;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
-import com.javajober.core.error.exception.Exception404;
-import com.javajober.core.message.ErrorMessage;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +31,7 @@ public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
     default List<SpaceWall> findSpaceWallsOrThrow(final Long memberId, final Long addSpaceId) {
         List<SpaceWall> spaceWalls = findSpaceWalls(memberId, addSpaceId);
         if (spaceWalls.isEmpty()) {
-            throw new Exception404(ErrorMessage.SPACE_WALL_TEMPORARY_NOT_FOUND);
+            throw new ApplicationException(ApiStatus.NOT_FOUND, "임시 저장된 공유페이지가 없습니다.");
         }
         return spaceWalls;
     }
@@ -51,6 +49,6 @@ public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
 
     default SpaceWall getByShareURL(final String shareURL) {
         return findByShareURL(shareURL)
-                .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않은 share url입니다."));
+                .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 share url입니다."));
     }
 }

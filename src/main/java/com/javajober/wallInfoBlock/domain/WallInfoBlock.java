@@ -9,6 +9,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import com.javajober.wallInfoBlock.dto.request.WallInfoBlockStringUpdateRequest;
+import com.javajober.wallInfoBlock.filedto.WallInfoBlockUpdateRequest;
+
 @Getter
 @Table(name="wall_info_block")
 @EntityListeners(AuditingEntityListener.class)
@@ -54,10 +57,17 @@ public class WallInfoBlock {
         this.wallInfoDescription = wallInfoDescription;
     }
 
-    public void update(final String wallInfoBackgroundImageUrl, final String wallInfoProfileImageUrl, final String wallInfoTitle, final String wallInfoDescription){
-        this.wallInfoBackgroundImageUrl = wallInfoBackgroundImageUrl;
-        this.wallInfoProfileImageUrl = wallInfoProfileImageUrl;
-        this.wallInfoTitle = wallInfoTitle;
-        this.wallInfoDescription = wallInfoDescription;
+    public void update (WallInfoBlockUpdateRequest request, String backgroundImgName, String wallInfoImgName){
+        this.wallInfoBackgroundImageUrl = backgroundImgName;
+        this.wallInfoProfileImageUrl = wallInfoImgName;
+        this.wallInfoTitle = request.getWallInfoTitle();
+        this.wallInfoDescription = request.getWallInfoDescription();
+    }
+
+    public void update(WallInfoBlockStringUpdateRequest request){
+        this.wallInfoBackgroundImageUrl = request.getBackgroundImgURL();
+        this.wallInfoProfileImageUrl = request.getWallInfoImgURL();
+        this.wallInfoTitle = request.getWallInfoTitle();
+        this.wallInfoDescription = request.getWallInfoDescription();
     }
 }

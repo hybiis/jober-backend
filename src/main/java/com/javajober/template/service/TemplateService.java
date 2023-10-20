@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import com.javajober.space.repository.AddSpaceRepository;
-import com.javajober.core.error.exception.Exception404;
-import com.javajober.core.message.ErrorMessage;
 import com.javajober.member.domain.Member;
 import com.javajober.spaceWallCategory.domain.SpaceWallCategory;
 import com.javajober.spaceWallCategory.domain.SpaceWallCategoryType;
@@ -57,7 +57,7 @@ public class TemplateService {
 		for (MemberGroup memberGroup : memberGroups) {
 			Member member = memberGroup.getMember();
 			if (member == null) {
-				throw new Exception404(ErrorMessage.MEMBER_NOT_FOUND);
+				throw new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 회원정보입니다.");
 			}
 			TemplateAuth templateAuth = templateAuthRepository.getByAuthMemberIdAndTemplateBlockId(memberGroup.getId(),templateBlock.getId());
 			MemberAuthResponse.MemberInfo memberInfo = MemberAuthResponse.MemberInfo.of(memberGroup, member,

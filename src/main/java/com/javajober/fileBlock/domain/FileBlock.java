@@ -9,6 +9,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import com.javajober.fileBlock.dto.request.FileBlockStringUpdateRequest;
+import com.javajober.fileBlock.filedto.FileBlockUpdateRequest;
+
 @Getter
 @Table(name = "file_block")
 @EntityListeners(AuditingEntityListener.class)
@@ -61,20 +64,16 @@ public class FileBlock {
         this.fileName = fileName;
     }
 
-    public void update(final String fileTitle, final String fileDescription, final String fileName, final String file) {
-        this.fileTitle = fileTitle;
-        this.fileDescription = fileDescription;
-        this.fileName = fileName;
+    public void fileUpdate(final FileBlockUpdateRequest request, String file) {
+        this.fileTitle = request.getFileTitle();
+        this.fileDescription = request.getFileDescription();
         this.file = file;
     }
 
-    public void fileUpdate(final String fileTitle, final String fileDescription, final String fileName) {
-        this.fileTitle = fileTitle;
-        this.fileDescription = fileDescription;
-        this.fileName = fileName;
-    }
-
-    public void setDeletedAt() {
-        this.deletedAt = LocalDateTime.now();
+    public void update(final FileBlockStringUpdateRequest request) {
+        this.fileTitle = request.getFileTitle();
+        this.fileDescription = request.getFileDescription();
+        this.fileName = request.getFileName();
+        this.file = request.getFile();
     }
 }

@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,15 +21,15 @@ public class RefreshToken {
 
 	private Long memberId;
 
-	private String value;
+	private String tokenValue;
 
 	public RefreshToken(){
 
 	}
 
 	@Builder
-	public RefreshToken(final Long memberId, final String value){
+	public RefreshToken(final Long memberId, final String tokenValue){
 		this.memberId = memberId;
-		this.value = value;
+		this.tokenValue = tokenValue;
 	}
 }

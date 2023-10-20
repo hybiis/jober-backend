@@ -342,7 +342,7 @@ public class FileUploadService {
         WallInfoBlock wallInfoBlock = wallInfoBlockRepository.findWallInfoBlock(wallInfoBlockRequest.getWallInfoBlockId());
         String backgroundImgName = fileImageService.uploadFile(backgroundImgURL);
         String wallInfoImgName = fileImageService.uploadFile(wallInfoImgURL);
-        wallInfoBlock.update(backgroundImgName, wallInfoImgName, wallInfoBlockRequest.getWallInfoTitle(), wallInfoBlockRequest.getWallInfoDescription());
+        wallInfoBlock.update(wallInfoBlockRequest,backgroundImgName, wallInfoImgName);
 
         return wallInfoBlockRepository.save(wallInfoBlock).getId();
     }
@@ -356,7 +356,7 @@ public class FileUploadService {
                 updatedFreeBlockIds.add(freeBlockRepository.save(freeBlock).getId());
             }else {
                 FreeBlock freeBlock = freeBlockRepository.findFreeBlock(updateRequest.getFreeBlockId());
-                freeBlock.update(updateRequest.getFreeTitle(), updateRequest.getFreeContent());
+                freeBlock.update(updateRequest);
                 updatedFreeBlockIds.add(freeBlockRepository.save(freeBlock).getId());
             }
         }
@@ -373,8 +373,7 @@ public class FileUploadService {
                 updateSnsBlockIds.add(snsBlockRepository.save(snsBlock).getId());
             }else {
                 SNSBlock snsBlock = snsBlockRepository.findSNSBlock(snsBlockRequest.getSnsBlockId());
-                SNSType snsType = SNSType.findSNSTypeByString(snsBlockRequest.getSnsType());
-                snsBlock.update(snsBlockRequest.getSnsUUID(), snsType, snsBlockRequest.getSnsURL());
+                snsBlock.update(snsBlockRequest);
                 updateSnsBlockIds.add(snsBlockRepository.save(snsBlock).getId());
             }
         });
@@ -408,7 +407,7 @@ public class FileUploadService {
                 updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
             }else{
                 FileBlock fileBlock = fileBlockRepository.findFileBlock(updateRequest.getFileBlockId());
-                fileBlock.fileUpdate(updateRequest.getFileTitle(), updateRequest.getFileDescription(), fileName);
+                fileBlock.fileUpdate(updateRequest, fileName);
                 updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
             }
         }
@@ -424,7 +423,7 @@ public class FileUploadService {
                 updateListBlockIds.add(listBlockRepository.save(listBlock).getId());
             }else{
                 ListBlock listBlock = listBlockRepository.findListBlock(updateRequest.getListBlockId());
-                listBlock.update(updateRequest.getListUUID(), updateRequest.getListLabel(), updateRequest.getListTitle(), updateRequest.getListDescription(), updateRequest.getIsLink());
+                listBlock.update(updateRequest);
                 updateListBlockIds.add(listBlockRepository.save(listBlock).getId());
             }
         }
@@ -452,7 +451,7 @@ public class FileUploadService {
     private Long updateBlockSetting(final BlockSettingUpdateRequest updateRequest){
 
         BlockSetting blockSetting = blockSettingRepository.getById(updateRequest.getBlockSettingBlockId());
-        blockSetting.update(updateRequest.getShape(), updateRequest.getStyle(),updateRequest.getStyleColor(),updateRequest.getGradation());
+        blockSetting.update(updateRequest);
         return blockSettingRepository.save(blockSetting).getId();
     }
 

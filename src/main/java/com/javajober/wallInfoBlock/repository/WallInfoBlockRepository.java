@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.repository.Repository;
 
-import com.javajober.core.error.exception.Exception404;
-import com.javajober.core.message.ErrorMessage;
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import com.javajober.wallInfoBlock.domain.WallInfoBlock;
 
 public interface WallInfoBlockRepository extends Repository<WallInfoBlock, Long> {
@@ -16,6 +16,6 @@ public interface WallInfoBlockRepository extends Repository<WallInfoBlock, Long>
 
 	default WallInfoBlock findWallInfoBlock(final Long id) {
 		return findByIdAndDeletedAtIsNull(id)
-				.orElseThrow(() -> new Exception404(ErrorMessage.WALL_INFO_BLOCK_NOT_FOUND));
+			.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "공유페이지 블록 데이터를 찾을 수 없습니다."));
 	}
 }

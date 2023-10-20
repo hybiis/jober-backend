@@ -15,16 +15,12 @@ public interface MemberRepository extends Repository<Member, Long> {
 	Member save(final Member member);
 
 	default Member findMember(final Long id) {
-		String message = "존재하지 않는 회원정보입니다.";
-
 		return findById(id)
-			.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, message));
+			.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 회원입니다."));
 	}
 
 	default Member findMember (final String email) {
-		String message = "존재하지 않는 회원정보입니다.";
-
 		return findByMemberEmail(email)
-			.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, message));
+			.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 회원 아이디입니다."));
 	}
 }

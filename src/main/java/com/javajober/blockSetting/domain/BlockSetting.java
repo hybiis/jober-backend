@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import com.javajober.blockSetting.dto.request.BlockSettingUpdateRequest;
+
 @Getter
 @Table(name = "block_setting")
 @EntityListeners(AuditingEntityListener.class)
@@ -54,10 +56,10 @@ public class BlockSetting {
         this.gradation = gradation;
     }
 
-    public void update(final String shape, final String style, final String styleColor, final Boolean gradation) {
-        this.shape = shape;
-        this.style = style;
-        this.styleColor = styleColor;
-        this.gradation = gradation;
+    public void update(final BlockSettingUpdateRequest request) {
+        this.shape = request.getShape();
+        this.style = request.getStyle();
+        this.styleColor = request.getStyleColor();
+        this.gradation = request.getGradation();
     }
 }

@@ -61,7 +61,7 @@ public class SpaceService {
     private static void existsAddSpace(Long addSpaceId, List<Long> addSpaceIds) {
         boolean containsId = addSpaceIds.stream().anyMatch(id -> Objects.equals(id, addSpaceId));
         if(!containsId) {
-            throw new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 스페이스 입니다.");
+            throw new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 스페이스입니다.");
         }
     }
 

@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import com.javajober.snsBlock.dto.request.SNSBlockUpdateRequest;
+
 @Getter
 @Table(name = "sns_block")
 @EntityListeners(AuditingEntityListener.class)
@@ -49,10 +51,9 @@ public class SNSBlock {
         this.snsURL = snsURL;
     }
 
-    public void update(final String snsUUID, final SNSType snsType, final String snsURL) {
-        this.snsUUID = snsUUID;
-        this.snsType = snsType;
-        this.snsURL = snsURL;
+    public void update(final SNSBlockUpdateRequest request) {
+        this.snsType = SNSType.findSNSTypeByString(request.getSnsType());
+        this.snsURL = request.getSnsURL();
     }
 
     public void updateTimeOnDelete() {

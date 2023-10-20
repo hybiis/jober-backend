@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import com.javajober.listBlock.dto.request.ListBlockUpdateRequest;
 
 @Getter
 @Table(name = "list_block")
@@ -56,11 +57,11 @@ public class ListBlock {
         this.listDescription = listDescription;
         this.isLink = isLink;
     }
-    public void update(final String listUUID, final String listLabel, final String listTitle, final String listDescription, final boolean isLink) {
-        this.listUUID = listUUID;
-        this.listLabel = listLabel;
-        this.listTitle = listTitle;
-        this.listDescription = listDescription;
-        this.isLink = isLink;
+    public void update(final ListBlockUpdateRequest request) {
+        this.listUUID = request.getListUUID();
+        this.listLabel = request.getListLabel();
+        this.listTitle = request.getListTitle();
+        this.listDescription = request.getListDescription();
+        this.isLink = request.getIsLink();
     }
 }

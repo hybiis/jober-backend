@@ -322,7 +322,7 @@ public class SpaceWallService {
 	private Long updateWallInfoBlock(final WallInfoBlockStringUpdateRequest wallInfoBlockRequest) {
 
 		WallInfoBlock wallInfoBlock = wallInfoBlockRepository.findWallInfoBlock(wallInfoBlockRequest.getWallInfoBlockId());
-		wallInfoBlock.update(wallInfoBlockRequest.getBackgroundImgURL(), wallInfoBlockRequest.getWallInfoImgURL(), wallInfoBlockRequest.getWallInfoTitle(), wallInfoBlockRequest.getWallInfoDescription());
+		wallInfoBlock.update(wallInfoBlockRequest);
 
 		return wallInfoBlockRepository.save(wallInfoBlock).getId();
 	}
@@ -336,7 +336,7 @@ public class SpaceWallService {
 				updatedFreeBlockIds.add(freeBlockRepository.save(freeBlock).getId());
 			}else {
 				FreeBlock freeBlock = freeBlockRepository.findFreeBlock(updateRequest.getFreeBlockId());
-				freeBlock.update(updateRequest.getFreeTitle(), updateRequest.getFreeContent());
+				freeBlock.update(updateRequest);
 				updatedFreeBlockIds.add(freeBlockRepository.save(freeBlock).getId());
 			}
 		}
@@ -353,8 +353,7 @@ public class SpaceWallService {
 				updateSnsBlockIds.add(snsBlockRepository.save(snsBlock).getId());
 			}else {
 				SNSBlock snsBlock = snsBlockRepository.findSNSBlock(snsBlockRequest.getSnsBlockId());
-				SNSType snsType = SNSType.findSNSTypeByString(snsBlockRequest.getSnsType());
-				snsBlock.update(snsBlockRequest.getSnsUUID(), snsType, snsBlockRequest.getSnsURL());
+				snsBlock.update(snsBlockRequest);
 				updateSnsBlockIds.add(snsBlockRepository.save(snsBlock).getId());
 			}
 		});
@@ -387,7 +386,7 @@ public class SpaceWallService {
 				updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
 			}else{
 				FileBlock fileBlock = fileBlockRepository.findFileBlock(updateRequest.getFileBlockId());
-				fileBlock.update(updateRequest.getFileTitle(), updateRequest.getFileDescription(), updateRequest.getFileName(),updateRequest.getFile());
+				fileBlock.update(updateRequest);
 				updateFileBlockIds.add(fileBlockRepository.save(fileBlock).getId());
 			}
 		}
@@ -403,7 +402,7 @@ public class SpaceWallService {
 				updateListBlockIds.add(listBlockRepository.save(listBlock).getId());
 			}else{
 				ListBlock listBlock = listBlockRepository.findListBlock(updateRequest.getListBlockId());
-				listBlock.update(updateRequest.getListUUID(), updateRequest.getListLabel(), updateRequest.getListTitle(), updateRequest.getListDescription(), updateRequest.getIsLink());
+				listBlock.update(updateRequest);
 				updateListBlockIds.add(listBlockRepository.save(listBlock).getId());
 			}
 		}
@@ -432,7 +431,7 @@ public class SpaceWallService {
 	private Long updateBlockSetting(final BlockSettingUpdateRequest updateRequest){
 
 		BlockSetting blockSetting = blockSettingRepository.getById(updateRequest.getBlockSettingBlockId());
-		blockSetting.update(updateRequest.getShape(), updateRequest.getStyle(),updateRequest.getStyleColor(),updateRequest.getGradation());
+		blockSetting.update(updateRequest);
 
 		return blockSettingRepository.save(blockSetting).getId();
 	}

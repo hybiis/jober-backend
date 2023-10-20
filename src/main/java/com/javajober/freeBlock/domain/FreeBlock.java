@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import com.javajober.freeBlock.dto.request.FreeBlockUpdateRequest;
+
 @Getter
 @Table(name = "free_block")
 @EntityListeners(AuditingEntityListener.class)
@@ -46,12 +48,8 @@ public class FreeBlock {
         this.freeContent = freeContent;
     }
 
-    public void update(final String freeTitle, final String freeContent) {
-        this.freeTitle = freeTitle;
-        this.freeContent = freeContent;
-    }
-
-    public void setDeletedAt() {
-        this.deletedAt = LocalDateTime.now();
+    public void update(final FreeBlockUpdateRequest request) {
+        this.freeTitle = request.getFreeTitle();
+        this.freeContent = request.getFreeContent();
     }
 }

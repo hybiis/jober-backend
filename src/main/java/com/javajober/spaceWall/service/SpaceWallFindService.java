@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javajober.backgroundSetting.dto.response.BackgroundSettingResponse;
 import com.javajober.blockSetting.dto.response.BlockSettingResponse;
-import com.javajober.core.error.exception.Exception500;
-import com.javajober.core.message.ErrorMessage;
 import com.javajober.core.util.CommonResponse;
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import com.javajober.fileBlock.domain.FileBlock;
 import com.javajober.fileBlock.dto.response.FileBlockResponse;
 import com.javajober.fileBlock.repository.FileBlockRepository;
@@ -99,7 +99,7 @@ public class SpaceWallFindService {
         try {
             rootNode = mapper.readTree(blocksPS);
         } catch (JsonProcessingException e) {
-            throw new Exception500(ErrorMessage.JSON_PROCESSING_ERROR);
+            throw new ApplicationException(ApiStatus.EXCEPTION, "Json을 변환 중 오류가 발생했습니다.");
         }
         List<BlockResponse<CommonResponse>> blocks = new ArrayList<>();
         WallInfoBlockResponse wallInfoBlockResponse = new WallInfoBlockResponse();

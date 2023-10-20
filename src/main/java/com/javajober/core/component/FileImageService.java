@@ -1,9 +1,8 @@
 package com.javajober.core.component;
 
 import com.javajober.core.config.FileDirectoryConfig;
-import com.javajober.core.error.exception.Exception404;
-import com.javajober.core.error.exception.Exception500;
-import com.javajober.core.message.ErrorMessage;
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +26,7 @@ public class FileImageService {
             return null;
         }
         if (file.getOriginalFilename() == null) {
-            throw new Exception404(ErrorMessage.INVALID_FILE_NAME);
+            throw new ApplicationException(ApiStatus.NOT_FOUND, "이름이 없는 파일입니다.");
         }
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
         String fileUploadPath = getDirectoryPath() + fileName;
@@ -35,7 +34,7 @@ public class FileImageService {
         try {
             file.transferTo(new File(fileUploadPath));
         } catch (IOException e) {
-            throw new Exception500(ErrorMessage.FILE_UPLOAD_FAILED);
+            throw new ApplicationException(ApiStatus.IO_EXCEPTION, "파일 업로드 중 실패하였습니다.");
         }
         return fileName;
     }
@@ -48,15 +47,15 @@ public class FileImageService {
 
         for (MultipartFile file : files) {
             if (file == null || file.isEmpty()) {
-                throw new Exception404(ErrorMessage.FILE_IS_EMPTY);
+                throw new ApplicationException(ApiStatus.INVALID_DATA, "업로드할 파일이 없습니다.");
             }
             String originalFilename = file.getOriginalFilename();
             if (originalFilename == null) {
-                throw new Exception404(ErrorMessage.INVALID_FILE_NAME);
+                throw new ApplicationException(ApiStatus.NOT_FOUND, "이름이 없는 파일입니다.");
             }
             int dotIndex = originalFilename.lastIndexOf('.');
             if (dotIndex < 0 || !(originalFilename.substring(dotIndex + 1).equalsIgnoreCase("pdf"))) {
-                throw new Exception404(ErrorMessage.INVALID_FILE_TYPE);
+                throw new ApplicationException(ApiStatus.INVALID_DATA, "첨부 파일은 pdf만 가능합니다.");
             }
         }
     }

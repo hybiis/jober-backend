@@ -3,8 +3,8 @@ package com.javajober.template.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.javajober.core.error.exception.Exception404;
-import com.javajober.core.message.ErrorMessage;
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import com.javajober.template.domain.TemplateAuth;
 import com.javajober.templateBlock.domain.TemplateBlock;
 
@@ -22,6 +22,6 @@ public interface TemplateAuthRepository extends Repository<TemplateAuth, Long> {
 
 	default TemplateAuth getByAuthMemberIdAndTemplateBlockId(final Long authMemberId, final Long templateBlockId){
 		return findByAuthMemberIdAndTemplateBlockId(authMemberId, templateBlockId)
-				.orElseThrow(() -> new Exception404(ErrorMessage.TEMPLATE_AUTH_NOT_FOUND));
+				.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "템플릿 권한 데이터를 찾을 수 없습니다."));
 	}
 }

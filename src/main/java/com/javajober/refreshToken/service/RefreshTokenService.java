@@ -31,20 +31,20 @@ public class RefreshTokenService {
 
 	@Transactional
 	public void deleteRefreshToken(String refreshToken) {
-		refreshTokenRepository.findByValue(refreshToken).ifPresent(refreshTokenRepository::delete);
+		refreshTokenRepository.findByTokenValue(refreshToken).ifPresent(refreshTokenRepository::delete);
 	}
 
 	@Transactional
 	public MemberLoginResponse findRefreshToken(RefreshTokenRequest refreshTokenRequest) {
-		RefreshToken refreshToken = refreshTokenRepository.findByValue(refreshTokenRequest.getRefreshToken()).orElseThrow(
+		RefreshToken refreshToken = refreshTokenRepository.findByTokenValue(refreshTokenRequest.getRefreshToken()).orElseThrow(
 			() -> new ApplicationException(ApiStatus.NOT_FOUND, "토큰이 존재하지 않습니다."));
-		Claims claims = jwtTokenizer.parseRefreshToken(refreshToken.getValue());
+		Claims claims = jwtTokenizer.parseRefreshToken(refreshToken.getTokenValue());
 
 		Long userId = Long.valueOf((Integer)claims.get("userId"));
 		Member member = memberRepository.findMember(userId);
 		String email = claims.getSubject();
 		String accessToken = jwtTokenizer.createAccessToken(userId, email);
 
-		return new MemberLoginResponse(member, accessToken, refreshToken.getValue());
+		return new MemberLoginResponse(member, accessToken, refreshToken.getTokenValue());
 	}
 }

@@ -2,8 +2,9 @@ package com.javajober.spaceWall.domain;
 
 import java.util.Arrays;
 
-import com.javajober.core.error.exception.Exception404;
 import com.javajober.core.message.ErrorMessage;
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 
 import lombok.Getter;
 
@@ -31,6 +32,6 @@ public enum BlockType {
         return Arrays.stream(values())
                 .filter(blockType -> blockType.getEngTitle().equals(type))
                 .findAny()
-                .orElseThrow(() -> new Exception404(ErrorMessage.INVALID_BLOCK_TYPE));
+                .orElseThrow(() -> new ApplicationException(ApiStatus.INVALID_DATA,"유효하지 않은 블록 타입입니다"));
     }
 }

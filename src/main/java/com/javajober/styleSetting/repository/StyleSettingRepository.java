@@ -1,9 +1,9 @@
 package com.javajober.styleSetting.repository;
 
-import com.javajober.core.error.exception.Exception404;
-import com.javajober.core.message.ErrorMessage;
 import org.springframework.data.repository.Repository;
 
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import com.javajober.styleSetting.domain.StyleSetting;
 
 import java.util.Optional;
@@ -16,6 +16,6 @@ public interface StyleSettingRepository extends Repository<StyleSetting, Long> {
 
 	default StyleSetting findStyleBlock(final Long id) {
 		return findByIdAndDeletedAtIsNull(id)
-				.orElseThrow(() -> new Exception404(ErrorMessage.STYLE_SETTING_BLOCK_NOT_FOUND));
+				.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "스타일 설정 데이터를 찾을 수 없습니다."));
 	}
 }

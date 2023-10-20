@@ -3,8 +3,9 @@ package com.javajober.core.fcm;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.javajober.core.error.exception.Exception500;
-import com.javajober.core.message.ErrorMessage;
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
+
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -36,7 +37,7 @@ public class FcmInitializer {
 
         } catch (IOException e) {
             log.error("FCM initialization ERROR {}", e.getMessage());
-            throw new Exception500(ErrorMessage.FCM_INITIALIZATION_FAILED);
+            throw new ApplicationException(ApiStatus.IO_EXCEPTION, "FCM 초기화에 실패하였습니다.");
         }
     }
 }

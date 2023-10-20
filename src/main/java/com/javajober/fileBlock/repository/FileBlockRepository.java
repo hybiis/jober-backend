@@ -1,7 +1,7 @@
 package com.javajober.fileBlock.repository;
 
-import com.javajober.core.error.exception.Exception404;
-import com.javajober.core.message.ErrorMessage;
+import com.javajober.exception.ApiStatus;
+import com.javajober.exception.ApplicationException;
 import com.javajober.fileBlock.domain.FileBlock;
 import org.springframework.data.repository.Repository;
 
@@ -15,6 +15,6 @@ public interface FileBlockRepository extends Repository<FileBlock, Long> {
 
     default FileBlock findFileBlock(final Long id) {
         return findByIdAndDeletedAtIsNull(id)
-                .orElseThrow(() -> new Exception404(ErrorMessage.FILE_BLOCK_NOT_FOUND));
+            .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "파일 블록 데이터를 찾을 수 없습니다."));
     }
 }
