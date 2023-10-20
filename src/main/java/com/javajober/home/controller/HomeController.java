@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javajober.core.util.ApiResponse;
-import com.javajober.exception.ApiStatus;
+import com.javajober.core.util.response.ApiResponse;
+import com.javajober.core.exception.ApiStatus;
 import com.javajober.home.dto.response.HomeResponse;
 import com.javajober.home.service.HomeService;
 

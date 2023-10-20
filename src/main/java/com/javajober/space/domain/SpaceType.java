@@ -2,8 +2,8 @@ package com.javajober.space.domain;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import lombok.Getter;
 
 import java.util.Arrays;

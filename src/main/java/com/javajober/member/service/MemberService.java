@@ -6,17 +6,17 @@ import javax.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import com.javajober.member.domain.Member;
 import com.javajober.member.dto.MemberLoginRequest;
 import com.javajober.member.dto.MemberLoginResponse;
 import com.javajober.member.dto.MemberSignupRequest;
 import com.javajober.member.dto.MemberSignupResponse;
 import com.javajober.member.repository.MemberRepository;
-import com.javajober.refreshToken.repository.RefreshTokenRepository;
-import com.javajober.security.JwtTokenizer;
-import com.javajober.refreshToken.domain.RefreshToken;
+import com.javajober.core.refreshToken.repository.RefreshTokenRepository;
+import com.javajober.core.security.JwtTokenizer;
+import com.javajober.core.refreshToken.domain.RefreshToken;
 
 @Service
 public class MemberService {

@@ -4,7 +4,7 @@ import com.javajober.space.domain.AddSpace;
 import com.javajober.member.domain.Member;
 import com.javajober.spaceWall.dto.request.DataStringUpdateRequest;
 import com.javajober.spaceWall.filedto.DataUpdateRequest;
-import com.javajober.spaceWallCategory.domain.SpaceWallCategoryType;
+import com.javajober.spaceWall.spaceWallCategory.domain.SpaceWallCategoryType;
 
 import lombok.Builder;
 import lombok.Getter;

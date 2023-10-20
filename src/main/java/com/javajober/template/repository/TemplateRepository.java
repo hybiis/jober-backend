@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.repository.Repository;
 
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import com.javajober.template.domain.Template;
 
 public interface TemplateRepository extends Repository<Template, Long> {

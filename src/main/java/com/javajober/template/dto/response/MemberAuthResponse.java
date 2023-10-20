@@ -3,7 +3,7 @@ package com.javajober.template.dto.response;
 import java.util.List;
 
 import com.javajober.member.domain.Member;
-import com.javajober.memberGroup.domain.MemberGroup;
+import com.javajober.member.memberGroup.domain.MemberGroup;
 import com.javajober.template.domain.TemplateAuth;
 
 import lombok.Builder;

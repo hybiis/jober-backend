@@ -1,8 +1,8 @@
 package com.javajober.spaceWall.dto.response;
 
-import com.javajober.core.util.CommonResponse;
-import com.javajober.styleSetting.dto.response.StyleSettingResponse;
-import com.javajober.wallInfoBlock.dto.response.WallInfoBlockResponse;
+import com.javajober.core.util.response.CommonResponse;
+import com.javajober.blocks.styleSetting.dto.response.StyleSettingResponse;
+import com.javajober.blocks.wallInfoBlock.dto.response.WallInfoBlockResponse;
 import lombok.Builder;
 import lombok.Getter;
 

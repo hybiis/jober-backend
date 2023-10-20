@@ -1,7 +1,7 @@
 package com.javajober.space.dto.response;
 
 import com.javajober.member.domain.AccountType;
-import com.javajober.memberGroup.domain.MemberHashtagType;
+import com.javajober.member.memberGroup.domain.MemberHashtagType;
 import lombok.Builder;
 import lombok.Getter;
 

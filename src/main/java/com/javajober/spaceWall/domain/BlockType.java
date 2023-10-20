@@ -2,9 +2,8 @@ package com.javajober.spaceWall.domain;
 
 import java.util.Arrays;
 
-import com.javajober.core.message.ErrorMessage;
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 
 import lombok.Getter;
 

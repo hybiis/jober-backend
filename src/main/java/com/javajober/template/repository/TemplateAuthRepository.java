@@ -3,10 +3,10 @@ package com.javajober.template.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import com.javajober.template.domain.TemplateAuth;
-import com.javajober.templateBlock.domain.TemplateBlock;
+import com.javajober.blocks.templateBlock.domain.TemplateBlock;
 
 import org.springframework.data.repository.Repository;
 

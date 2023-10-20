@@ -6,24 +6,24 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import com.javajober.space.repository.AddSpaceRepository;
 import com.javajober.member.domain.Member;
-import com.javajober.spaceWallCategory.domain.SpaceWallCategory;
-import com.javajober.spaceWallCategory.domain.SpaceWallCategoryType;
+import com.javajober.spaceWall.spaceWallCategory.domain.SpaceWallCategory;
+import com.javajober.spaceWall.spaceWallCategory.domain.SpaceWallCategoryType;
 import com.javajober.template.domain.Template;
-import com.javajober.templateBlock.domain.TemplateBlock;
+import com.javajober.blocks.templateBlock.domain.TemplateBlock;
 import com.javajober.template.dto.response.MemberAuthResponse;
 import com.javajober.space.domain.AddSpace;
-import com.javajober.memberGroup.domain.MemberGroup;
+import com.javajober.member.memberGroup.domain.MemberGroup;
 import com.javajober.space.domain.SpaceType;
 import com.javajober.template.domain.TemplateAuth;
 import com.javajober.template.dto.response.TemplateResponse;
-import com.javajober.memberGroup.repository.MemberGroupRepository;
-import com.javajober.spaceWallCategory.repository.SpaceWallCategoryRepository;
+import com.javajober.member.memberGroup.repository.MemberGroupRepository;
+import com.javajober.spaceWall.spaceWallCategory.repository.SpaceWallCategoryRepository;
 import com.javajober.template.repository.TemplateAuthRepository;
-import com.javajober.templateBlock.repository.TemplateBlockRepository;
+import com.javajober.blocks.templateBlock.repository.TemplateBlockRepository;
 import com.javajober.template.repository.TemplateRepository;
 
 @Service

@@ -1,6 +1,6 @@
 package com.javajober.spaceWall.dto.response;
 
-import com.javajober.core.util.CommonResponse;
+import com.javajober.core.util.response.CommonResponse;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javajober.core.util.ApiResponse;
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.util.response.ApiResponse;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import com.javajober.member.dto.MemberLoginRequest;
 import com.javajober.member.dto.MemberLoginResponse;
 import com.javajober.member.dto.MemberSignupRequest;
 import com.javajober.member.dto.MemberSignupResponse;
 import com.javajober.member.service.MemberService;
-import com.javajober.refreshToken.service.RefreshTokenService;
-import com.javajober.refreshToken.dto.RefreshTokenRequest;
+import com.javajober.core.refreshToken.service.RefreshTokenService;
+import com.javajober.core.refreshToken.dto.RefreshTokenRequest;
 
 @RestController
 @Validated

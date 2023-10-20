@@ -3,8 +3,8 @@ package com.javajober.space.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 

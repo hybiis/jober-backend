@@ -9,8 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import com.javajober.memberGroup.domain.MemberGroup;
-import com.javajober.templateBlock.domain.TemplateBlock;
+import com.javajober.member.memberGroup.domain.MemberGroup;
+import com.javajober.blocks.templateBlock.domain.TemplateBlock;
 
 @Getter
 @Table(name = "template_auth")

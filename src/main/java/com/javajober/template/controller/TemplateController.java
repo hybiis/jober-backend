@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javajober.core.message.SuccessMessage;
 import com.javajober.core.util.ApiUtils;
-import com.javajober.spaceWallCategory.domain.SpaceWallCategoryType;
+import com.javajober.spaceWall.spaceWallCategory.domain.SpaceWallCategoryType;
 import com.javajober.template.dto.response.MemberAuthResponse;
 import com.javajober.space.domain.SpaceType;
 import com.javajober.template.dto.response.TemplateResponse;

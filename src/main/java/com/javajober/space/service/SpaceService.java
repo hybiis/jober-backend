@@ -1,10 +1,10 @@
 package com.javajober.space.service;
 
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import com.javajober.member.domain.Member;
 import com.javajober.member.repository.MemberRepository;
-import com.javajober.memberGroup.repository.MemberGroupRepository;
+import com.javajober.member.memberGroup.repository.MemberGroupRepository;
 import com.javajober.space.domain.AddSpace;
 import com.javajober.space.domain.SpaceType;
 import com.javajober.space.dto.request.SpaceSaveRequest;

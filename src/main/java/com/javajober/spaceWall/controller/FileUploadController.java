@@ -1,6 +1,6 @@
 package com.javajober.spaceWall.controller;
 
-import com.javajober.core.component.FileImageService;
+import com.javajober.core.util.file.FileImageService;
 import com.javajober.core.message.SuccessMessage;
 import com.javajober.core.util.ApiUtils;
 import com.javajober.spaceWall.domain.FlagType;

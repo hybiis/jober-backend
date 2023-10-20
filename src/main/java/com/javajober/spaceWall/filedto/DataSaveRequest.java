@@ -3,8 +3,8 @@ package com.javajober.spaceWall.filedto;
 import java.util.List;
 
 import com.javajober.spaceWall.dto.request.BlockSaveRequest;
-import com.javajober.styleSetting.filedto.StyleSettingSaveRequest;
-import com.javajober.wallInfoBlock.filedto.WallInfoBlockSaveRequest;
+import com.javajober.blocks.styleSetting.filedto.StyleSettingSaveRequest;
+import com.javajober.blocks.wallInfoBlock.filedto.WallInfoBlockSaveRequest;
 import lombok.Getter;
 
 @Getter

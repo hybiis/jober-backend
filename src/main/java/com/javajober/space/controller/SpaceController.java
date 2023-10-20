@@ -1,9 +1,9 @@
 package com.javajober.space.controller;
 
-import com.javajober.core.util.ApiResponse;
-import com.javajober.exception.ApiStatus;
-import com.javajober.exception.ApplicationException;
-import com.javajober.security.JwtTokenizer;
+import com.javajober.core.util.response.ApiResponse;
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
+import com.javajober.core.security.JwtTokenizer;
 import com.javajober.space.domain.SpaceType;
 import com.javajober.space.dto.request.SpaceSaveRequest;
 import com.javajober.space.dto.response.SpaceResponse;

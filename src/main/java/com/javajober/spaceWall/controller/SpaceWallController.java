@@ -1,9 +1,9 @@
 package com.javajober.spaceWall.controller;
 
 import com.javajober.core.message.SuccessMessage;
-import com.javajober.core.util.ApiResponse;
+import com.javajober.core.util.response.ApiResponse;
 import com.javajober.core.util.ApiUtils;
-import com.javajober.exception.ApiStatus;
+import com.javajober.core.exception.ApiStatus;
 import com.javajober.spaceWall.domain.FlagType;
 import com.javajober.spaceWall.dto.request.TemporaryDeleteRequest;
 import com.javajober.spaceWall.dto.request.SpaceWallStringRequest;
