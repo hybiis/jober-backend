@@ -19,8 +19,7 @@ public interface MemberRepository extends Repository<Member, Long> {
 			.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 회원입니다."));
 	}
 
-	default Member findMember (final String email) {
-		return findByMemberEmail(email)
-			.orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 회원 아이디입니다."));
+	default Optional<Member> findMember(final String email) {
+		return findByMemberEmail(email);
 	}
 }
