@@ -25,6 +25,9 @@ public class BackgroundSettingResponse {
     }
 
     public static BackgroundSettingResponse from(final BackgroundSetting backgroundSetting) {
+        if (backgroundSetting == null) {
+            return null;
+        }
         return BackgroundSettingResponse.builder()
                 .backgroundSettingBlockId(backgroundSetting.getId())
                 .solidColor(backgroundSetting.getSolidColor())

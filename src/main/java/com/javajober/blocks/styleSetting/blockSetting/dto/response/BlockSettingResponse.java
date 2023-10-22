@@ -27,6 +27,9 @@ public class BlockSettingResponse {
     }
 
     public static BlockSettingResponse from(final BlockSetting blockSetting) {
+        if (blockSetting == null) {
+            return null;
+        }
         return BlockSettingResponse.builder()
                 .blockSettingBlockId(blockSetting.getId())
                 .shape(blockSetting.getShape())

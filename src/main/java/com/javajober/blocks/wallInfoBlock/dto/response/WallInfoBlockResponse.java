@@ -1,11 +1,12 @@
 package com.javajober.blocks.wallInfoBlock.dto.response;
 
 import com.javajober.blocks.wallInfoBlock.domain.WallInfoBlock;
+import com.javajober.core.util.response.CommonResponse;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class WallInfoBlockResponse {
+public class WallInfoBlockResponse implements CommonResponse {
 
     private Long wallInfoBlockId;
     private String wallInfoTitle;

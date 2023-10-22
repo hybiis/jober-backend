@@ -21,6 +21,9 @@ public class ThemeSettingResponse {
     }
 
     public static ThemeSettingResponse from(final ThemeSetting themeSetting) {
+        if (themeSetting == null) {
+            return null;
+        }
         return ThemeSettingResponse.builder()
                 .themeSettingBlockId(themeSetting.getId())
                 .theme(themeSetting.getTheme())

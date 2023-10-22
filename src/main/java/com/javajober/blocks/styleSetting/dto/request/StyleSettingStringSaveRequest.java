@@ -1,7 +1,7 @@
 package com.javajober.blocks.styleSetting.dto.request;
 
 import com.javajober.blocks.styleSetting.backgroundSetting.domain.BackgroundSetting;
-import com.javajober.blocks.styleSetting.backgroundSetting.dto.request.BackgroundStringSaveRequest;
+import com.javajober.blocks.styleSetting.backgroundSetting.dto.request.BackgroundSettingStringSaveRequest;
 import com.javajober.blocks.styleSetting.blockSetting.domain.BlockSetting;
 import com.javajober.blocks.styleSetting.blockSetting.dto.request.BlockSettingSaveRequest;
 import com.javajober.blocks.styleSetting.domain.StyleSetting;
@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class StyleSettingStringSaveRequest {
 
-    private BackgroundStringSaveRequest backgroundSetting;
+    private BackgroundSettingStringSaveRequest backgroundSetting;
     private BlockSettingSaveRequest blockSetting;
     private ThemeSettingSaveRequest themeSetting;
 

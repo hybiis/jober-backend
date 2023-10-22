@@ -37,6 +37,6 @@ public class SpaceWallTemporaryService {
 
         return spaceWallRepository.findSpaceWallId(memberId, addSpaceId, FlagType.PENDING)
                 .map(spaceWallId -> new SpaceWallTemporaryResponse(spaceWallId, true))
-                .orElseGet(() -> new SpaceWallTemporaryResponse(null, false));
+                .orElseGet(() -> new SpaceWallTemporaryResponse(0L, false));
     }
 }

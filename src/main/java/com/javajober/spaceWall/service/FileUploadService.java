@@ -5,11 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.javajober.blocks.styleSetting.backgroundSetting.domain.BackgroundSetting;
+import com.javajober.blocks.styleSetting.backgroundSetting.dto.request.BackgroundSettingStringSaveRequest;
+import com.javajober.blocks.styleSetting.backgroundSetting.filedto.BackgroundSettingSaveRequest;
 import com.javajober.blocks.styleSetting.backgroundSetting.filedto.BackgroundSettingUpdateRequest;
 import com.javajober.blocks.styleSetting.backgroundSetting.repository.BackgroundSettingRepository;
 import com.javajober.blocks.styleSetting.blockSetting.domain.BlockSetting;
+import com.javajober.blocks.styleSetting.blockSetting.dto.request.BlockSettingSaveRequest;
 import com.javajober.blocks.styleSetting.blockSetting.dto.request.BlockSettingUpdateRequest;
 import com.javajober.blocks.styleSetting.blockSetting.repository.BlockSettingRepository;
+import com.javajober.blocks.styleSetting.dto.request.StyleSettingStringSaveRequest;
+import com.javajober.blocks.styleSetting.themeSetting.dto.request.ThemeSettingSaveRequest;
 import com.javajober.core.util.file.FileImageService;
 import com.javajober.blocks.fileBlock.domain.FileBlock;
 import com.javajober.blocks.fileBlock.filedto.FileBlockSaveRequest;
@@ -320,19 +325,19 @@ public class FileUploadService {
         return listBlockIds;
     }
 
-    private Long saveStyleSetting(final StyleSettingSaveRequest saveRequest, MultipartFile styleImgURL){
+    private Long saveStyleSetting(final StyleSettingSaveRequest request, MultipartFile styleImgURL){
 
+        BackgroundSettingSaveRequest backgroundRequest = request.getBackgroundSetting();
         String styleImgName = fileImageService.uploadFile(styleImgURL);
+        BackgroundSetting backgroundSetting = backgroundSettingRepository.save(BackgroundSettingSaveRequest.toEntity(backgroundRequest, styleImgName));
 
-        BackgroundSetting savedBackgroundSetting = backgroundSettingRepository.save(saveRequest.getBackgroundSetting().toEntity(styleImgName));
-        BlockSetting savedBlockSetting = blockSettingRepository.save(saveRequest.getBlockSetting().toEntity());
-        ThemeSetting savedThemeSetting = themeSettingRepository.save(saveRequest.getThemeSetting().toEntity());
+        BlockSettingSaveRequest blockSettingRequest = request.getBlockSetting();
+        BlockSetting blockSetting = blockSettingRepository.save(BlockSettingSaveRequest.toEntity(blockSettingRequest));
 
-        StyleSetting styleSetting = StyleSetting.builder()
-                .backgroundSetting(savedBackgroundSetting)
-                .blockSetting(savedBlockSetting)
-                .themeSetting(savedThemeSetting)
-                .build();
+        ThemeSettingSaveRequest themeSettingRequest = request.getThemeSetting();
+        ThemeSetting themeSetting = themeSettingRepository.save(ThemeSettingSaveRequest.toEntity(themeSettingRequest));
+
+        StyleSetting styleSetting = request.toEntity(backgroundSetting, blockSetting, themeSetting);
 
         return styleSettingRepository.save(styleSetting).getId();
     }

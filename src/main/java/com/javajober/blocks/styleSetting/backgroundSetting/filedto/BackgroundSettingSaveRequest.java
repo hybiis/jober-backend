@@ -13,10 +13,10 @@ public class BackgroundSettingSaveRequest {
 
     }
 
-    public BackgroundSetting toEntity(final String styleImgName) {
+    public static BackgroundSetting toEntity(final BackgroundSettingSaveRequest request, final String styleImgName) {
         return BackgroundSetting.builder()
-                .solidColor(this.getSolidColor())
-                .gradation(this.getGradation())
+                .solidColor(request.getSolidColor())
+                .gradation(request.getGradation())
                 .styleImageURL(styleImgName)
                 .build();
     }
