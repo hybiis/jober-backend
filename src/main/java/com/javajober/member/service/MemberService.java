@@ -1,6 +1,8 @@
 package com.javajober.member.service;
 
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +37,12 @@ public class MemberService {
 
 	@Transactional
 	public MemberSignupResponse signup(MemberSignupRequest memberSignupRequest) {
+		Optional<Member> existingMember = memberRepository.findMember(memberSignupRequest.getEmail());
+
+		if (existingMember.isPresent()) {
+			throw new ApplicationException(ApiStatus.ALREADY_EXIST, "이미 등록된 이메일입니다.");
+		}
+
 		Member member = memberSignupRequest.toEntity(memberSignupRequest);
 		member.setPassword(passwordEncoder.encode(memberSignupRequest.getPassword()));
 		Member saveMember = memberRepository.save(member);
@@ -44,7 +52,8 @@ public class MemberService {
 
 	@Transactional
 	public MemberLoginResponse login(MemberLoginRequest loginDto) {
-		Member member = memberRepository.findMember(loginDto.getEmail());
+		Member member = memberRepository.findMember(loginDto.getEmail()).orElseThrow(()
+			-> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 회원 아이디입니다."));
 
 		if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword())) {
 			throw new ApplicationException(ApiStatus.NOT_FOUND, "비밀번호가 일치하지 않습니다.");

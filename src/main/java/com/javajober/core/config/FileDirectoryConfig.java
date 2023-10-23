@@ -1,5 +1,7 @@
 package com.javajober.core.config;
 
+import com.javajober.core.exception.ApiStatus;
+import com.javajober.core.exception.ApplicationException;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
@@ -10,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 public class FileDirectoryConfig {
 
     public String getDirectoryPath() {
-
         String separator = File.separator;
         LocalDate today = LocalDate.now();
 
@@ -25,7 +26,9 @@ public class FileDirectoryConfig {
     public void createDirectory(final String directoryPath) {
         File directory = new File(directoryPath);
         if (!directory.exists()) {
-            directory.mkdirs();
+            if (!directory.mkdirs()) {
+                throw new ApplicationException(ApiStatus.FAIL, "디렉토리 생성을 실패하였습니다");
+            }
         }
     }
 }

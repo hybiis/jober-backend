@@ -1,5 +1,6 @@
 package com.javajober.core.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
@@ -11,6 +12,7 @@ import com.javajober.core.util.response.ApiResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MultipartException;
 
 @RestControllerAdvice
 @Slf4j
@@ -47,5 +49,11 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse.InvalidResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         return ApiResponse.invalidResponse(ApiStatus.INVALID_DATA, e.getMessage());
+    }
+
+    @ExceptionHandler(MultipartException.class)
+    public ResponseEntity<ApiResponse.InvalidResponse> handleMultipartException(MultipartException e) {
+        log.error(e.getMessage());
+        return ApiResponse.invalidResponse(ApiStatus.PAYLOAD_TOO_LARGE, e.getMessage());
     }
 }

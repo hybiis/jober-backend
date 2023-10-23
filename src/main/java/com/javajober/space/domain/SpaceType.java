@@ -29,8 +29,8 @@ public enum SpaceType {
 
     public static SpaceType findSpaceTypeByString(final String type) {
         return Arrays.stream(values())
-                .filter(spaceType -> spaceType.getEngTitle().equals(type))
+                .filter(spaceType -> spaceType.getEngTitle().equals(type.toLowerCase()))
                 .findAny()
-                .orElseThrow(() -> new ApplicationException(ApiStatus.INVALID_DATA, "존재하지 않는 space type입니다."));
+                .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 spaceType입니다."));
     }
 }

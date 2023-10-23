@@ -20,6 +20,7 @@ public enum ApiStatus {
 	OBJECT_EMPTY(HttpStatus.BAD_REQUEST, "object is empty"),
 	INVALID_DATE(HttpStatus.BAD_REQUEST, "invalid date"),
 	NOT_FOUND(HttpStatus.NOT_FOUND, "data not found"),
+	PAYLOAD_TOO_LARGE(HttpStatus.PAYLOAD_TOO_LARGE, "Payload Too Large"),
 	UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "login token expire");
 
 	private final HttpStatus httpStatus;

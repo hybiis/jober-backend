@@ -75,7 +75,7 @@ public class SpaceWallFindService {
         List<JsonNode> wallInfoBlocks = groupedBlockByPosition.get(INITIAL_POSITION);
 
         if (wallInfoBlocks == null || wallInfoBlocks.isEmpty()) {
-            throw new ApplicationException(ApiStatus.FAIL, "wallInfoBlock 조회를 실패했습니다.");
+            throw new ApplicationException(ApiStatus.NOT_FOUND, "wallInfoBlock 조회를 실패했습니다.");
         }
 
         FixBlockStrategy blockStrategy = blockStrategyFactory.findFixBlockStrategy(getStrategyName(wallInfoBlocks));

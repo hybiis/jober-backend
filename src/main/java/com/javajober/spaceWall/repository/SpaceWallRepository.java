@@ -49,6 +49,6 @@ public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
 
     default SpaceWall getByShareURL(final String shareURL) {
         return findByShareURL(shareURL)
-                .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 share url입니다."));
+                .orElseThrow(() -> new ApplicationException(ApiStatus.NOT_FOUND, "존재하지 않는 shareURL입니다."));
     }
 }

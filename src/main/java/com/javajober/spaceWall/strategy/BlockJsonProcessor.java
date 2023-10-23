@@ -68,7 +68,7 @@ public class BlockJsonProcessor {
 					.sorted(Comparator.comparingInt(a -> a.get("position").asInt()))
 					.collect(Collectors.groupingBy(node -> (long) node.get("position").asInt()));
 		} catch (JsonProcessingException e) {
-			throw new ApplicationException(ApiStatus.FAIL, "제이슨 변환 실패");
+			throw new ApplicationException(ApiStatus.FAIL, "제이슨 변환 중 실패하였습니다.");
 		}
 	}
 }

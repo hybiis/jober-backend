@@ -46,7 +46,7 @@ public class SpaceService {
     }
 
     public SpaceResponse find(Long addSpaceId, String spaceTypeString, Long memberId) {
-        SpaceType spaceType = SpaceType.valueOf(spaceTypeString.toUpperCase());
+        SpaceType spaceType = SpaceType.findSpaceTypeByString(spaceTypeString);
         List<Long> addSpaceIds = addSpaceRepository.findAddSpaceIds(spaceType, memberId);
         existsAddSpace(addSpaceId, addSpaceIds);
 
@@ -55,7 +55,7 @@ public class SpaceService {
         Optional<Long> spaceWallId = spaceWallRepository.findSpaceWallId(memberId, addSpaceId, FlagType.SAVED);
 
         return spaceWallId.map(id -> new SpaceResponse(true, id, memberGroupResponses))
-                .orElseGet(() -> new SpaceResponse(false, null, memberGroupResponses));
+                .orElseGet(() -> new SpaceResponse(false, 0L, memberGroupResponses));
     }
 
     private static void existsAddSpace(Long addSpaceId, List<Long> addSpaceIds) {

@@ -21,7 +21,6 @@ public class FileImageService {
     }
 
     public String uploadFile(final MultipartFile file) {
-
         if (file.isEmpty()) {
             return null;
         }
@@ -44,7 +43,6 @@ public class FileImageService {
     }
 
     public void validatePdfFile(final List<MultipartFile> files) {
-
         for (MultipartFile file : files) {
             if (file == null || file.isEmpty()) {
                 throw new ApplicationException(ApiStatus.INVALID_DATA, "업로드할 파일이 없습니다.");
@@ -57,6 +55,13 @@ public class FileImageService {
             if (dotIndex < 0 || !(originalFilename.substring(dotIndex + 1).equalsIgnoreCase("pdf"))) {
                 throw new ApplicationException(ApiStatus.INVALID_DATA, "첨부 파일은 pdf만 가능합니다.");
             }
+        }
+    }
+
+    public void checkImageFileSize(final MultipartFile backgroundImgURL, final MultipartFile wallInfoImgURL, final MultipartFile styleImgURL) {
+        long FILE_SIZE_LIMIT = 2 * 1024 * 1024; // 2MB
+        if (backgroundImgURL.getSize() > FILE_SIZE_LIMIT || wallInfoImgURL.getSize() > FILE_SIZE_LIMIT || styleImgURL.getSize() > FILE_SIZE_LIMIT) {
+            throw new ApplicationException(ApiStatus.PAYLOAD_TOO_LARGE, "첨부 가능한 이미지 파일의 최대 크기는 2MB입니다.");
         }
     }
 }
