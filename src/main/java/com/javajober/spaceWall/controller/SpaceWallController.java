@@ -38,20 +38,21 @@ public class SpaceWallController {
     }
 
     @PostMapping("/wall")
-    public ResponseEntity<ApiResponse.Response<SpaceWallSaveResponse>> save(@RequestBody final SpaceWallStringRequest spaceWallRequest) {
+    public ResponseEntity<ApiResponse.Response<SpaceWallSaveResponse>> save(@RequestHeader("Authorization") String token, @RequestBody final SpaceWallStringRequest spaceWallRequest) {
 
-        SpaceWallSaveResponse data = spaceWallService.save(spaceWallRequest, FlagType.SAVED);
+        Long memberId = jwtTokenizer.getUserIdFromToken(token);
+        SpaceWallSaveResponse data = spaceWallService.save(memberId, spaceWallRequest, FlagType.SAVED);
 
         return ApiResponse.response(ApiStatus.OK, "공유페이지 저장이 완료되었습니다.", data);
     }
 
     @PostMapping(path = "/wall-temporary")
-    public ResponseEntity<ApiUtils.ApiResponse<SpaceWallSaveResponse>> savePending (
-            @RequestBody final SpaceWallStringRequest spaceWallRequest) {
+    public ResponseEntity<ApiResponse.Response<SpaceWallSaveResponse>> savePending (@RequestHeader("Authorization") String token, @RequestBody final SpaceWallStringRequest spaceWallRequest) {
 
-       SpaceWallSaveResponse data = spaceWallService.save(spaceWallRequest, FlagType.PENDING);
+        Long memberId = jwtTokenizer.getUserIdFromToken(token);
+        SpaceWallSaveResponse data = spaceWallService.save(memberId, spaceWallRequest, FlagType.PENDING);
 
-        return ResponseEntity.ok(ApiUtils.success(HttpStatus.OK, SuccessMessage.SPACE_WALL_TEMPORARY_SAVE_SUCCESS, data));
+        return ApiResponse.response(ApiStatus.OK, "공유페이지 임시저장이 완료되었습니다.", data);
     }
 
     @GetMapping("/wall-temporary/check/{addSpaceId}")

@@ -1,11 +1,11 @@
 package com.javajober.spaceWall.strategy;
 
 public enum BlockStrategyName {
-	SNSBlockStrategy,
-	FreeBlockStrategy,
 	FileBlockStrategy,
-	TemplateBlockStrategy,
+	FreeBlockStrategy,
 	ListBlockStrategy,
+	SNSBlockStrategy,
+	StyleSettingStrategy,
+	TemplateBlockStrategy,
 	WallInfoBlockStrategy,
-	StyleSettingStrategy
 }

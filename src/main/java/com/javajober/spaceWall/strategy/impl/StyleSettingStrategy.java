@@ -1,6 +1,7 @@
 package com.javajober.spaceWall.strategy.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.javajober.blocks.styleSetting.backgroundSetting.dto.response.BackgroundSettingResponse;
 import com.javajober.blocks.styleSetting.blockSetting.dto.response.BlockSettingResponse;
 import com.javajober.blocks.styleSetting.dto.response.StyleSettingResponse;
@@ -20,7 +21,9 @@ import com.javajober.blocks.styleSetting.repository.StyleSettingRepository;
 import com.javajober.blocks.styleSetting.themeSetting.domain.ThemeSetting;
 import com.javajober.blocks.styleSetting.themeSetting.dto.request.ThemeSettingSaveRequest;
 import com.javajober.blocks.styleSetting.themeSetting.repository.ThemeSettingRepository;
+import com.javajober.spaceWall.domain.BlockType;
 import com.javajober.spaceWall.dto.request.DataStringSaveRequest;
+import com.javajober.spaceWall.strategy.BlockJsonProcessor;
 import com.javajober.spaceWall.strategy.BlockStrategyName;
 import com.javajober.spaceWall.strategy.FixBlockStrategy;
 
@@ -29,14 +32,17 @@ import java.util.List;
 @Component
 public class StyleSettingStrategy implements FixBlockStrategy {
 
+	private static final String STYLE_SETTING = BlockType.STYLE_SETTING.getEngTitle();
+	private final BlockJsonProcessor blockJsonProcessor;
 	private final StyleSettingRepository styleSettingRepository;
 	private final BackgroundSettingRepository backgroundSettingRepository;
 	private final BlockSettingRepository blockSettingRepository;
 	private final ThemeSettingRepository themeSettingRepository;
 
-	public StyleSettingStrategy(final StyleSettingRepository styleSettingRepository,
+	public StyleSettingStrategy(final BlockJsonProcessor blockJsonProcessor, final StyleSettingRepository styleSettingRepository,
 								final BackgroundSettingRepository backgroundSettingRepository, final BlockSettingRepository blockSettingRepository,
 								final ThemeSettingRepository themeSettingRepository) {
+		this.blockJsonProcessor = blockJsonProcessor;
 		this.styleSettingRepository = styleSettingRepository;
 		this.backgroundSettingRepository = backgroundSettingRepository;
 		this.blockSettingRepository = blockSettingRepository;
@@ -44,10 +50,11 @@ public class StyleSettingStrategy implements FixBlockStrategy {
 	}
 
 	@Override
-	public Long saveBlocks(final DataStringSaveRequest data) {
+	public void saveBlocks(final DataStringSaveRequest data, ArrayNode blockInfoArray, Long position) {
 		StyleSettingStringSaveRequest request = data.getStyleSetting();
 
-		return saveStyleSetting(request);
+		Long styleSettingId = saveStyleSetting(request);
+		blockJsonProcessor.addBlockInfoToArray(blockInfoArray, position, STYLE_SETTING, styleSettingId, "");
 	}
 
 	private Long saveStyleSetting(final StyleSettingStringSaveRequest request){

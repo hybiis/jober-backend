@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.javajober.blocks.freeBlock.dto.response.FreeBlockResponse;
 import com.javajober.core.util.response.CommonResponse;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,14 @@ import org.springframework.stereotype.Component;
 import com.javajober.blocks.freeBlock.domain.FreeBlock;
 import com.javajober.blocks.freeBlock.dto.request.FreeBlockSaveRequest;
 import com.javajober.blocks.freeBlock.repository.FreeBlockRepository;
+import com.javajober.spaceWall.domain.BlockType;
 import com.javajober.spaceWall.strategy.BlockJsonProcessor;
 import com.javajober.spaceWall.strategy.BlockStrategyName;
 import com.javajober.spaceWall.strategy.MoveBlockStrategy;
 
 @Component
 public class FreeBlockStrategy implements MoveBlockStrategy {
+	private static final String FREE_BLOCK = BlockType.FREE_BLOCK.getEngTitle();
 	private final BlockJsonProcessor blockJsonProcessor;
 	private final FreeBlockRepository freeBlockRepository;
 
@@ -26,17 +29,18 @@ public class FreeBlockStrategy implements MoveBlockStrategy {
 	}
 
 	@Override
-	public List<Long> saveBlocks(final List<Object> subData) {
-
-		List<Long> freeBlockIds = new ArrayList<>();
+	public void saveBlocks(final List<?> subData, final ArrayNode blockInfoArray, final Long position) {
 
 		subData.forEach(block -> {
 			FreeBlockSaveRequest request = blockJsonProcessor.convertValue(block, FreeBlockSaveRequest.class);
-			FreeBlock freeBlock = FreeBlockSaveRequest.toEntity(request);
-			freeBlockIds.add(freeBlockRepository.save(freeBlock).getId());
+			Long freeBlockId = saveFreeBlock(request);
+			blockJsonProcessor.addBlockInfoToArray(blockInfoArray, freeBlockId, FREE_BLOCK, freeBlockId, "");
 		});
+	}
 
-		return freeBlockIds;
+	private Long saveFreeBlock(FreeBlockSaveRequest request) {
+		FreeBlock freeBlock = FreeBlockSaveRequest.toEntity(request);
+		return freeBlockRepository.save(freeBlock).getId();
 	}
 
 	@Override
