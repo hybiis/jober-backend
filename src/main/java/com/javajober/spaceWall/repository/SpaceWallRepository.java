@@ -13,13 +13,15 @@ import java.util.Optional;
 
 public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
 
+    SpaceWall save(final SpaceWall spaceWall);
+
     boolean existsByShareURL(final String shareURL);
+
+    boolean existsByAddSpaceId(final Long spaceId);
 
     @Query("SELECT s FROM SpaceWall s LEFT JOIN s.addSpace a LEFT JOIN s.member m " +
             "WHERE a.id = :addSpaceId AND m.id = :memberId")
     List<SpaceWall> findSpaceWalls(@Param("memberId") final Long memberId, @Param("addSpaceId") final Long addSpaceId);
-
-    SpaceWall save(final SpaceWall spaceWall);
 
     @Query("SELECT s.id FROM SpaceWall s WHERE s.member.id = :memberId AND s.addSpace.id = :addSpaceId AND s.flag = :flag")
     Optional<Long> findSpaceWallId(@Param("memberId") final Long memberId, @Param("addSpaceId") final Long addSpaceId, @Param("flag") final FlagType flag);
@@ -27,6 +29,7 @@ public interface SpaceWallRepository extends Repository<SpaceWall, Long> {
     Optional<SpaceWall> findByIdAndAddSpaceIdAndMemberIdAndFlag(final Long id, final Long addSpaceId, final Long memberId, final FlagType flag);
 
     Optional<SpaceWall> findByShareURL(final String shareURL);
+
 
     default List<SpaceWall> findSpaceWallsOrThrow(final Long memberId, final Long addSpaceId) {
         List<SpaceWall> spaceWalls = findSpaceWalls(memberId, addSpaceId);

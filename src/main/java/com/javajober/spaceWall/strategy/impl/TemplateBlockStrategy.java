@@ -1,10 +1,11 @@
 package com.javajober.spaceWall.strategy.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Collections;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.javajober.blocks.templateBlock.dto.response.TemplateBlockResponse;
 import com.javajober.core.util.response.CommonResponse;
 import org.springframework.stereotype.Component;
@@ -12,14 +13,15 @@ import org.springframework.stereotype.Component;
 import com.javajober.blocks.templateBlock.domain.TemplateBlock;
 import com.javajober.blocks.templateBlock.dto.request.TemplateBlockSaveRequest;
 import com.javajober.blocks.templateBlock.repository.TemplateBlockRepository;
+import com.javajober.spaceWall.domain.BlockType;
 import com.javajober.spaceWall.strategy.BlockJsonProcessor;
 import com.javajober.spaceWall.strategy.BlockStrategyName;
 import com.javajober.spaceWall.strategy.MoveBlockStrategy;
 
-
 @Component
 public class TemplateBlockStrategy implements MoveBlockStrategy {
 
+	private static final String TEMPLATE_BLOCK = BlockType.TEMPLATE_BLOCK.getEngTitle();
 	private final BlockJsonProcessor blockJsonProcessor;
 	private final TemplateBlockRepository templateBlockRepository;
 
@@ -29,16 +31,19 @@ public class TemplateBlockStrategy implements MoveBlockStrategy {
 	}
 
 	@Override
-	public List<Long> saveBlocks(final List<Object> subData) {
-		List<Long> templateBlockIds = new ArrayList<>();
+	public void saveBlocks(final List<?> subData, final ArrayNode blockInfoArray, final Long position) {
 
 		subData.forEach(block -> {
 			TemplateBlockSaveRequest request = blockJsonProcessor.convertValue(block, TemplateBlockSaveRequest.class);
-			TemplateBlock templateBlock = TemplateBlockSaveRequest.toEntity(request);
-			templateBlockIds.add(templateBlockRepository.save(templateBlock).getId());
+			TemplateBlock templateBlock = saveTemplateBlock(request);
+			blockJsonProcessor.addBlockInfoToArray(blockInfoArray, position, TEMPLATE_BLOCK, templateBlock.getId(), templateBlock.getTemplateUUID());
 		});
+	}
 
-		return templateBlockIds;
+	private TemplateBlock saveTemplateBlock(TemplateBlockSaveRequest request) {
+		TemplateBlock templateBlock = TemplateBlockSaveRequest.toEntity(request);
+		templateBlockRepository.save(templateBlock);
+		return templateBlock;
 	}
 
 	@Override

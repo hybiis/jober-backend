@@ -29,7 +29,9 @@ public class BlockStrategyFactory {
 
 
 	private Map<String, MoveBlockStrategy> initializeMoveBlockStrategies(Set<MoveBlockStrategy> StrategySet) {
+
 		Map<String, MoveBlockStrategy>  strategies = new HashMap<>();
+
 		StrategySet.forEach(
 			strategy -> strategies.put(strategy.getStrategyName(), strategy));
 
@@ -37,7 +39,9 @@ public class BlockStrategyFactory {
 	}
 
 	private Map<String, FixBlockStrategy> initializeFixBlockStrategies(Set<FixBlockStrategy> StrategySet) {
+
 		Map<String, FixBlockStrategy>  strategies = new HashMap<>();
+
 		StrategySet.forEach(
 			strategy -> strategies.put(strategy.getStrategyName(), strategy));
 

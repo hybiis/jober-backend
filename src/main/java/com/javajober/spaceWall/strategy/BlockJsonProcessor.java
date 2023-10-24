@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.javajober.spaceWall.dto.request.BlockSaveRequest;
 
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +16,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class BlockJsonProcessor {
 	private final ObjectMapper jsonMapper;
@@ -30,33 +32,23 @@ public class BlockJsonProcessor {
 	}
 
 	public <T> T convertValue(final Object fromValue, final Class<T> toValueType) {
-		return jsonMapper.convertValue(fromValue, toValueType);
+		try {
+			return jsonMapper.convertValue(fromValue, toValueType);
+		} catch (IllegalArgumentException e) {
+			String errorMessage = String.format("'%s' 값을 '%s' 타입으로 변환하는데 실패했습니다. 오류: %s", fromValue, toValueType.getName(), e.getMessage());
+			log.error(errorMessage);
+			throw new ApplicationException(ApiStatus.FAIL, "데이터를 처리하는 중 문제가 발생했습니다.");
+		}
 	}
 
-	public void addBlockInfoToArray(final ArrayNode blockInfoArray, final Long position, final Long blockId, final BlockSaveRequest block) {
-
-		String currentBlockTypeTitle = block.getBlockType();
-		String blockUUID = block.getBlockUUID();
-
-		ObjectNode blockInfoObject = jsonMapper.createObjectNode();
-
-		blockInfoObject.put("position", position);
-		blockInfoObject.put("block_type", currentBlockTypeTitle);
-		blockInfoObject.put("block_id", blockId);
-		blockInfoObject.put("block_uuid", blockUUID);
-
-		blockInfoArray.add(blockInfoObject);
-	}
-
-
-	public void addBlockToJsonArray(final ArrayNode blockInfoArray, final Long position, final String blockType, final Long blockId) {
+	public void addBlockInfoToArray(final ArrayNode blockInfoArray, final Long position, final String blockType, final Long blockId, final String blockUUID) {
 
 		ObjectNode blockInfoObject = jsonMapper.createObjectNode();
 
 		blockInfoObject.put("position", position);
 		blockInfoObject.put("block_type", blockType);
 		blockInfoObject.put("block_id", blockId);
-		blockInfoObject.put("block_uuid", "");
+		blockInfoObject.put("block_uuid", blockUUID);
 
 		blockInfoArray.add(blockInfoObject);
 	}

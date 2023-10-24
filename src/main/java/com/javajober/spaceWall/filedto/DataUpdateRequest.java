@@ -17,14 +17,14 @@ public class DataUpdateRequest {
 	private Long spaceWallId;
 	private String shareURL;
 	private WallInfoBlockUpdateRequest wallInfoBlock;
-	private List<BlockSaveRequest> blocks;
+	private List<BlockSaveRequest<?>> blocks;
 	private StyleSettingUpdateRequest styleSetting;
 
 	private DataUpdateRequest(){
 
 	}
 
-	public DataUpdateRequest(final String category, final Long spaceWallId, final Long spaceId, final Long memberId, final String shareURL, final WallInfoBlockUpdateRequest wallInfoBlock, final List<BlockSaveRequest> blocks, final StyleSettingUpdateRequest styleSetting) {
+	public DataUpdateRequest(final String category, final Long spaceWallId, final Long spaceId, final Long memberId, final String shareURL, final WallInfoBlockUpdateRequest wallInfoBlock, final List<BlockSaveRequest<?>> blocks, final StyleSettingUpdateRequest styleSetting) {
 		this.category = category;
 		this.spaceWallId = spaceWallId;
 		this.spaceId = spaceId;

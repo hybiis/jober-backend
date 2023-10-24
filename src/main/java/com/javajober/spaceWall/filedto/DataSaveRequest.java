@@ -15,14 +15,14 @@ public class DataSaveRequest {
 	private Long spaceId;
 	private String shareURL;
 	private WallInfoBlockSaveRequest wallInfoBlock;
-	private List<BlockSaveRequest> blocks;
+	private List<BlockSaveRequest<?>> blocks;
 	private StyleSettingSaveRequest styleSetting;
-  
+
 	private DataSaveRequest() {
 
 	}
 
-	public DataSaveRequest(final String category, final Long memberId, Long spaceId, final String shareURL, final WallInfoBlockSaveRequest wallInfoBlock, final List<BlockSaveRequest> blocks, final StyleSettingSaveRequest styleSetting) {
+	public DataSaveRequest(final String category, final Long memberId, Long spaceId, final String shareURL, final WallInfoBlockSaveRequest wallInfoBlock, final List<BlockSaveRequest<?>> blocks, final StyleSettingSaveRequest styleSetting) {
 		this.category = category;
 		this.memberId = memberId;
 		this.spaceId = spaceId;

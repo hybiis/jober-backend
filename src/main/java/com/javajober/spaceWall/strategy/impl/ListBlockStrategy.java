@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.javajober.blocks.listBlock.dto.response.ListBlockResponse;
 import com.javajober.core.util.response.CommonResponse;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.javajober.blocks.listBlock.domain.ListBlock;
 import com.javajober.blocks.listBlock.dto.request.ListBlockSaveRequest;
 import com.javajober.blocks.listBlock.repository.ListBlockRepository;
+import com.javajober.spaceWall.domain.BlockType;
 import com.javajober.spaceWall.strategy.BlockJsonProcessor;
 import com.javajober.spaceWall.strategy.BlockStrategyName;
 import com.javajober.spaceWall.strategy.MoveBlockStrategy;
@@ -18,6 +20,7 @@ import com.javajober.spaceWall.strategy.MoveBlockStrategy;
 @Component
 public class ListBlockStrategy implements MoveBlockStrategy {
 
+	private static final String LIST_BLOCK = BlockType.LIST_BLOCK.getEngTitle();
 	private final BlockJsonProcessor blockJsonProcessor;
 	private final ListBlockRepository listBlockRepository;
 
@@ -27,17 +30,18 @@ public class ListBlockStrategy implements MoveBlockStrategy {
 	}
 
 	@Override
-	public List<Long> saveBlocks(final List<Object> subData) {
-
-		List<Long> listBlockIds = new ArrayList<>();
+	public void saveBlocks(final List<?> subData, final ArrayNode blockInfoArray, final Long position) {
 
 		subData.forEach(block -> {
 			ListBlockSaveRequest request = blockJsonProcessor.convertValue(block, ListBlockSaveRequest.class);
-			ListBlock listBlock = ListBlockSaveRequest.toEntity(request);
-			listBlockIds.add(listBlockRepository.save(listBlock).getId());
+			ListBlock listBlock = saveListBlock(request);
+			blockJsonProcessor.addBlockInfoToArray(blockInfoArray, position, LIST_BLOCK, listBlock.getId(), listBlock.getListUUID());
 		});
+	}
 
-		return listBlockIds;
+	private ListBlock saveListBlock(ListBlockSaveRequest request) {
+		ListBlock listBlock = ListBlockSaveRequest.toEntity(request);
+		return listBlockRepository.save(listBlock);
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package com.javajober.spaceWall.dto.request;
 
 import java.util.List;
 
-import com.javajober.core.util.response.CommonResponse;
 import lombok.Getter;
 
 @Getter
